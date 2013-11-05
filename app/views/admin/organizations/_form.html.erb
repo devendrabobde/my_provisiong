@@ -1,0 +1,69 @@
+<%= form_for([:admin, @organization]) do |f| %>
+  <div>
+    <%= f.label :name, 'Organization Name' %>
+    <%= f.text_field :name, :autofocus => true %>
+  </div>
+  <div>
+    <%= f.label :address1, 'Address1' %>
+    <%= f.text_field :address1 %>
+  </div>
+  <div>
+    <%= f.label :address2, 'Address2' %>
+    <%= f.text_field :address2 %>
+  </div>
+  <div>
+    <%= f.label :city, 'City' %>
+    <%= f.text_field :city %>
+  </div>
+  <div>
+    <%= f.label :state_code, 'State' %>
+    <%= f.text_field :state_code %>
+  </div>
+  <div>
+    <%= f.label :zip_code, 'Zip Code' %>
+    <%= f.text_field :zip_code %>
+  </div>
+  <div>
+    <%= f.label :postal_code, 'Postal Code' %>
+    <%= f.text_field :postal_code %>
+  </div>
+  <div>
+    <%= f.label :country_code, 'Country Code' %>
+    <%= f.text_field :country_code %>
+  </div>
+  <div>
+    <%= f.label :contact_first_name, 'Contact First Name' %>
+    <%= f.text_field :contact_first_name %>
+  </div>
+  <div>
+    <%= f.label :contact_last_name, 'Contact Last Name' %>
+    <%= f.text_field :contact_last_name %>
+  </div>
+  <div>
+    <%= f.label :contact_phone, 'Contact Phone' %>
+    <%= f.text_field :contact_phone %>
+  </div>
+  <div>
+    <%= f.label :contact_fax, 'Contact Fax' %>
+    <%= f.text_field :contact_fax %>
+  </div>
+  <div>
+    <%= f.label :contact_email, 'Contact Email' %>
+    <%= f.text_field :contact_email %>
+  </div>
+  <div>
+    <%= f.label :idp_vendor_id, 'IDP Vendor ID' %>
+    <%= f.text_field :idp_vendor_id %>
+  </div>
+  <div>
+    <%= f.label :vendor_label, 'EPCS Vendor Label' %>
+    <%= f.text_field :vendor_label %>
+  </div>
+  <div>
+    <%= f.label :vendor_node_label, 'EPCS Vendor Label Node' %>
+    <%= f.text_field :vendor_node_label %>
+  </div>
+  <div>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>

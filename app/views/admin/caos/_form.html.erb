@@ -1,0 +1,37 @@
+<%= form_for([:admin, @organization, @cao]) do |f| %>
+  <div>
+    <%= f.label :user_id, 'User Id' %>
+    <%= f.text_field :user_id, :autofocus => true %>
+  </div>
+  <div>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.label :profile_id %>
+    <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name") %>
+  </div>
+  <div>
+    <%= f.label :role_id %>
+    <%= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name") %>
+  </div><br/>
+  <div>
+    <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
+  </div>
+<% end %>

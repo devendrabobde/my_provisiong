@@ -1,0 +1,48 @@
+<h4>COA Details</h4>
+
+<p>
+  <strong>User Id:</strong>
+  <%= @cao.user_id %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @cao.first_name %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @cao.last_name %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @cao.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @cao.email %>
+</p>
+<!--
+<p>
+  <strong>Is Active:</strong>
+  <%#= @cao.is_active %>
+</p>
+-->
+<p>
+  <strong>Organization:</strong>
+  <%= @cao.organization.name rescue nil%>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @cao.profile.profile_name rescue nil%>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @cao.role.name rescue nil %>
+</p>
+
+<%= link_to 'Back', admin_organization_caos_path(@organization.id) %>

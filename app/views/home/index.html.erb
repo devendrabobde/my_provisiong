@@ -1,0 +1,11 @@
+<!-- <h4>Welcome To OneStop Admin Console</h4> -->
+<h4>Upload Providers</h4>
+<%= select_tag "site", options_for_select([ "Backline Application"]) %>
+<%= link_to "Fetch Providers","", class: "btn btn-primary", id: "fetch_data", "data-href" => providers_path %>
+
+<div id="provider_data">
+</div>
+<!--
+<div id="dialog" title="Message">
+  <div class="error_message_content"></div>
+</div> -->

@@ -1,0 +1,38 @@
+<h5> Total Uploaded Files: <%= audit_trails.count %> </h5>
+<table class="table table-striped table-bordered table-condensed" id="table1">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Date Uploaded</th>
+      <th>File Name</th>
+      <th>Total NPI Processed</th>
+      <th>Uploaded By</th>
+      <th>Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if audit_trails.present? %>
+      <% virtual_id = 0 %>
+      <% audit_trails.each do |audit| %>
+        <tr>
+          <td id="audit_link_<%= audit.id %>">
+            <% virtual_id =  virtual_id + 1 %>
+            <% if audit.upload_status %>
+              <%= link_to virtual_id, show_provider_admin_organization_path(audit.id) %>
+            <% else %>
+              <%= virtual_id %>
+            <% end %>
+          </td>
+      <td><%= audit.createddate.strftime("%m/%d/%Y") %></td>
+      <td><%= audit.file_name %></td>
+      <td>
+            <%= audit.total_npi_processed %> / <%= audit.total_providers %>
+          </td>
+      <td><%= audit.cao.full_name rescue nil  %></td>
+      <td><%= audit.registered_app.app_name rescue nil %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+

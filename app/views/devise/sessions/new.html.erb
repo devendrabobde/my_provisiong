@@ -1,0 +1,31 @@
+  <div class="sign_in_box">
+  <h3>Sign in</h3>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <!--   <div><%#= f.label :email %><br />
+    <%#= f.email_field :email, :autofocus => true %></div> -->
+      <table>
+        <tbody>
+          <tr>
+            <td><%= f.label :username %></td>
+          <td style="padding-left:13px;"><%= f.text_field :username, :autofocus => true %></td>
+          </tr>
+  <!--         <tr>
+            <td><%#= f.label :hospital_name %> </td>
+            <td><%#= f.text_field :hospital_name, :autofocus => true %></td>
+          </tr> -->
+          <tr>
+           <td> <%= f.label :password %> </td>
+           <td style="padding-left:13px;"> <%= f.password_field :password %></td>
+          </tr>
+          <tr>
+            <% if devise_mapping.rememberable? -%>
+            <td> <%= f.check_box :remember_me %> </td>
+               <td style="padding-left:13px;"> <%= f.label :remember_me %> </td>
+           <% end -%>
+         </tr>
+        </tbody>
+      </table> <br />
+      <div><%= f.submit "Sign in", :class=>'btn btn-primary' %></div>
+    <% end %>
+  <%= render "devise/shared/links" %>
+</div>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+ <!--        <Cell><Data ss:Type="String">Username</Data></Cell>
+        <Cell><Data ss:Type="String">Role</Data></Cell>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Middle Name</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
+        <Cell><Data ss:Type="String">Department</Data></Cell>
+        <Cell><Data ss:Type="Number">Npi</Data></Cell> -->
+        <Cell><Data ss:Type="String">Username</Data></Cell>
+        <Cell><Data ss:Type="String">Password</Data></Cell>
+        <Cell><Data ss:Type="String">Role</Data></Cell>
+        <Cell><Data ss:Type="String">Prefix</Data></Cell>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Middle Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Suffix</Data></Cell>
+        <Cell><Data ss:Type="String">Degrees</Data></Cell>
+        <Cell><Data ss:Type="String">Npi</Data></Cell>
+        <Cell><Data ss:Type="String">Birth Date</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="Text">Address1</Data></Cell>
+        <Cell><Data ss:Type="Text">Address2</Data></Cell>
+        <Cell><Data ss:Type="String">City</Data></Cell>
+        <Cell><Data ss:Type="String">State</Data></Cell>
+        <Cell><Data ss:Type="String">Postal Code</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
+        <Cell><Data ss:Type="String">Fax</Data></Cell>
+        <Cell><Data ss:Type="String">Department</Data></Cell>
+      </Row>
+
+    <% @providers.each do |provider| %>
+      <Row>
+       <!--  <Cell><Data ss:Type="String"><%= provider.username %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.role %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.middle_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.email %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.department %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= provider.npi %></Data></Cell> -->
+
+        <Cell><Data ss:Type="String"><%= provider.username %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.password %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.role %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.prefix %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.middle_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.suffix %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.degrees %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= provider.npi %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= provider.birth_date %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.email %></Data></Cell>
+        <Cell><Data ss:Type="Text"><%= provider.address_1 %></Data></Cell>
+        <Cell><Data ss:Type="Text"><%= provider.address_2 %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.city %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.state %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.postal_code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.fax %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= provider.department %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
