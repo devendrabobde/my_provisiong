@@ -1,0 +1,19 @@
+#! /bin/bash
+
+# This script is to be run on the deployment server. This script logs in to the production server
+# and runs the deployment_script or the OneStop application.
+
+############################################ VARIABLES BEGIN ########################################
+#
+# User and address for SSH'ing into the production server.
+SSH_USER_ADDRESS=dave@192.168.2.5
+
+# Git executables directory on the production server
+GIT_EXECUTABLES="C:\Program Files\Git\bin"
+
+# OneStop root directory on the production server
+ONESTOP_ROOT="/c/Documents\ and\ Settings/Administrator/My\ Documents/Rails_Projects/onestop"
+#
+############################################ VARIABLES END ##########################################
+
+ssh $SSH_USER_ADDRESS "cmd.exe /c cd $GIT_EXECUTABLES && bash.exe -c 'cd $ONESTOP_ROOT; ./deployment_script'"

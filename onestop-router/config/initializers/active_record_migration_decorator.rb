@@ -1,0 +1,1 @@
+require Rails.root.join('lib/active_record/migration_decorator')

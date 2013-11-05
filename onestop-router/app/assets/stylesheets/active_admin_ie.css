@@ -1,0 +1,13 @@
+#header h1 {
+  *display: inline;
+  zoom: 1;
+}
+
+#tabs {
+  *display: inline;
+  zoom: 1;
+}
+
+#tabs > li {
+  *float: left;
+}

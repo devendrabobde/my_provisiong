@@ -1,0 +1,23 @@
+  
+  # 
+  # Please follow below sets to setup onestop provisioing application
+  #
+
+  1. Configure database.yml file & DB credenatils as per environment
+
+  2. Run Sql script that contains SQL & DDL statements
+
+  3. Configure redis server
+
+    Please refer http://redis.io/download to download & configure redis server
+ 
+  4. Strat redis server & then strat backgroud job queue, please refer below commands
+
+    a> Start redis server:
+       => redis-server
+    b> Start redis job queue
+       => RAILS_ENV=development QUEUE=providers_queue rake environment resque:work
+       Run redis job queue in backgroud:-
+       => PIDFILE=./resque.pid BACKGROUND=yes QUEUE=providers_queue rake resque:work >>  worker1.log &
+
+    Note:- RAILS_ENV value is depends upon current environment that we are using.
