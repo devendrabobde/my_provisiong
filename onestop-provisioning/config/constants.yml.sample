@@ -44,3 +44,7 @@ EPCS:
 EPCS_OIS:
   SERVER_URL: http://192.168.1.6:3002
   BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
+
+SUPERNPI_OIS:
+  SERVER_URL: http://192.168.1.11:3002
+  VIEW_USER_URL: api/v1/ois/supernpis/view-user.json
