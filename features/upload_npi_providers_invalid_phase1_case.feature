@@ -1,4 +1,4 @@
-Feature: COA upload NPI providers and completes successfully
+Feature: COA upload NPI providers and phase 1 validations are not satisfied
   In order to upload NPI providers in the onestop provisioning
   As a COA
   I want to be able to upload a CSV file with the providers' data
@@ -14,10 +14,6 @@ Background:
 @no-database-cleaner
   Scenario: COA logs in
     And I should see correct screen title
-    And I should see application selection list
-    And I should see file selection button
-    And I should see application csv template download button
-    And I should see correct section names
 
   @selenium
   @no-database-cleaner
@@ -30,8 +26,8 @@ Background:
   @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
-    When I select a csv file of 4 providers
+    When I select CSV File of Invalid providers
     And I clicks upload button
-    And I should be able to see correct file upload message
-    And I should be able to see progress bar
-    And I should be able to verify clean provider data in Provisioning DB
+    And I should be able to see invalid file upload message
+    And No data should be uploaded in the provisioning db
+    And No Audit data should be added in the Provisioning db

@@ -1,0 +1,15 @@
+#Configuration for the different environments
+
+defaults: &defaults
+
+development:
+    memcache_server: 'localhost:11211'
+
+test:
+    memcache_server: '' # Need to enter
+
+staging:
+    memcache_server: '' # Need to enter
+
+production:
+    memcache_server: '' # Need to enter

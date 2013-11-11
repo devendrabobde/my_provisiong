@@ -15,10 +15,13 @@ module ProvisioingCsvValidation
 
   def self.process_csv(path, application)
     providers = []
-    app_upload_fileds = application.app_upload_fields
+    # Added memcached call to fetch app_upload_fields
+    # memcached_store_fields = Memcached.get_field_memcached("#{application.app_name}_fields")
+    # app_upload_fields = memcached_store_fields.present? ? memcached_store_fields : application.app_upload_fields
+    app_upload_fields = application_upload_field_validations(application)
     CSV.foreach(path, :col_sep=>',', :headers => true) do |row|
       provider_record = row.to_hash
-      providers << process_record(provider_record, application, app_upload_fileds) if provider_record.present?
+      providers << process_record(provider_record, application, app_upload_fields) if provider_record.present?
     end
     providers
   end
@@ -61,7 +64,9 @@ module ProvisioingCsvValidation
   end
 
   def self.application_upload_field_validations(application)
-    validation_fields = application.app_upload_fields.includes(:app_upload_field_validations).where("required =? ", 1).all
+    # Added validations from memcached server which reduce time consumption
+    memcached_store_validation = Memcached.get_validation_memcached(application.app_name)
+    validation_fields = memcached_store_validation.present? ? memcached_store_validation : application.app_upload_fields.includes(:app_upload_field_validations).where("required =? ", 1).all
   end
 
   def self.validate_required_field(providers, application)
