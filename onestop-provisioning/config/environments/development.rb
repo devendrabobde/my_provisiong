@@ -4,14 +4,24 @@ OneStop::Application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+
+  # Below config updated because we need to check memcached working in development. Please make  value 'false' when you are not checking memcached in development. 
+  # config.cache_classes = false
+  config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+
+  # Added memcache server 
+  config.cache_store = :dalli_store
+  # Below code commented because we need to check memcached working in development. Please make  value 'false' when you are not checking memcached in development.
+  # config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
+
+
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true

@@ -68,3 +68,7 @@ end
 
 
 
+# Dalli- Ruby client for accessing memcached servers
+gem 'dalli'
+# settingslogic - To maintain all settings
+gem 'settingslogic'

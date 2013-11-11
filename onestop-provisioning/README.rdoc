@@ -21,3 +21,9 @@
        => PIDFILE=./resque.pid BACKGROUND=yes QUEUE=providers_queue rake resque:work >>  worker1.log &
 
     Note:- RAILS_ENV value is depends upon current environment that we are using.
+
+  5. Install memcached if not installed.
+     => sudo apt-get install memcached
+
+     To start memcached
+     => sudo /etc/init.d/memcached start  

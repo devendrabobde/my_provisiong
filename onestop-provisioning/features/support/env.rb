@@ -60,3 +60,13 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
+def wait_for_ajax
+  Timeout.timeout(Capybara.default_wait_time) do
+    loop do
+      active = page.evaluate_script('jQuery.active')
+      break if active == 0
+    end
+  end
+end
+
