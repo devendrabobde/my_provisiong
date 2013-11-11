@@ -22,6 +22,11 @@
 
     Note:- RAILS_ENV value is depends upon current environment that we are using.
 
+    # Run multiple queue lists
+
+      RAILS_ENV=development QUEUE=providers_queue,memcached_updation rake environment resque:work
+
+
   5. Install memcached if not installed.
      => sudo apt-get install memcached
 
