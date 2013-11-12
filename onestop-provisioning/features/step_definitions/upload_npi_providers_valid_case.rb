@@ -93,7 +93,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB, invoke
       count = 0
     else
       count+=1
-      break if count > 20
+      break if count > 22
     end
   end
   page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
