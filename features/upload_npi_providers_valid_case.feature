@@ -35,5 +35,6 @@ Background:
     And I should be able to see correct file upload message
     And I should be able to see progress bar
     And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to associate provider with COA
     And I should be able to add audit data in Provisioning DB
     And I should be able to see simple acknowledgement messages

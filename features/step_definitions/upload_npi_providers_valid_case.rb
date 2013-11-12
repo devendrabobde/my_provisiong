@@ -107,6 +107,10 @@ When(/^I should be able to verify clean provider data in Provisioning DB, invoke
   end
 end
 
+And /^I should be able to associate provider with COA$/ do
+  ProviderAppDetail.where(fk_cao_id: @current_cao.id).count > 0
+end
+
 And /^I should be able to add audit data in Provisioning DB$/ do
   page.all(:css, "#table1 tbody tr").size.should > 0
 end
