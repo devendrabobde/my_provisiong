@@ -6,7 +6,7 @@ development:
     memcache_server: 'localhost:11211'
 
 test:
-    memcache_server: '' # Need to enter
+    memcache_server: 'localhost:11211' # Need to enter
 
 staging:
     memcache_server: '' # Need to enter
