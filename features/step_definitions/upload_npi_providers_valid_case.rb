@@ -85,7 +85,7 @@ And /^I should be able to see application info, upload time, file name, download
   page.should have_content("Download Sample Data File")
 end
 
-And(/^I should be able to verify clean provider data in Provisioning DB$/) do
+When(/^I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router$/) do
   count = 0
   loop do
     sleep 1
