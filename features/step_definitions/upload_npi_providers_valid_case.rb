@@ -62,7 +62,7 @@ Given /^I select an application$/ do
 end
 
 When /^I select a csv file of 4 providers$/ do
-  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_31_10_2013.csv') # id
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv') # id
 end
 
 And /^I clicks upload button$/ do
@@ -78,7 +78,7 @@ And /^I should be able to see progress bar$/ do
 end
 
 And /^I should be able to see application info, upload time, file name, download button$/ do
-  page.should have_content("epcs_31_10_2013.csv")
+  page.should have_content("valid_epcs_providers.csv")
   page.should have_content("EPCS-IDP")
   page.should have_content(Time.now.strftime("%m/%d/%Y"))
   page.should have_content("")
@@ -114,6 +114,11 @@ When(/^I should be able to verify clean provider data in Provisioning DB$/) do
   page.all(:css, "#table1 tr").each do |td|
     td.all(:xpath, '//td[1]').should_not == ""
   end
+
+  page.all(:css, "#table1 tbody tr").each do |td|
+    td.text.split(" ").last.should =~ /Success/
+  end
+  
 end
 
 
