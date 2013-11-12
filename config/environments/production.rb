@@ -8,8 +8,8 @@ OneStop::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Added memcached store 
-  config.cache_store = :dalli_store
+  # Added redis store 
+  config.cache_store = :redis_store
 
 
   # Disable Rails's static asset server (Apache or nginx will already do this)

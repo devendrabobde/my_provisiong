@@ -66,9 +66,9 @@ end
 # gem 'xmpp4r', group: :development
 # gem 'airbrake', group: :development
 
-
-
-# Dalli- Ruby client for accessing memcached servers
-gem 'dalli'
 # settingslogic - To maintain all settings
 gem 'settingslogic'
+
+# redis cache used
+gem 'redis-rails'
+gem 'redis-rack-cache'
