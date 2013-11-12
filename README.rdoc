@@ -24,11 +24,4 @@
 
     # Run multiple queue lists
 
-      RAILS_ENV=development QUEUE=providers_queue,memcached_updation rake environment resque:work
-
-
-  5. Install memcached if not installed.
-     => sudo apt-get install memcached
-
-     To start memcached
-     => sudo /etc/init.d/memcached start  
+      RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work
