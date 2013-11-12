@@ -1,5 +1,6 @@
 Given /^a valid COA$/ do
-  coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name, 
+  coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
+    first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "password", password_confirmation: "password")
   role = Role.create(name: "COA")
   organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
@@ -81,10 +82,10 @@ And /^I should be able to see application info, upload time, file name, download
   page.should have_content("valid_epcs_providers.csv")
   page.should have_content("EPCS-IDP")
   page.should have_content(Time.now.strftime("%m/%d/%Y"))
-  page.should have_content("")
+  page.should have_content("Download Sample Data File")
 end
 
-When(/^I should be able to verify clean provider data in Provisioning DB$/) do
+And(/^I should be able to verify clean provider data in Provisioning DB$/) do
   # wait_for_ajax do
     # page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
   # end
@@ -114,11 +115,14 @@ When(/^I should be able to verify clean provider data in Provisioning DB$/) do
   page.all(:css, "#table1 tr").each do |td|
     td.all(:xpath, '//td[1]').should_not == ""
   end
+end
 
+And /^I should be able to add audit data in Provisioning DB$/ do
+  page.all(:css, "#table1 tbody tr").size.should > 0
+end
+
+And /^I should be able to see simple acknowledgement messages$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
     td.text.split(" ").last.should =~ /Success/
   end
-  
 end
-
-
