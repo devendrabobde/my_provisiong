@@ -86,13 +86,6 @@ And /^I should be able to see application info, upload time, file name, download
 end
 
 And(/^I should be able to verify clean provider data in Provisioning DB$/) do
-  # wait_for_ajax do
-    # page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
-  # end
-  # page.evaluate_script('jQuery.isReady&&jQuery.active==0').class.should_not eql(String) until page.evaluate_script('jQuery.isReady&&jQuery.active==0') do
-    # sleep 1
-  # end
-  # wait_for_ajax
   count = 0
   loop do
     sleep 1
@@ -109,9 +102,6 @@ And(/^I should be able to verify clean provider data in Provisioning DB$/) do
   page.should have_content("First Name")
   page.should have_content("Email")
   page.should have_content("DEA Numbers")
-  # page.find("#table1 td:nth -child(3)").each do |td|
-    # td.text.should_not == ""
-  # end
   page.all(:css, "#table1 tr").each do |td|
     td.all(:xpath, '//td[1]').should_not == ""
   end
