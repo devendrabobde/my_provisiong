@@ -7,6 +7,7 @@ OneStop::Application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
+
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
@@ -17,6 +18,12 @@ OneStop::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+
+  # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
@@ -34,4 +41,14 @@ OneStop::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'baci.lindsaar.net',
+    :user_name            => 'sharonevas@gmail.com',
+    :password             => 'timonishere',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
 end
