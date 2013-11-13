@@ -1,5 +1,6 @@
 Given /^a valid COA$/ do
-  coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name, 
+  coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
+    first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "password", password_confirmation: "password")
   role = Role.create(name: "COA")
   organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
@@ -62,7 +63,7 @@ Given /^I select an application$/ do
 end
 
 When /^I select a csv file of 4 providers$/ do
-  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_31_10_2013.csv') # id
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv') # id
 end
 
 And /^I clicks upload button$/ do
@@ -78,20 +79,13 @@ And /^I should be able to see progress bar$/ do
 end
 
 And /^I should be able to see application info, upload time, file name, download button$/ do
-  page.should have_content("epcs_31_10_2013.csv")
+  page.should have_content("valid_epcs_providers.csv")
   page.should have_content("EPCS-IDP")
   page.should have_content(Time.now.strftime("%m/%d/%Y"))
-  page.should have_content("")
+  page.should have_content("Download Sample Data File")
 end
 
-When(/^I should be able to verify clean provider data in Provisioning DB$/) do
-  # wait_for_ajax do
-    # page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
-  # end
-  # page.evaluate_script('jQuery.isReady&&jQuery.active==0').class.should_not eql(String) until page.evaluate_script('jQuery.isReady&&jQuery.active==0') do
-    # sleep 1
-  # end
-  # wait_for_ajax
+When(/^I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router$/) do
   count = 0
   loop do
     sleep 1
@@ -99,7 +93,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB$/) do
       count = 0
     else
       count+=1
-      break if count > 20
+      break if count > 22
     end
   end
   page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
@@ -108,12 +102,21 @@ When(/^I should be able to verify clean provider data in Provisioning DB$/) do
   page.should have_content("First Name")
   page.should have_content("Email")
   page.should have_content("DEA Numbers")
-  # page.find("#table1 td:nth -child(3)").each do |td|
-    # td.text.should_not == ""
-  # end
   page.all(:css, "#table1 tr").each do |td|
     td.all(:xpath, '//td[1]').should_not == ""
   end
 end
 
+And /^I should be able to associate provider with COA$/ do
+  ProviderAppDetail.where(fk_cao_id: @current_cao.id).count > 0
+end
 
+And /^I should be able to add audit data in Provisioning DB$/ do
+  page.all(:css, "#table1 tbody tr").size.should > 0
+end
+
+And /^I should be able to see simple acknowledgement messages$/ do
+  page.all(:css, "#table1 tbody tr").each do |td|
+    td.text.split(" ").last.should =~ /Success/
+  end
+end
