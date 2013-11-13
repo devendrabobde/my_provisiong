@@ -1,4 +1,5 @@
-
+require 'email_spec'
+require 'email_spec/cucumber'
 require 'simplecov'
 SimpleCov.start
 SimpleCov.coverage_dir 'coverage/cucumber'
