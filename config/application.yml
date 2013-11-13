@@ -3,13 +3,13 @@
 defaults: &defaults
 
 development:
-    memcache_server: 'localhost:11211'
+    cache_server: 'localhost:6379'
 
 test:
-    memcache_server: '' # Need to enter
+    cache_server: '' # Need to enter
 
 staging:
-    memcache_server: '' # Need to enter
+    cache_server: '' # Need to enter
 
 production:
-    memcache_server: '' # Need to enter
+    cache_server: '' # Need to enter
