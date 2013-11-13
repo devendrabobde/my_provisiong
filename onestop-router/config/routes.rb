@@ -20,6 +20,8 @@ Onestop::Application.routes.draw do
       namespace :ois do
         resource 'save-user', :controller => 'users', :as => 'users', :only => :create
         resource 'create-id-token', :controller => 'id_tokens', :as => 'id_tokens', :only => :create
+        post 'batch-upload', :to =>"users#batch_upload", :as => 'upload_users'
+        post 'save-provider', :to =>"users#save_provider", :as => 'save_providers'
       end
     end
   end
