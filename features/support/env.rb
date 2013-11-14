@@ -75,9 +75,3 @@ def wait_for_ajax
     end
   end
 end
-
-# if RUBY_VERSION > "1.9"
-#   require 'simplecov'
-#   SimpleCov.start 'rails'
-#   SimpleCov.coverage_dir 'coverage/cucumber'
-# end
