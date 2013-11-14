@@ -1,6 +1,5 @@
 module ProvisioningOis
   include OnestopRouter
-  include EpcsIdpOis
 
   def self.batch_upload_dest(providers, cao, application)
     if application.app_name.eql?("EPCS-IDP")
