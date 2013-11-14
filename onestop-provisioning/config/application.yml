@@ -6,7 +6,7 @@ development:
     cache_server: 'localhost:6379'
 
 test:
-    cache_server: '' # Need to enter
+    cache_server: 'localhost:6379'
 
 staging:
     cache_server: '' # Need to enter
