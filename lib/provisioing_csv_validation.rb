@@ -105,18 +105,45 @@ module ProvisioingCsvValidation
     [required_field_status, required_field_errors, invalid_providers]
   end
 
-  def self.validate_provider(provider, application, upload_field_validations)
-    provider_error_messages = []
-    upload_field_validations.each do |f_validation|
-      f_validation.app_upload_field_validations.each do |field_validation|
-        validate, error_message = class_eval((field_validation.validation.classify + "Validation")).validate(provider, field_validation) rescue nil
-        unless validate
-          provider_error_messages << error_message
+  # def self.validate_provider(provider, application, upload_field_validations)
+  #   provider_error_messages = []
+  #   upload_field_validations.each do |f_validation|
+  #     f_validation.app_upload_field_validations.each do |field_validation|
+  #       validate, error_message = class_eval((field_validation.validation.classify + "Validation")).validate(provider, field_validation) rescue nil
+  #       unless validate
+  #         provider_error_messages << error_message
+  #       end
+  #     end
+  #   end
+  #   provider_error_messages = provider_error_messages.flatten.compact
+  #   final_status = provider_error_messages.present? ? false : true
+  #   [final_status, provider_error_messages.flatten.join(", ")]
+  # end
+
+  def self.validate_provider(providers, application, upload_field_validations)
+    modified_providers = []
+    providers.each do |provider|
+      if provider.present?
+        provider = provider.symbolize_keys
+        provider_error_messages = []
+        upload_field_validations.each do |f_validation|
+          f_validation.app_upload_field_validations.each do |field_validation|
+            validation_class = field_validation.validation.classify
+            if validation_class != "Npi"
+              validate, error_message = class_eval((validation_class + "Validation")).validate(provider, field_validation) rescue nil
+              unless validate
+                provider_error_messages << error_message
+              end
+            end
+          end
         end
+        provider_error_messages = provider_error_messages.flatten.compact
+        provider[:validation_error_message] = provider_error_messages.flatten.join(", ")
+        modified_providers << provider
       end
     end
-    provider_error_messages = provider_error_messages.flatten.compact
-    final_status = provider_error_messages.present? ? false : true
-    [final_status, provider_error_messages.flatten.join(", ")]
+    # Apply SuperNPI validation in Batch
+    validated_providers = class_eval(("Npi" + "Validation")).validate(modified_providers, application) rescue nil
+    validated_providers
   end
 end
