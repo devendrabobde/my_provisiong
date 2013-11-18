@@ -72,3 +72,4 @@ gem 'settingslogic'
 # redis cache used
 gem 'redis-rails'
 gem 'redis-rack-cache'
+gem 'newrelic_rpm'
