@@ -25,63 +25,36 @@ class Provider < ActiveRecord::Base
   def self.save_provider(providers, cao, application)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
     upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
-    # providers.each do |provider|
-    #   if provider.present?
-    #     provider = provider.symbolize_keys
-    #     provider_app_detail = application.provider_app_details.create(fk_cao_id: cao.id, fk_organization_id: cao.organization.id)
-    #     if provider_app_detail.present?
-    #       providers_ids << provider_app_detail.id
-    #       provider_app_detail.create_provider(provider.except(:provider_dea_record))
-    #       if application.app_name.eql?("EPCS-IDP")
-    #         provider_deas = provider[:provider_dea_record]
-    #         if provider_deas.present?
-    #           provider_deas.each do |dea|
-    #             if dea.present?
-    #               provider_app_detail.provider_dea_numbers.create(dea)
-    #             end
-    #           end
-    #         end
-    #       end
-    #       # status, error_message = ProvisioingCsvValidation::validate_provider(provider, application, upload_field_validations)
-    #       # if status
-    #       #   valid_providers << provider
-    #       # else
-    #       #  # update status code and message
-    #       #   provider_invalid_ids << provider_app_detail.id
-    #       #   provider_app_detail.update_attributes(status_code: "422", status_text: error_message)
-    #       # end
-    #     end
-    #   end
-    # end # do loop end
     validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
-    validated_providers.each do |provider|
-      if provider.present?
-        provider = provider.symbolize_keys
-        provider_app_detail = application.provider_app_details.create(fk_cao_id: cao.id, fk_organization_id: cao.organization.id)
-        if provider_app_detail.present?
-          providers_ids << provider_app_detail.id
-          provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
-          if application.app_name.eql?("EPCS-IDP")
-            provider_deas = provider[:provider_dea_record]
-            if provider_deas.present?
-              provider_deas.each do |dea|
-                if dea.present?
-                  provider_app_detail.provider_dea_numbers.create(dea)
+    if validated_providers.present?
+      validated_providers.each do |provider|
+        if provider.present?
+          provider = provider.symbolize_keys
+          provider_app_detail = application.provider_app_details.create(fk_cao_id: cao.id, fk_organization_id: cao.organization.id)
+          if provider_app_detail.present?
+            providers_ids << provider_app_detail.id
+            provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
+            if application.app_name.eql?("EPCS-IDP")
+              provider_deas = provider[:provider_dea_record]
+              if provider_deas.present?
+                provider_deas.each do |dea|
+                  if dea.present?
+                    provider_app_detail.provider_dea_numbers.create(dea)
+                  end
                 end
               end
             end
-          end
-          # status, error_message = ProvisioingCsvValidation::validate_provider(provider, application, upload_field_validations)
-          unless provider[:validation_error_message].present?
-            valid_providers << provider
-          else
-           # update status code and message
-            provider_invalid_ids << provider_app_detail.id
-            provider_app_detail.update_attributes(status_code: "422", status_text: provider[:validation_error_message])
+            unless provider[:validation_error_message].present?
+              valid_providers << provider
+            else
+             # update status code and message
+              provider_invalid_ids << provider_app_detail.id
+              provider_app_detail.update_attributes(status_code: "422", status_text: provider[:validation_error_message])
+            end
           end
         end
-      end
-    end # do loop end
+      end # do loop end
+    end
     [providers_ids, valid_providers, provider_invalid_ids]
   end
 
