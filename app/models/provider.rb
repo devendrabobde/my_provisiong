@@ -53,8 +53,8 @@ class Provider < ActiveRecord::Base
     #     end
     #   end
     # end # do loop end
-    processed_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
-    processed_providers.each do |provider|
+    validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
+    validated_providers.each do |provider|
       if provider.present?
         provider = provider.symbolize_keys
         provider_app_detail = application.provider_app_details.create(fk_cao_id: cao.id, fk_organization_id: cao.organization.id)
@@ -63,7 +63,6 @@ class Provider < ActiveRecord::Base
           provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
           if application.app_name.eql?("EPCS-IDP")
             provider_deas = provider[:provider_dea_record]
-            provider_deas = [provider_deas].flatten
             if provider_deas.present?
               provider_deas.each do |dea|
                 if dea.present?

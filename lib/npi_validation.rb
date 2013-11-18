@@ -61,11 +61,15 @@ module NpiValidation
     begin
       url = CONSTANT["SUPERNPI_OIS"]["SERVER_URL"] + "/" + CONSTANT["SUPERNPI_OIS"]["VIEW_USER_URL"]
       # response = RestClient.get url, params: { providers: providers_records }
-      payload = { :providers => { "" => providers_records } }
+      modified_providers = providers_records
+      modified_providers.each do |provider|
+        provider[:provider_dea_record] = { "" => provider[:provider_dea_record]}
+      end
+      payload = { :providers => { "" => modified_providers } }
       response = RestClient::Request.execute(:method => :get, :url => url , :payload => payload )
       if response.present?
         response = JSON.parse(response)
-        providers = response["providers"]
+        providers = response["valid_providers"] + response["invalid_providers"]
       end
     rescue  => e
       providers_records.each do |provider|
