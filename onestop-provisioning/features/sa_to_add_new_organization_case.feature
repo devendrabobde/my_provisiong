@@ -6,6 +6,7 @@ Background:
   When I go to login page
   And I fill in the username and password
   And I press "Sign in"
+  Then I should see success message
 
 @selenium
 @no-database-cleaner
