@@ -13,6 +13,13 @@ SimpleCov.coverage_dir 'coverage/cucumber'
 require "selenium-webdriver"
 require 'cucumber/rails'
 require 'factory_girl'
+
+Capybara.register_driver :selen do |app|
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile['browser.download.dir'] = Rails.root.join("tmp").to_s
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/csv; charset=utf-8; header=present" # content-type of file that will be downloaded
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, profile: profile)
+end
 # require 'factory_girl/step_definitions'
 # Dir["../../features/support/factories/*.rb"].each {|file| require_relative file }
 
@@ -21,6 +28,10 @@ require 'factory_girl'
 # selectors in your step definitions to use the XPath syntax.
 # Capybara.default_selector = :xpath
 Capybara.default_selector = :css
+
+
+
+Capybara.default_driver = Capybara.javascript_driver = :selen
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
