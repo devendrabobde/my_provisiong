@@ -12,4 +12,5 @@ Background:
 Scenario: SA proceeds to add a new organization
 	Given I click on create organization
 	Then I should see a form
-	When I fill in form with proper organization details
+	When I fill in form with proper organization details and submit
+	Then I should see success message and organization details
