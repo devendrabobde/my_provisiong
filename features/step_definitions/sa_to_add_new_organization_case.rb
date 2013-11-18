@@ -7,8 +7,5 @@ role = Role.create(name: "Admin")
 # address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
 # contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
 coa.update_attributes(fk_role_id: role.id)
-@current_admin = admin
-end
-
-When(/^I fill in SA creadentials$/) do
+@current_cao = admin
 end
