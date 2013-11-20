@@ -1,15 +1,17 @@
 Given(/^a valid SA$/) do
-admin = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
-first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-password: "password", password_confirmation: "password")
-Role.delete_all
-role = Role.create(name: "Admin")
-Organization.unscoped.delete_all
-@organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
-address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
-contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
-admin.update_attributes(fk_role_id: role.id)
-@current_cao = admin
+  role = Role.create(:name => "Admin")
+  role_cao = Role.create(name: "COA")
+  admin = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
+  first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
+  password: "password", password_confirmation: "password", fk_role_id: role.id)
+  @current_cao = admin
+  Organization.unscoped.delete_all
+  @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
+  address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
+  contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
+  @e_org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
+  first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
+  password: "password", password_confirmation: "password", fk_role_id: role_cao.id, fk_organization_id: @organization.id)
 end
 
 Given(/^I go to admin home page$/) do
@@ -90,17 +92,12 @@ Then(/^I should see success message for organization update and organization det
 end
 
 And(/^I should be able to view COAs of any organization$/) do
-  org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
-  first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-  password: "password", password_confirmation: "password")
-  role_cao = Role.create(name: "COA")
-  org_cao.update_attributes(fk_role_id: role_cao.id, fk_organization_id: @organization.id)
   page.find('table#cao_table tbody tr', text: @organization.name).click_link('Manage')
   page.should have_content("Listing COAs for #{@organization.name}")
-  page.should have_content(org_cao.first_name)
-  page.should have_content(org_cao.last_name)
-  page.should have_content(org_cao.username)
-  page.should have_content(org_cao.email)
+  page.should have_content(@e_org_cao.first_name)
+  page.should have_content(@e_org_cao.last_name)
+  page.should have_content(@e_org_cao.username)
+  page.should have_content(@e_org_cao.email)
 end
 
 And(/^I should be able to view all applications of selected organization$/) do
@@ -118,7 +115,7 @@ end
 Then(/^I should be able to activate an organization which is inactive$/) do
   @organization.update_attribute(:deleted_at, Time.now)
   @organization.caos.update_all(deleted_at: Time.now)
-  visit application_admin_providers_path 
+  visit application_admin_providers_path
   page.find('table#cao_table tbody tr', text: @organization.name).click_link('Activate')
   click_button("Activate")
   page.find('table#cao_table tbody tr', text: @organization.name).should have_content("Active")
