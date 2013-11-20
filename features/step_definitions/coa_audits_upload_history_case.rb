@@ -15,14 +15,21 @@ And(/^I should be able to download csv file of the registered application provid
   count = 0
   loop do
     sleep 1
-    if !page.evaluate_script('jQuery.active==0')
-      count = 0
+    if !page.find("#table1").has_content?("In Progress ..")
+      sleep 1
+      break
     else
       count+=1
-      break if count > 22
     end
+    # if !page.evaluate_script('jQuery.active==0')
+    #   count = 0
+    # else
+    #   count+=1
+    #   break if count > 25
+    # end
+    break if count > 200
   end
   page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
   page.find("#table1 td:last-child").find(:xpath, '../td/a').click
-  click_link "Download"
+  page.should have_link("Download")
 end

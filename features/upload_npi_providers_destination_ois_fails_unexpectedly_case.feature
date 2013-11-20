@@ -23,4 +23,4 @@ Scenario: COA selects an application and uploads a CSV file of 4 providers
   And I clicks upload button
   And I should be able to see correct file upload message
   And I should be able to see progress bar
-  And I should be able to verify clean provider data in Provisioning DB
+  And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
