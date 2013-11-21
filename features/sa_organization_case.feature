@@ -4,7 +4,7 @@ Feature: SA to manage organization
 Background:
   Given a valid SA
   When I go to login page
-  And I fill in the username and password
+  And I fill in the username and password for SA
   And I press "Sign in"
   Then I should see success message
 
