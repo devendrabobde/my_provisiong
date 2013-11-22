@@ -61,7 +61,7 @@ end
 # gem 'quiet_assets', :group => :development
 # gem 'awesome_print', group: :development
 # gem 'thin'
-# gem 'ruby-growl', group: :development 
+# gem 'ruby-growl', group: :development
 # gem 'ruby_gntp', group: :development
 # gem 'xmpp4r', group: :development
 # gem 'airbrake', group: :development

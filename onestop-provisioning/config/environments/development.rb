@@ -5,7 +5,7 @@ OneStop::Application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
 
-  # Below config updated because we need to check cached working in development. Please make  value 'false' when you are not checking cached in development. 
+  # Below config updated because we need to check cached working in development. Please make  value 'false' when you are not checking cached in development.
   # config.cache_classes = false
   config.cache_classes = true
 
@@ -15,7 +15,7 @@ OneStop::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-  # Added redis server 
+  # Added redis server
   config.cache_store = :redis_store
   # Below code commented because we need to check cached working in development. Please make  value 'false' when you are not checking cached in development.
   # config.action_controller.perform_caching = false
