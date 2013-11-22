@@ -4,7 +4,6 @@ class Admin::CaosController < ApplicationController
 
   def index
     @organization = Organization.where("SYS_ORGANIZATION_ID = ?", params[:organization_id]).includes(:caos => [:role, :profile]).first
-    #@caos =  @organization.caos
   end
 
   def new
