@@ -12,7 +12,10 @@ end
 module ProvisioingCsvValidation
 
   include ValidateRecord
-
+  
+  #
+  # This method is responsible for mapping CSV data with model fields based on display name
+  #
   def self.process_csv(path, application)
     providers = []
     app_upload_fields = application_upload_field_validations(application)
@@ -66,6 +69,9 @@ module ProvisioingCsvValidation
     validation_fields = cached_store_validation.present? ? cached_store_validation : application.app_upload_fields.includes(:app_upload_field_validations).where("required =? ", 1).all
   end
 
+  #
+  # This method is responsible for validating providers record. In this we are checking present field condition.
+  #
   def self.validate_required_field(providers, application)
     required_field_errors, invalid_providers = [], []
     provider_keys, provider_dea_keys = [], []
@@ -105,6 +111,9 @@ module ProvisioingCsvValidation
     [required_field_status, required_field_errors, invalid_providers]
   end
 
+  #
+  # This method is responsible for applying different validation classes to verify providers record
+  #
   def self.validate_provider(providers, application, upload_field_validations)
     modified_providers = []
     providers.each do |provider|
@@ -127,7 +136,6 @@ module ProvisioingCsvValidation
         modified_providers << provider
       end
     end
-    # Apply SuperNPI validation in Batch
     validated_providers = class_eval(("NpiValidation")).validate(modified_providers, application) rescue nil
     validated_providers
   end

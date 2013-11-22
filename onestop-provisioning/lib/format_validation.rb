@@ -1,3 +1,6 @@
+#
+# This class is basically used to validate provider record field format with Regular Expression
+#
 module FormatValidation
   def self.validate(provider, field_validation)
    provider_record = provider.symbolize_keys

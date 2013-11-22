@@ -1,3 +1,6 @@
+#
+# This class is basically used to validate providers DEA number
+#
 module ProviderDeaValidation
   def self.validate(provider, vf)
    error_messages = []
