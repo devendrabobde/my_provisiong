@@ -22,6 +22,9 @@ class Provider < ActiveRecord::Base
   # class methods
   #
 
+  #
+  # Save provider record to provision db and process the same
+  #
   def self.save_provider(providers, cao, application)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
     upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
@@ -58,6 +61,10 @@ class Provider < ActiveRecord::Base
     [providers_ids, valid_providers, provider_invalid_ids]
   end
 
+
+  #
+  # used to download provider csv file based on application conditions
+  #
   def self.to_csv(application, options = {})
     if application.app_name.eql?("EPCS-IDP")
         csv_cols = ["Provider NPI", "Provider DEA", "Provider DEA State", "Provider DEA Expiration Date",

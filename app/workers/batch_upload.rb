@@ -1,6 +1,8 @@
 class BatchUpload
   include ProvisioningOis
    @queue = :providers_queue
+
+   # Ask resque to perform processing of CSV record
    def self.perform(providers,cao_id, application_id, audit_trail_id)
     cao = Cao.find(cao_id)
     application = RegisteredApp.find(application_id)
@@ -9,6 +11,8 @@ class BatchUpload
     update_audit_trail(audit_trail, providers.count, provider_app_detail_ids, total_npi_processed)
   end
 
+
+  # Process and add provider data in provisioning db
   def self.save_providers(providers, cao, application, audit_trail)
     begin
     provider_app_detail_ids, provider_invalid_ids = [], []
@@ -57,6 +61,9 @@ class BatchUpload
     [provider_app_detail_ids, total_npi_processed]
   end
 
+  #
+  # After processiong csv file, update the file upload status with total NPI processed count
+  #
   def self.update_audit_trail(audit_trail, total_provider_count, provider_app_detail_ids, total_npi_processed)
     provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids.flatten)
     provider_app_details.update_all(fk_audit_trail_id: audit_trail.id)
