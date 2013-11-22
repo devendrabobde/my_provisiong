@@ -25,3 +25,30 @@
     # Run multiple queue lists
 
       RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work
+
+
+#
+# Please are the steps to run rspec and cucumber test cases
+#
+
+1.Add/Configure Test Adapator in database.yml
+2.Run seed file
+  Command -  RAILS_ENV=test rake db:seed
+3.Restart redis server
+4.Run resque queue in test environment below is the cmd for that,
+  RAILS_ENV=test QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+
+
+Below are the command to test cases,
+
+1. For Cucumber 
+  => cd yourprojectdir
+  # Run all test cases
+    => cucumber
+  # To run specific feature
+    => cucumber features/sa_organization_case.feature
+
+2. Rspec
+  => cd yourprojectdir
+  =>rspec spec/
+  
