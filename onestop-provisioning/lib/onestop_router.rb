@@ -3,6 +3,9 @@
 #
 module OnestopRouter
 
+  #
+  # This is responsible for uploading the providers data to OIS Router
+  #
   def self.batch_upload(providers, application)
     body = { :users => {"" => providers } }
     url = batch_upload_url
@@ -19,6 +22,9 @@ module OnestopRouter
     end
   end
 
+  #
+  # This is responsible to obtain a list of OIS that have a record of this provider
+  #
   def self.request_idp(params)
     payload = request_idp_payload(params)
     headers = request_idp_header
