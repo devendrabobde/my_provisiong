@@ -5,7 +5,7 @@ class Admin::OrganizationsController < ApplicationController
     @organizations = Organization.unscoped.all
   end
 
-  # get new organization form
+  # Get new organization form
   def new
    @organization = Organization.new
   end

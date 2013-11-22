@@ -14,7 +14,7 @@ module ProvisioingCsvValidation
   include ValidateRecord
   
   #
-  # This method is responsible for mapping CSV data with model fields based on display name
+  # Processing providers CSV file
   #
   def self.process_csv(path, application)
     providers = []
@@ -26,6 +26,9 @@ module ProvisioingCsvValidation
     providers
   end
 
+  #
+  #  Mapping providers CSV data with model field based on display name
+  #
   def self.process_record(record, application, app_upload_fileds)
     provider = {}
     record.each do |key,value|
@@ -63,6 +66,9 @@ module ProvisioingCsvValidation
     provider
   end
 
+  #
+  # Get application validation fields
+  #
   def self.application_upload_field_validations(application)
     # Added validations from redis server which reduce time consumption
     cached_store_validation = RedisCache.get_validation_cached(application.app_name)

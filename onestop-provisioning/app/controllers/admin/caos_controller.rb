@@ -26,7 +26,7 @@ class Admin::CaosController < ApplicationController
     end
   end
 
-  # get Details of a CAO
+  # Get Details of a CAO
   def show
     @organization = Organization.find(params[:organization_id])
     @cao = Cao.find(params[:id])
