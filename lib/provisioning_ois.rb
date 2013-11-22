@@ -1,6 +1,9 @@
 module ProvisioningOis
   include OnestopRouter
 
+  #
+  # This method is responsible for uploading the providers information in specific OIS application
+  #
   def self.batch_upload_dest(providers, cao, application)
     if application.app_name.eql?("EPCS-IDP")
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }

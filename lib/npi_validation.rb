@@ -1,14 +1,19 @@
+#
+# This class is basically used to validate providers NPI number
+#
 module NpiValidation
 
+  #
+  # Find the application and verify application specific conditions, for EPCS we are verifying providers against SuperNPI DB 
+  #
   def self.validate(providers, application)
-    # find the application and validate application specific conditions
     response = providers
     if application.app_name.eql?("EPCS-IDP")
       response = check_supernpi_acceptance(providers)
     end
     response
   end
-
+  
   def self.check_supernpi_acceptance(providers_records)
     updated_providers = []
     begin
