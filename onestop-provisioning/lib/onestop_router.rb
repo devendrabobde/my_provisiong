@@ -1,9 +1,11 @@
+#
+# This class contains a different methods to communicate with the OneStop Router
+#
 module OnestopRouter
 
   def self.batch_upload(providers, application)
     body = { :users => {"" => providers } }
     url = batch_upload_url
-    # header = batch_upload_header
     if application.app_name.eql?("EPCS-IDP")
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["EPCS_IDP"]
     elsif application.app_name.eql?("Backline")

@@ -5,7 +5,6 @@ class Admin::CaosController < ApplicationController
   # Eager load organizations with CAOs
   def index
     @organization = Organization.where("SYS_ORGANIZATION_ID = ?", params[:organization_id]).includes(:caos => [:role, :profile]).first
-    #@caos =  @organization.caos
   end
 
   # Form for new CAO
