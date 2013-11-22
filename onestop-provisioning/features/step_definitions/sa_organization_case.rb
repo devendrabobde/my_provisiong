@@ -6,8 +6,8 @@ Given(/^a valid SA$/) do
   password: "password", password_confirmation: "password", fk_role_id: role.id)
   @current_admin = admin
   Organization.unscoped.delete_all
-  @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
-  address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
+  @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
+  address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
   contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
   @e_org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
@@ -15,7 +15,7 @@ Given(/^a valid SA$/) do
 end
 
 Given(/^I go to admin home page$/) do
-  visit application_admin_providers_path 
+  visit application_admin_providers_path
 end
 
 And(/^I fill in the username and password for SA$/) do
@@ -112,7 +112,7 @@ end
 Then(/^I should be able to delete an organization$/) do
   page.find('table#cao_table tbody tr', text: @organization.name).click_link('Deactivate')
   click_button("Deactivate")
-  page.find('table#cao_table tbody tr', text: @organization.name).should have_link("Activate") 
+  page.find('table#cao_table tbody tr', text: @organization.name).should have_link("Activate")
   page.find('table#cao_table tbody tr', text: @organization.name).should have_content("Inactive")
   page.find('table#cao_table tbody tr', text: @organization.name).should_not have_link("Manage")
 end

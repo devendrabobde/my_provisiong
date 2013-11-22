@@ -24,5 +24,5 @@ module ProvisioningOis
       OnestopRouter::batch_upload(providers_with_npi, application)
     end
   end
-  
+
 end

@@ -31,7 +31,7 @@ module OnestopRouter
   def self.request_idp_payload(params)
     { :npi => params[:npi], :first_name => params[:first_name], :last_name => params[:last_name] }
   end
-  
+
   def self.verify_identity(params)
     url = verify_identity_url
     payload = verify_identity_payload(params)
@@ -101,5 +101,5 @@ module OnestopRouter
   def self.server_url
     CONSTANT["ONESTOP_ROUTER"]["SERVER_URL"]
   end
-  
+
 end
