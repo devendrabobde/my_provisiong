@@ -83,4 +83,16 @@ class Admin::OrganizationsController < ApplicationController
     @providers = Provider.where("fk_provider_app_detail_id in (?)", provider_app_detail_ids)
     @audit_trail = AuditTrail.find(params[:id])
   end
+
+  def download_provider
+    provider_app_detail_ids = ProviderAppDetail.where(fk_audit_trail_id: params[:audit_id]).pluck(:sys_provider_app_detail_id)
+    @providers = Provider.where("fk_provider_app_detail_id in (?)", provider_app_detail_ids)
+    reg_app = AuditTrail.find(params[:audit_id]).registered_app
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @providers.to_csv(reg_app, {}), :type => 'text/csv; charset=utf-8; header=present',
+                   :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
+    end
+  end
 end
