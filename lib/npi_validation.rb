@@ -14,6 +14,10 @@ module NpiValidation
     response
   end
   
+
+  #
+  # view_user method call. For validating provider npi number.
+  #
   def self.check_supernpi_acceptance(providers_records)
     updated_providers = []
     begin

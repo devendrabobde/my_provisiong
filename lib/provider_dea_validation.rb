@@ -20,6 +20,10 @@ module ProviderDeaValidation
     final_status = error_messages.present? ? false : true
     [final_status, error_messages]
   end
+  
+  #
+  # Calculate DEA checksum
+  #
   def self.validate_provider_dea(dea_number)
     dea = dea_number.to_s.split(//)
     # Step 1: Add together the first, third and fifth digits ["A", "b", "1", "2", "3", "4", "5", "6", "7"]
