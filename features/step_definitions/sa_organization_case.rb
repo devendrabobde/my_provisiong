@@ -4,7 +4,7 @@ Given(/^a valid SA$/) do
   admin = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
   password: "password", password_confirmation: "password", fk_role_id: role.id)
-  @current_cao = admin
+  @current_admin = admin
   Organization.unscoped.delete_all
   @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
   address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
@@ -16,6 +16,11 @@ end
 
 Given(/^I go to admin home page$/) do
   visit application_admin_providers_path 
+end
+
+And(/^I fill in the username and password for SA$/) do
+  fill_in "cao_username", with: @current_admin.username
+  fill_in "cao_password", with: "password"
 end
 
 And(/^I click on create organization$/) do

@@ -16,6 +16,6 @@ Scenario: COA Audits Upload History
     And I clicks upload button
     And I should be able to see correct file upload message
     And I should be able to see progress bar
-	And I should be able to view any previously uploaded csv and its providers
-	And I should be able to download any previously uploaded csv and its providers
-	And I should be able to download csv file of the registered application providers
+  	And I should be able to view any previously uploaded csv and its providers
+  	And I should be able to download any previously uploaded csv and its providers
+  	And I should be able to download csv file of the registered application providers
