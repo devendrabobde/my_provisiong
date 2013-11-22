@@ -15,8 +15,8 @@ When /^I enter email on the reset password form$/ do
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "password", password_confirmation: "password")
   role = Role.create(name: "COA")
-  organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address, 
-    address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name, 
+  organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
+    address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
   @coa.update_attributes(fk_role_id: role.id, fk_organization_id: organization.id)
   fill_in "cao_email", with: @coa.email

@@ -8,7 +8,7 @@ OneStop::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Added redis store 
+  # Added redis store
   config.cache_store = :redis_store
 
 
