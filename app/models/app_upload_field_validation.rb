@@ -11,7 +11,7 @@ class AppUploadFieldValidation < ActiveRecord::Base
   # hooks to manipulate cached
   after_save  :add_or_update_cached
   after_destroy :remove_from_cached, :add_or_update_cached
- 
+
   #
   # Assocations
   #
