@@ -1,13 +1,16 @@
 class Admin::OrganizationsController < ApplicationController
 
+  # Get all organizations which are ACTIVE
   def index
     @organizations = Organization.unscoped.all
   end
 
+  # get new organization form
   def new
    @organization = Organization.new
   end
 
+  # Create an Organization. Next step after new.
   def create
    @organization = Organization.new(params[:organization])
     if @organization.save
