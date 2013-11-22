@@ -26,3 +26,4 @@ Scenario: SA audits upload history
 	Then I should be able to see a list of all csv files uploaded by provider
 	When I click on any csv file from the list
 	Then I should be able to see the provider details
+	And I should be able to download any previously updated csv file with its providers
