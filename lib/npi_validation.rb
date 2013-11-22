@@ -14,7 +14,6 @@ module NpiValidation
     response
   end
   
-
   #
   # view_user method call. For validating provider npi number.
   #

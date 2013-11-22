@@ -26,7 +26,6 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
-
   # get details of a uploaded providers
   def show
     provider_app_detail_ids = @cao.organization.provider_app_details.where(fk_audit_trail_id: params[:id])
@@ -34,7 +33,6 @@ class Admin::ProvidersController < ApplicationController
     @audit_trail = AuditTrail.find(params[:id])
     @upload_error = ProviderErrorLog.where(fk_audit_trail_id: @audit_trail.id).first
   end
-
 
   # Download csv of providers uploaded previously
   def download
