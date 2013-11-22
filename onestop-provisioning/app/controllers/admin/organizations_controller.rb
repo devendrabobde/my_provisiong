@@ -1,13 +1,16 @@
 class Admin::OrganizationsController < ApplicationController
 
+  # Get all organizations which are ACTIVE
   def index
     @organizations = Organization.unscoped.all
   end
 
+  # get new organization form
   def new
    @organization = Organization.new
   end
 
+  # Create an Organization. Next step after new.
   def create
    @organization = Organization.new(params[:organization])
     if @organization.save
@@ -19,14 +22,17 @@ class Admin::OrganizationsController < ApplicationController
     end
   end
 
+  # Get Details of an organization
   def show
     @organization = Organization.find(params[:id])
   end
 
+  # Get edit organization form
   def edit
     @organization = Organization.find(params[:id])
   end
 
+  # Update an organization with provided details. Step after edit
   def update
     @organization = Organization.find(params[:id])
     respond_to do |format|
@@ -40,6 +46,8 @@ class Admin::OrganizationsController < ApplicationController
     end
   end
 
+
+  # Delete/Deactivate an organization
   def destroy
     @organization = Organization.find(params[:id])
     @organization.caos.each do |cao|
@@ -50,6 +58,8 @@ class Admin::OrganizationsController < ApplicationController
     redirect_to admin_organizations_path, :notice => "Organization " + @organization.name + " deactivated successfully."
   end
 
+
+  # Change the state of an organization from inactive to active.
   def activate
     @organization = Organization.unscoped.find(params[:id])
     @organization.caos.each do |cao|
@@ -59,6 +69,7 @@ class Admin::OrganizationsController < ApplicationController
     redirect_to admin_organizations_path, :notice => "Organization " + @organization.name + " activated successfully."
   end
 
+  # Get all the uploaded files for a particular organization and for a particular COA
   def show_uploaded_file
     @organization = Organization.unscoped.find(params[:id])
     @registered_applications = RegisteredApp.all
@@ -78,12 +89,16 @@ class Admin::OrganizationsController < ApplicationController
     end
   end
 
+
+  # Get a list of all providers for a particular organization and COA
   def show_provider
     provider_app_detail_ids = ProviderAppDetail.where(fk_audit_trail_id: params[:id])
     @providers = Provider.where("fk_provider_app_detail_id in (?)", provider_app_detail_ids)
     @audit_trail = AuditTrail.find(params[:id])
   end
 
+
+  # Download the list of providers in CSV format.
   def download_provider
     provider_app_detail_ids = ProviderAppDetail.where(fk_audit_trail_id: params[:audit_id]).pluck(:sys_provider_app_detail_id)
     @providers = Provider.where("fk_provider_app_detail_id in (?)", provider_app_detail_ids)

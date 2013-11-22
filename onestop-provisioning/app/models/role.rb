@@ -11,6 +11,9 @@ class Role < ActiveRecord::Base
   #
   has_many :caos, foreign_key: :fk_role_id
 
+  #
+  # Find the role or create it
+  #
   def find_or_create_by_name(name)
   	role = Role.find_by_name(name)
   	unless role

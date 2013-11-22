@@ -7,6 +7,7 @@ class Admin::ProvidersController < ApplicationController
   before_filter :require_coa_login
   before_filter :find_application, :only => [:upload]
 
+  # Return list of uploaded files.
   def application
     @registered_applications = RegisteredApp.all
     if params[:registered_app_id].present?
@@ -25,6 +26,8 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
+
+  # get details of a uploaded providers
   def show
     provider_app_detail_ids = @cao.organization.provider_app_details.where(fk_audit_trail_id: params[:id])
     @providers = Provider.where("fk_provider_app_detail_id in (?)", provider_app_detail_ids)
@@ -32,6 +35,8 @@ class Admin::ProvidersController < ApplicationController
     @upload_error = ProviderErrorLog.where(fk_audit_trail_id: @audit_trail.id).first
   end
 
+
+  # Download csv of providers uploaded previously
   def download
     if params[:audit_id].present?
       provider_app_detail_ids = @cao.organization.provider_app_details.where(fk_audit_trail_id: params[:audit_id] )
@@ -49,6 +54,7 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
+  # Upload and process providers csv file
   def upload
     error_message, success_message, invalid_providers = "", "", []
     file_path, file_name = store_csv
@@ -72,7 +78,8 @@ class Admin::ProvidersController < ApplicationController
     end
     redirect_to application_admin_providers_path
   end
-
+  
+  # Pull audit trail record to verify file upload status
   def pull_redis_job_status
     audit_trail = AuditTrail.where(sys_audit_trail_id: params[:audit_id]).first
     render :json => audit_trail
@@ -80,6 +87,7 @@ class Admin::ProvidersController < ApplicationController
 
   private
 
+  # Assign current user to session. 
   def find_cao
     @cao = current_cao
   end
@@ -94,10 +102,12 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
+  # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
     Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
   end
-
+  
+  # Store uploaded file
   def store_csv
     upload = params[:upload]
     name =  upload.original_filename
@@ -107,7 +117,8 @@ class Admin::ProvidersController < ApplicationController
     File.open(path, "w") { |f| f.write(upload.read) }
     [path,name]
   end
-
+  
+  # Save Audit Trail record
   def save_audit_trails(file_name)
     audit = @cao.audit_trails.build(file_name: file_name, fk_registered_app_id: @application.id, total_providers: "0",
                             file_url: file_name, fk_organization_id: @cao.organization.id, total_npi_processed: 0)
