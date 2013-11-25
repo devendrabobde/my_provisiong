@@ -32,10 +32,15 @@
 #
 
 1.Add/Configure Test Adapator in database.yml
-2.Run seed file
+
+2.Run sql script that is present in db folder
+
+3.Run seed file
   Command -  RAILS_ENV=test rake db:seed
-3.Restart redis server
-4.Run resque queue in test environment below is the cmd for that,
+
+4.Restart redis server
+
+5.Run resque queue in test environment below is the cmd for that,
   RAILS_ENV=test QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
 
 
