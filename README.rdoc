@@ -14,21 +14,21 @@
   4. Strat redis server & then strat backgroud job queue, please refer below commands
 
     a> Start redis server:
-       => redis-server
+        => redis-server
     b> Start redis job queue
-       => RAILS_ENV=development QUEUE=providers_queue rake environment resque:work
-       Run redis job queue in backgroud:-
-       => PIDFILE=./resque.pid BACKGROUND=yes QUEUE=providers_queue rake resque:work >>  worker1.log &
+          => RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+        Run redis job queue in backgroud:-
+          => RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
 
-    Note:- RAILS_ENV value is depends upon current environment that we are using.
+    Note:- RAILS_ENV value depends upon current environment that we are using.
 
-    # Run multiple queue lists
+  # Run multiple queue lists 
 
-      RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work
+    RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
 
 
 #
-# Please are the steps to run rspec and cucumber test cases
+# Below are the steps to run rspec and cucumber test cases
 #
 
 1.Add/Configure Test Adapator in database.yml
@@ -50,5 +50,4 @@ Below are the command to test cases,
 
 2. Rspec
   => cd yourprojectdir
-  =>rspec spec/
-  
+  => rspec spec/
