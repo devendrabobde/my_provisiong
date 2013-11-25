@@ -53,7 +53,7 @@ class Admin::CaosController < ApplicationController
     end
   end
 
-  # Delete a CAO (Basically, deactivate the CAO)
+  # Delete a CAO (Basically, Deactivate the CAO)
   def destroy
     @organization = Organization.find(params[:organization_id])
     @cao = Cao.find(params[:id])
