@@ -1,3 +1,6 @@
+#
+# This class is responsible for uploading the providers information in specific OIS application
+#
 module ProvisioningOis
   include OnestopRouter
 
