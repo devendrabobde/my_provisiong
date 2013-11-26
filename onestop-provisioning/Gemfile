@@ -45,9 +45,6 @@ group :development, :test do
   gem "factory_girl_rails", ">= 4.2.0"
   gem 'faker'
   gem 'brakeman', :require => false
-end
-
-group :test do
   gem "database_cleaner", ">= 1.0.0.RC1"
   gem "email_spec", ">= 1.4.0"
   gem "capybara", ">= 2.0.3"
@@ -65,6 +62,7 @@ end
 # gem 'ruby_gntp', group: :development
 # gem 'xmpp4r', group: :development
 # gem 'airbrake', group: :development
+
 
 # settingslogic - To maintain all settings
 gem 'settingslogic'
