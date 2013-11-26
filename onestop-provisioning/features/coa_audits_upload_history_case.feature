@@ -8,6 +8,7 @@ Background:
   And I press "Sign in"
   Then I should see success message
 
+@selenium
 @no-database-cleaner
 Scenario: COA Audits Upload History
 	Given I go to application page
