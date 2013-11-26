@@ -1,6 +1,6 @@
 class Admin::OrganizationsController < ApplicationController
 
-  # Get all organizations which are ACTIVE
+  # Get all organizations
   def index
     @organizations = Organization.unscoped.all
   end
