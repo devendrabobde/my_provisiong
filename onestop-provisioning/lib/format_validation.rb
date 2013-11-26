@@ -4,13 +4,14 @@
 module FormatValidation
 
   #
-  # Validate provider record field with Regular Expression
+  # Validate providers record field with Regular Expression
   #
   def self.validate(provider, field_validation)
    provider_record = provider.symbolize_keys
     check_provider_field_format(provider_record, field_validation)
   end
   
+  # Validate provider record, apply field validation and returns format_validation_status, error_messages accordingly
   def self.check_provider_field_format(provider_record, field_validation)
    error_messages = []
    provider_keys = provider_record.keys
