@@ -39,7 +39,6 @@ Scenario: SA views an organization
   Given I go to admin home page 
   Then I should see a list of all organizations
   And I should be able to view COAs of any organization
-  And I should be able to view applications of any organization
 
 @selenium
 @no-database-cleaner
