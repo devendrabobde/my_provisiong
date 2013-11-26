@@ -101,7 +101,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB, invoke
     #   count+=1
     #   break if count > 25
     # end
-    break if count > 200
+    break if count > 600
   end
   page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
   page.find("#table1 td:last-child").find(:xpath, '../td/a').click
