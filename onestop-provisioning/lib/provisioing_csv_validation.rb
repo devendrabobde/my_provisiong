@@ -1,14 +1,25 @@
+#
+# This class is basically used for Exception handling 
+#
 module ValidateRecord
-
+  
+  #
+  # Raise exception if provider record field is not present o.w return true
+  #
   def self.presence_validation(record, validation_field)
     raise FieldPresenceError.new("Field #{validation_field.name} not present.") if record[validation_field.name.to_sym].blank? || record[validation_field.name.to_sym].nil?
     return true
   end
 
+  # User defined class for handling exception
   class FieldPresenceError < StandardError
   end
 end
 
+
+#
+# This class is basically used for Processing CSV and Validating providers records 
+#
 module ProvisioingCsvValidation
 
   include ValidateRecord
