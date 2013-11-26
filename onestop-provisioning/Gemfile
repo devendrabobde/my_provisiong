@@ -55,6 +55,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'selenium-webdriver'
   gem 'selenium'
+  gem 'headless'
 end
 
 # gem "bullet", :group => "development"
