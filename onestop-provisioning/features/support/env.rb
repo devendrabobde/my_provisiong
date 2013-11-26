@@ -14,6 +14,18 @@ require "selenium-webdriver"
 require 'cucumber/rails'
 require 'factory_girl'
 
+Before do
+  if ENV['HEADLESS']
+    require 'headless'
+    @headless = Headless.new
+    @headless.start
+    at_exit do
+      @headless.destroy if @headless.present?
+    end
+  end
+end
+
+
 Capybara.register_driver :selen do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.dir'] = Rails.root.join("tmp").to_s
@@ -31,7 +43,7 @@ Capybara.default_selector = :css
 
 
 
-Capybara.default_driver = Capybara.javascript_driver = :selen
+Capybara.default_driver = Capybara.javascript_driver = :selenium
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
