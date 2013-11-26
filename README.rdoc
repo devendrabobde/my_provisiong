@@ -35,12 +35,16 @@
 
 2.Run sql script that contains SQL & DDL statements, Please find this file under project "db" folder
 
-3.Run seed file
+3.Install Xvfb software package for Headless browser support, for ubuntu system below is the cmd to install it,
+
+  sudo apt-get install xvfb
+
+4.Run seed file
   Command -  RAILS_ENV=test rake db:seed
 
-4.Restart redis server
+5.Restart redis server
 
-5.Run resque queue in test environment below is the cmd for that,
+6.Run resque queue in test environment below is the cmd for that,
   RAILS_ENV=test QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
 
 
@@ -52,6 +56,9 @@ Below are the command to test cases,
     => cucumber
   # To run specific feature
     => cucumber features/sa_organization_case.feature
+  # To run all cucumber features in background (Headless support)
+    => cucumber HEADLESS=true
+
 
 2. Rspec
   => cd yourprojectdir
