@@ -21,15 +21,29 @@ class BatchUpload
       provider_app_detail_ids, valid_providers, provider_invalid_ids = Provider.save_provider(providers, cao, application)
       providers = valid_providers
       if providers.present?
-        response = ProvisioningOis::batch_upload_dest(providers, cao, application)
+        invalid_providers, response = ProvisioningOis::batch_upload_dest(providers, cao, application)
       end
+      
+      # Update invalid providers status_code and status_text
+      if invalid_providers.present?
+        invalid_providers.each do |provider_record|
+          if provider_record.present?
+              provider = Provider.where("first_name like (?) and last_name like (?) and fk_provider_app_detail_id in (?)", "%#{provider_record[:first_name]}%", "%#{provider_record[:last_name]}%", provider_app_detail_ids.flatten).first
+              if provider.present?
+                error_msg = application.app_name + " OIS: " + provider_record[:error]
+                provider.provider_app_detail.update_attributes(status_code: 500, status_text: error_msg)
+              end
+          end
+        end
+      end
+
       # OneStop Router Response
       if response.present?
         if response["invalid_users"].present?
           response["invalid_users"].each do |record|
             record.each do |key,val|
               provider_fullname = key.strip.split(" ")
-              provider = Provider.where("first_name like (?) and last_name like (?) and provider_app_detail_id in (?)", "%#{provider_fullname.first}%", "%#{provider_fullname.last}%", provider_app_detail_ids.flatten).first
+              provider = Provider.where("first_name like (?) and last_name like (?) and fk_provider_app_detail_id in (?)", "%#{provider_fullname.first}%", "%#{provider_fullname.last}%", provider_app_detail_ids.flatten).first
               if provider.present?
                 error_msg = "Bad Request: " + val.to_s
                 provider.provider_app_detail.update_attributes(status_code: 500,status_text: error_msg)
