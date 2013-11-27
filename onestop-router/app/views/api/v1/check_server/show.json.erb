@@ -1,6 +1,0 @@
-{
-  "service_name": "<%= @server_configuration['service_name'] %>",
-  "server_instance_name": "<%= @server_configuration['server_instance_name'] %>",
-  "code_version": <%= @server_configuration['code_version'] %>,
-  "database_connection": <%= ActiveRecord::Base.connection.active? %>
-}
