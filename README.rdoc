@@ -60,4 +60,11 @@ Below are the command to test cases,
 
 2. Rspec
   => cd yourprojectdir
-  => rspec spec/
+  # Run all rspec test cases
+    => rspec spec/
+
+  # To run models test cases
+    => rspec spec/models/
+
+  # To run controllers test cases
+    => rspec spec/controllers/
