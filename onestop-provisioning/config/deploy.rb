@@ -4,7 +4,7 @@ require "rvm/capistrano"
 
 set :user, 'sparkway'
 set :application, "onestop-provisioning"
-#set :use_sudo, true
+set :use_sudo, true
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_path,          "/usr/local/rvm/"
