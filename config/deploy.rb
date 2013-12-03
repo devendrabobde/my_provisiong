@@ -23,7 +23,7 @@ set :default_environment, {
 }
 
 set :scm, 'git'
-set :repository,  "git@github01.drfirst.com:drfirst/onestop-provisioning.git"
+set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
 set :scm_passphrase, ""
 set :branch, "master"
 
