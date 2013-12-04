@@ -19,6 +19,8 @@ class Cao < ActiveRecord::Base
   validates :username, presence: true
   validates :username, :uniqueness =>  {:scope => [:email]}
   validates :email, :format => { :with => EMAIL }
+  validates :first_name, presence: true, :format => { :with => PERSON_NAME }
+  validates :last_name, presence: true, :format => { :with => PERSON_NAME }
 
   #
   # Association
