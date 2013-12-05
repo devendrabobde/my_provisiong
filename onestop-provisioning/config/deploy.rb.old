@@ -2,10 +2,9 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
 
-set :user, 'root' 
-#set :user, 'ubuntu'
+set :user, 'sparkway'
 set :application, "onestop-provisioning"
-set :use_sudo, false
+set :use_sudo, true
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_path,          "/usr/local/rvm/"
@@ -37,14 +36,11 @@ set :scm_verbose, true
 set :migrate_target, :latest
 
 default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-#set :ssh_options, { :forward_agent => true }
-#ssh_options[:auth_methods] = ["publickey"]
-#ssh_options[:keys] = ["~/.ssh/devprojects.pem"]
- set :domain, "10.100.10.212"
-#set :domain, "54.225.135.41"
+#ssh_options[:forward_agent] = true
+set :ssh_options, { :forward_agent => true }
+
+set :domain, "10.100.10.212"
 set :rails_env, "production"
-#set :deploy_to, "/home/ubuntu/apps/www/#{application}"
 set :deploy_to, "/home/sparkway/apps/www/#{application}"
 
 # roles (servers)
@@ -95,17 +91,17 @@ namespace :deploy do
 
   desc "Start redis server"
   task :start_redis do
-#    run  "cd /usr/local/bin/redis-server"
+    run  "cd /usr/local/bin/redis-server"
   end
 
   desc "start resque job queue"
- task :resque_work do
-#    run "cd #{current_path}; RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
+  task :resque_work do
+    run "cd #{current_path}; RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
   end
 
   desc "clean redis queue"
   task :clean_redis do
- #   run "cd #{current_path}; redis-cli FLUSHALL"
+    run "cd #{current_path}; redis-cli FLUSHALL"
   end
 
 end
@@ -126,7 +122,7 @@ end
 #  end
 #end
 
-#after 'deploy:finalize_update', 'bundler:bundle_new_release'
+after 'deploy:finalize_update', 'bundler:bundle_new_release'
 # after 'deploy:bundle_install', 'deploy:start_solr_server'
 after 'deploy:bundle_install', 'deploy:clean_redis'
 after 'deploy:clean_redis', 'deploy:resque_work'
