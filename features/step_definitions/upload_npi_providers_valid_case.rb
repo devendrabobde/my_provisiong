@@ -46,7 +46,7 @@ end
 
 And /^I should see correct section names$/ do
   page.should have_content("Upload CSV Data File")
-  page.should have_content("Previously Uploaded Date File")
+  page.should have_content("Previously Uploaded Data File")
 end
 Given /^I go to application page$/ do
   visit application_admin_providers_path

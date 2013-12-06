@@ -34,6 +34,7 @@ module ProvisioingCsvValidation
       provider_record = row.to_hash
       providers << process_record(provider_record, application, app_upload_fields) if provider_record.present?
     end
+    File.delete(path) if File.exist?(path)
     providers
   end
 
