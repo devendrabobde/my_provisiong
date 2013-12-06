@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :provider do
     username "testuser"
-    password 12345678
+    password "1234567"
     role "mystring"
     prefix "mystring"
     first_name "mystring"
@@ -9,7 +9,7 @@ FactoryGirl.define do
     last_name "mystring"
     suffix "mystring"
     degrees "mystring"
-    npi 1354665
+    npi "9632587412"
     birth_date "2013-06-12"
     email "testuser3@example.com"
     address_1 "mystring"
