@@ -39,8 +39,6 @@ When(/^I submit the form with proper values$/) do
 	fill_in "cao_username", with: @n_username
 	fill_in "cao_email", with: @n_email
 	fill_in "cao_password", with: "password"
-	# select "Doctor", from: 'cao_fk_profile_id'
-	# select "COA", from: "cao_fk_role_id"
 	click_button("Create")
 end
 

@@ -4,7 +4,7 @@ require "rvm/capistrano"
 
 set :user, 'sparkway'
 set :application, "onestop-provisioning"
-#set :use_sudo, true
+set :use_sudo, true
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_path,          "/usr/local/rvm/"
@@ -23,7 +23,7 @@ set :default_environment, {
 }
 
 set :scm, 'git'
-set :repository,  "git@github01.drfirst.com:drfirst/onestop-provisioning.git"
+set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
 set :scm_passphrase, ""
 set :branch, "master"
 

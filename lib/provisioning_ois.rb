@@ -10,6 +10,10 @@ module ProvisioningOis
   def self.batch_upload_dest(providers, cao, application)
     updated_providers = []
     if application.app_name.eql?("EPCS-IDP")
+      providers = providers.collect do |provider|
+        provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
+        provider
+      end
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
       url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       begin

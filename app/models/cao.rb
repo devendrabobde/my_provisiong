@@ -11,14 +11,15 @@ class Cao < ActiveRecord::Base
 
   alias_attribute :sys_cao_id, :id
 
+  #
   # Validations
   #
   EMAIL = /^.+@.+\..+$/.freeze
   PERSON_NAME  = /^[a-zA-Z'-]+$/.freeze
-
   validates :username, presence: true
   validates :username, :uniqueness =>  {:scope => [:email]}
   validates :email, :format => { :with => EMAIL }
+  validates :first_name, :last_name, presence: true
 
   #
   # Association
