@@ -84,7 +84,7 @@ module ProvisioingCsvValidation
   def self.application_upload_field_validations(application)
     # Added validations from redis server which reduce time consumption
     cached_store_validation = RedisCache.get_validation_cached(application.app_name)
-    validation_fields = cached_store_validation.present? ? cached_store_validation : application.app_upload_fields.includes(:app_upload_field_validations).where("required =? ", 1).all
+    validation_fields = cached_store_validation.present? ? cached_store_validation : application.app_upload_fields.includes(:app_upload_field_validations)
   end
 
   #
@@ -94,6 +94,7 @@ module ProvisioingCsvValidation
     required_field_errors, invalid_providers = [], []
     provider_keys, provider_dea_keys = [], []
     provider_validations = application_upload_field_validations(application)
+    provider_validations = provider_validations.each.select {|v| v.required }
     providers.each do |provider|
       if provider.present?
         provider_keys = provider.keys
