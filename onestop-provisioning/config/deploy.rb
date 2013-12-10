@@ -6,6 +6,8 @@ set :user, 'root'
 #set :user, 'ubuntu'
 set :application, "onestop-provisioning"
 set :use_sudo, false
+set :bundle_gemfile, "onestop-provisioning/Gemfile"
+
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_path,          "/usr/local/rvm/"
@@ -38,14 +40,11 @@ set :migrate_target, :latest
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
-#set :ssh_options, { :forward_agent => true }
-#ssh_options[:auth_methods] = ["publickey"]
-#ssh_options[:keys] = ["~/.ssh/devprojects.pem"]
  set :domain, "10.100.10.212"
-#set :domain, "54.225.135.41"
 set :rails_env, "production"
 #set :deploy_to, "/home/ubuntu/apps/www/#{application}"
-set :deploy_to, "/home/sparkway/apps/www/#{application}"
+#set :deploy_to, "/home/sparkway/apps/www/#{application}"
+set :deploy_to, "/var/www/#{application}"
 
 # roles (servers)
 role :web, domain
@@ -60,22 +59,24 @@ namespace :deploy do
   desc "Copy config files"
   after "deploy:update_code" do
     run "export RAILS_ENV=production"
-    run "cp #{shared_path}/config/database.yml #{release_path}/config/"
-    run "cp #{shared_path}/config/constants.yml #{release_path}/config/"
-    run "cp #{shared_path}/config/environments/production.rb #{release_path}/config/environments/"
-    # run "mkdir -p #{release_path}/public/images/ProfilePics"
+  # run "mkdir #{release_path}/config"
+    run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
+    run "cp -r #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
+  # run "mkdir #{release_path}/config/environments"
+    run "cp -r #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
+  # run "mkdir -p #{release_path}/public/images/ProfilePics"
 
-    sudo "chmod -R 0777 #{release_path}/tmp/"
-    sudo "chmod -R 666 #{release_path}/log/"
+#    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp/"
+#    sudo "chmod -R 666 #{release_path}/onestop-provisioning/log/"
   end
 
   task :restart, roles: :app, except: { no_release: true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
+  #  run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
   end
 
   desc 'run bundle install'
   task :bundle_install, roles: :app do
-    run "cd #{current_path} && bundle install --deployment --path #{shared_path}/bundle"
+    run "cd #{current_path}/onestop-provisioning && bundle exec bundle install --deployment --path #{shared_path}/bundle"
   end
 
   # desc "Reset the database"
@@ -86,26 +87,26 @@ namespace :deploy do
 
   desc "Import seed data in the database"
   task :seed do
-    run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=production"
+    run "cd #{current_path}/onestop-provisioning && bundle exec rake db:seed RAILS_ENV=production"
   end
 
   task :precompile_application do
-    run "cd #{current_path}; bundle exec rake assets:precompile RAILS_ENV=production"
+    run "cd #{current_path}/onestop-provisioning && bundle exec rake assets:precompile RAILS_ENV=production"
   end
 
   desc "Start redis server"
   task :start_redis do
-#    run  "cd /usr/local/bin/redis-server"
+    run  "cd /usr/local/src/redis-stable"
   end
 
   desc "start resque job queue"
  task :resque_work do
-#    run "cd #{current_path}; RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
+   run "cd #{current_path}/onestop-provisioning && RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
   end
 
   desc "clean redis queue"
   task :clean_redis do
- #   run "cd #{current_path}; redis-cli FLUSHALL"
+   run "cd #{current_path}/onestop-provisioning && redis-cli FLUSHALL"
   end
 
 end
@@ -129,4 +130,4 @@ end
 #after 'deploy:finalize_update', 'bundler:bundle_new_release'
 # after 'deploy:bundle_install', 'deploy:start_solr_server'
 after 'deploy:bundle_install', 'deploy:clean_redis'
-after 'deploy:clean_redis', 'deploy:resque_work'
+#after 'deploy:clean_redis', 'deploy:resque_work'
