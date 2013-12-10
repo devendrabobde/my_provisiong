@@ -148,7 +148,6 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    newrelic_rpm (3.6.9.171)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     nori (2.1.0)
@@ -340,7 +339,6 @@ DEPENDENCIES
   jquery-datatables-rails!
   jquery-rails
   jquery-ui-rails
-  newrelic_rpm
   pry
   rails (= 3.2.13)
   redis-rack-cache
