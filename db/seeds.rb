@@ -47,7 +47,8 @@ app_upload_fields = [
   { name: "hospital_admin_last_name", field_type: "string", required: true, field_format: nil, display_name: "Hospital Admin Last Name" },
   { name: "idp_performed_date", field_type: "datetime", required: true, field_format: "^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "IDP performed date" },
   { name: "idp_performed_time", field_type: "timestamp", required: true, field_format: "[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$", display_name: "IDP performed time" },
-  { name: "hospital_idp_transaction_id", field_type: "string", required: true, field_format: nil, display_name: "Hospital IDP transactionID" }
+  { name: "hospital_idp_transaction_id", field_type: "string", required: true, field_format: nil, display_name: "Hospital IDP transactionID" },
+  { name: "fqdn", field_type: "string", required: false, field_format: nil, display_name: "FQDN" }
 ]
 
 app_upload_fields.each do |f|
