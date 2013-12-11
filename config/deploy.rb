@@ -31,8 +31,8 @@ set :scm_passphrase, ""
 set :branch, "master"
 
 set :git_shallow_clone, 1
-#set :deploy_via, :remote_cache
-set :deploy_via, :copy
+set :deploy_via, :remote_cache
+#set :deploy_via, :copy
 set :keep_releases, 3
 set :scm_verbose, true
 
@@ -43,8 +43,8 @@ ssh_options[:forward_agent] = true
  set :domain, "10.100.10.212"
 set :rails_env, "production"
 #set :deploy_to, "/home/ubuntu/apps/www/#{application}"
-#set :deploy_to, "/home/sparkway/apps/www/#{application}"
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/home/sparkway/apps/www/#{application}"
+#set :deploy_to, "/var/www/#{application}"
 
 # roles (servers)
 role :web, domain
