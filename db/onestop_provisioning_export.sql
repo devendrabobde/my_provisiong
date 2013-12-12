@@ -1027,3 +1027,8 @@ END IF;
 END;
 ALTER TRIGGER "TRI_BIU_ROLES" ENABLE
 /
+
+--------------------------------------------------------
+--   EPCS: Added new Biometric FQDN field in PROVIDER table
+--------------------------------------------------------
+ALTER TABLE SPARKWAY.PROVIDERS ADD (fqdn VARCHAR2(255));

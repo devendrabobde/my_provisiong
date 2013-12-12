@@ -7,7 +7,7 @@ class Provider < ActiveRecord::Base
                   :last_name, :suffix, :degrees, :npi, :birth_date, :email, :address_1, :address_2,
                   :city, :state, :postal_code, :phone, :fax, :department, :provider_otp_token_serial,
                   :resend_flag, :hospital_admin_first_name, :hospital_admin_last_name, :idp_performed_date,
-                  :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip
+                  :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip, :fqdn
 
   alias_attribute :sys_provider_id, :id
 
@@ -28,6 +28,7 @@ class Provider < ActiveRecord::Base
   def self.save_provider(providers, cao, application)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
     upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
+    upload_field_validations = upload_field_validations.each.select {|v| v.required }
     validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
     if validated_providers.present?
       validated_providers.each do |provider|
