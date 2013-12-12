@@ -54,27 +54,32 @@ class Admin::ProvidersController < ApplicationController
 
   # Upload and process providers csv file
   def upload
-    error_message, success_message, invalid_providers = "", "", []
-    file_path, file_name = store_csv
-    providers = ProvisioingCsvValidation::process_csv(file_path, @application)
-    if providers.present?
-      required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
-      if required_field_status
-        @audit_trail = save_audit_trails(file_name)
-        save_providers(providers)
-        success_message = "Thanks for uploading providers, we are processing uploaded file."
+    begin
+      error_message, success_message, invalid_providers = "", "", []
+      file_path, file_name = store_csv
+      providers = ProvisioingCsvValidation::process_csv(file_path, @application)
+      if providers.present?
+        required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
+        if required_field_status
+          @audit_trail = save_audit_trails(file_name)
+          save_providers(providers)
+          success_message = "Thanks for uploading providers, we are processing uploaded file."
+        else
+          error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+        end
       else
-        error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+        error_message = "Uploaded providers csv file is empty."
       end
-    else
-      error_message = "Uploaded providers csv file is empty."
+      if error_message.present?
+        flash[:error] = error_message
+      else
+        flash[:notice] = success_message
+      end
+      redirect_to application_admin_providers_path
+    rescue => e
+      flash[:error] = "We are sorry something went wrong. we will look into it"
+      redirect_to application_admin_providers_path
     end
-    if error_message.present?
-      flash[:error] = error_message
-    else
-      flash[:notice] = success_message
-    end
-    redirect_to application_admin_providers_path
   end
   
   # Pull audit trail record to verify file upload status
