@@ -5,4 +5,4 @@ jQuery ->
  $('#cao_table').dataTable
    sPaginationType: "bootstrap"
    sDom: "Rlfrtip"
-   iDisplayLength: 20
+   iDisplayLength: 10
