@@ -31,7 +31,7 @@ app_upload_fields = [
   { name: "npi", field_type: "string", required: true, field_format: "^\\d{10}$", display_name: "Provider NPI" },
   { name: "provider_dea", field_type: "string", required: true, field_format: "^[a-zA-Z]{2}+\\d{7}$", display_name: "Provider DEA" },
   { name: "provider_dea_state", field_type: "string", required: true, field_format: "^[A-Z]{2}$", display_name: "Provider DEA State"  },
-  { name: "provider_dea_expiration_date", field_type: "datetime", required: true, field_format: "^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider DEA Expiration Date"},
+  { name: "provider_dea_expiration_date", field_type: "datetime", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider DEA Expiration Date"},
   { name: "last_name", field_type: "string", required: true, field_format: "^[a-zA-Z'-]+$", display_name: "Provider Last Name" },
   { name: "first_name", field_type: "string", required: true, field_format: "^[a-zA-Z'-]+$", display_name: "Provider First Name" },
   { name: "address_1", field_type: "text", required: true, field_format: nil, display_name: "Provider Home Address1" },
@@ -45,7 +45,7 @@ app_upload_fields = [
   { name: "resend_flag", field_type: "string", required: false, field_format: nil, display_name: "Resend Flag" },
   { name: "hospital_admin_first_name", field_type: "string", required: true, field_format:nil, display_name: "Hospital Admin First Name" },
   { name: "hospital_admin_last_name", field_type: "string", required: true, field_format: nil, display_name: "Hospital Admin Last Name" },
-  { name: "idp_performed_date", field_type: "datetime", required: true, field_format: "^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "IDP performed date" },
+  { name: "idp_performed_date", field_type: "datetime", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "IDP performed date" },
   { name: "idp_performed_time", field_type: "timestamp", required: true, field_format: "[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$", display_name: "IDP performed time" },
   { name: "hospital_idp_transaction_id", field_type: "string", required: true, field_format: nil, display_name: "Hospital IDP transactionID" }
 ]
