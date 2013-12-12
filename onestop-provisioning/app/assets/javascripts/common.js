@@ -77,7 +77,7 @@ $(document).ready(function () {
         $("#audit_data").html(data.html);
         $('#table1').dataTable({
           sPaginationType: "bootstrap",
-          iDisplayLength: 25
+          iDisplayLength: 10
         });
       });
     return false;
@@ -100,7 +100,7 @@ $(document).ready(function () {
       $("#uploaded_file").html(data.html);
       $('#table1').dataTable({
         sPaginationType: "bootstrap",
-        iDisplayLength: 15
+        iDisplayLength: 10
       });
     });
     return false;
