@@ -30,7 +30,8 @@ gem "spreadsheet", "0.7.7"
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+#gem 'capistrano'
+gem 'capistrano'#, '2.14.2'
 gem 'rvm-capistrano'
 gem 'strong_parameters'
 gem 'pry'
@@ -71,4 +72,4 @@ gem 'settingslogic'
 # redis cache used
 gem 'redis-rails'
 gem 'redis-rack-cache'
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
