@@ -71,4 +71,12 @@ OneStop::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  config.action_mailer.smtp_settings = {
+    :address              => "63.166.192.19",
+    :port                 => 25,
+    :domain               => "63.166.192.19",
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+
 end
