@@ -17,7 +17,7 @@
   </div>
   <div>
     <%= f.label :state_code, 'State' %>
-    <%= f.text_field :state_code %>
+    <%= f.select :state_code, US_STATES, { prompt: 'Select State' } %>
   </div>
   <div>
     <%= f.label :zip_code, 'Zip Code' %>
