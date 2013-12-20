@@ -115,6 +115,13 @@ class Admin::ProvidersController < ApplicationController
   # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
     Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
+    resque_info = Resque.info
+    if resque_info[:workers] == 0
+      admin = Role.where(:name => "Admin").first
+      UserMailer.send_resque_error(admin.caos.first).deliver
+      @audit_trail.update_attributes( status: "2", upload_status: true, total_providers: providers.count )
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working status", fk_audit_trail_id: @audit_trail.id)
+    end
   end
   
   # Store uploaded file
