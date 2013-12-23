@@ -42,12 +42,20 @@ OneStop::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # config.action_mailer.smtp_settings = {
+  #   :address              => "smtp.gmail.com",
+  #   :port                 => 587,
+  #   :domain               => 'baci.lindsaar.net',
+  #   :user_name            => 'sharonevas@gmail.com',
+  #   :password             => 'timonishere',
+  #   :authentication       => 'plain',
+  #   :enable_starttls_auto => true
+  # }
+
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'baci.lindsaar.net',
-    :user_name            => 'sharonevas@gmail.com',
-    :password             => 'timonishere',
+    :address              => "63.166.192.19",
+    :port                 => 25,
+    :domain               => "63.166.192.19",
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

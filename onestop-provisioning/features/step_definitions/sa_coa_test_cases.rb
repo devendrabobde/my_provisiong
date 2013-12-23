@@ -33,7 +33,7 @@ When(/^I submit the form with proper values$/) do
 	@n_lname = Faker::Name.last_name
 	@n_username = Faker::Internet.user_name
 	@n_email = Faker::Internet.email
-	fill_in "cao_user_id", with: @n_user_id
+	# fill_in "cao_user_id", with: @n_user_id
 	fill_in "cao_first_name", with: @n_fname
 	fill_in "cao_last_name", with: @n_lname
 	fill_in "cao_username", with: @n_username
@@ -45,7 +45,7 @@ end
 Then(/^I should see the created CAO saved in provisioning db with username and password$/) do
 	page.should have_content("COA was created successfully.")
 	page.should have_content("COA Details")
-	page.should have_content(@n_user_id)
+	# page.should have_content(@n_user_id)
 	page.should have_content(@n_fname)
 	page.should have_content(@n_lname)
 	page.should have_content(@n_username)
@@ -80,21 +80,19 @@ When(/^I update the edit COA form with proper fields$/) do
 	@e_lname = Faker::Name.last_name
 	@e_username = Faker::Internet.user_name
 	@e_email = Faker::Internet.email
-	fill_in "cao_user_id", with: @e_user_id
+	# fill_in "cao_user_id", with: @e_user_id
 	fill_in "cao_first_name", with: @e_fname
 	fill_in "cao_last_name", with: @e_lname
 	fill_in "cao_username", with: @e_username
 	fill_in "cao_email", with: @e_email
 	fill_in "cao_password", with: "password"
-	# select "Doctor", from: 'cao_fk_profile_id'
-	# select "COA", from: "cao_fk_role_id"
 	click_button("Update")
 end
 
 Then(/^the COA should be updated with username and password$/) do
  	page.should have_content("COA was updated successfully.")
 	page.should have_content("COA Details")
-	page.should have_content(@e_user_id)
+	# page.should have_content(@e_user_id)
 	page.should have_content(@e_fname)
 	page.should have_content(@e_lname)
 	page.should have_content(@e_username)
