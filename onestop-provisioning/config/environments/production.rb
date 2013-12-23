@@ -57,7 +57,7 @@ OneStop::Application.configure do
  # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.default_url_options = { :host => '10.100.10.212' }
+  config.action_mailer.default_url_options = { :host => '10.100.10.203' }
   
   config.action_mailer.delivery_method = :smtp
 

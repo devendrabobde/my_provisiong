@@ -2,10 +2,10 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
 
-set :user, 'root' 
+set :user, 'sparkway' 
 #set :user, 'ubuntu'
 set :application, "onestop-provisioning"
-set :use_sudo, false
+set :use_sudo, true
 set :bundle_gemfile, "onestop-provisioning/Gemfile"
 
 
@@ -20,10 +20,11 @@ set :rvm_type, :system
 set :default_environment, {
   'PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448/bin:/usr/local/rvm/gems/ruby-1.9.3-p448@global/bin:$PATH",
   'RUBY_VERSION' => 'ruby-1.9.3-p448',
-  'GEM_HOME'     => "/usr/local/rvm/gems/ruby-1.9.3-p448",
-  'GEM_PATH'     => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
-  'BUNDLE_PATH'  => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global"  # If you are using bundler.
+  'GEM_HOME' => "/usr/local/rvm/gems/ruby-1.9.3-p448",
+  'GEM_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
+  'BUNDLE_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global" # If you are using bundler.
 }
+
 
 set :scm, 'git'
 set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
@@ -40,7 +41,7 @@ set :migrate_target, :latest
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
- set :domain, "10.100.10.212"
+ set :domain, "10.100.10.203"
 set :rails_env, "production"
 #set :deploy_to, "/home/ubuntu/apps/www/#{application}"
 set :deploy_to, "/home/sparkway/apps/www/#{application}"
