@@ -57,24 +57,29 @@ class Admin::ProvidersController < ApplicationController
     begin
       error_message, success_message, invalid_providers = "", "", []
       file_path, file_name = store_csv
-      providers = ProvisioingCsvValidation::process_csv(file_path, @application)
-      duplicate_record_status, duplicate_npis, providers = check_provider_dublicate_records(providers)
-      if duplicate_record_status
+      providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+      if upload_file_status
+        providers = providers.collect { |x| x if x.present? }.compact
         if providers.present?
-          required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
-          if required_field_status
-            @audit_trail = save_audit_trails(file_name)
-            save_providers(providers)
-            success_message = "Thanks for uploading providers, we are processing uploaded file."
-            success_message = duplicate_npis.count > 0 ? success_message + " As NPI #{duplicate_npis.join(",")} record is duplicated in the uploaded CSV file. In this case we are simply passing unique record for each." : success_message
+          duplicate_record_status, duplicate_npis, providers = check_provider_dublicate_records(providers)
+          if duplicate_record_status
+              required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
+              if required_field_status
+                @audit_trail = save_audit_trails(file_name)
+                save_providers(providers)
+                success_message = "Thanks for uploading providers, we are processing uploaded file."
+                success_message = duplicate_npis.count > 0 ? success_message + " As NPI #{duplicate_npis.join(",")} record is duplicated in the uploaded CSV file. In this case we are simply passing unique record for each." : success_message
+              else
+                error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+              end
           else
-            error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+            error_message = "For EPCS, the NPI must be unique for each record in the file. Please remove duplicate NPI #{duplicate_npis.join(",")} record from CSV file before proceeding."
           end
         else
-          error_message = "Uploaded providers csv file is empty."
+          error_message = "Please check uploaded csv file. A csv file from another application should not be uploaded into any other application."
         end
       else
-        error_message = "For EPCS, the NPI must be unique for each record in the file. Please remove duplicate NPI #{duplicate_npis.join(",")} record from CSV file before proceeding."
+        error_message = "Uploaded providers csv file is empty."
       end
       if error_message.present?
         flash[:error] = error_message
