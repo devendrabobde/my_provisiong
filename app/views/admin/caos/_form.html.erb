@@ -1,11 +1,7 @@
 <%= form_for([:admin, @organization, @cao]) do |f| %>
   <div>
-    <%= f.label :user_id, 'User Id' %>
-    <%= f.text_field :user_id, :autofocus => true %>
-  </div>
-  <div>
     <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+    <%= f.text_field :first_name, :autofocus => true %>
   </div>
   <div>
     <%= f.label :last_name %>

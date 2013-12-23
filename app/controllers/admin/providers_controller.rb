@@ -58,28 +58,35 @@ class Admin::ProvidersController < ApplicationController
       error_message, success_message, invalid_providers = "", "", []
       file_path, file_name = store_csv
       providers = ProvisioingCsvValidation::process_csv(file_path, @application)
-      if providers.present?
-        required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
-        if required_field_status
-          @audit_trail = save_audit_trails(file_name)
-          save_providers(providers)
-          success_message = "Thanks for uploading providers, we are processing uploaded file."
+      duplicate_record_status, duplicate_npis, providers = check_provider_dublicate_records(providers)
+      if duplicate_record_status
+        if providers.present?
+          required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
+          if required_field_status
+            @audit_trail = save_audit_trails(file_name)
+            save_providers(providers)
+            success_message = "Thanks for uploading providers, we are processing uploaded file."
+            success_message = duplicate_npis.count > 0 ? success_message + " As NPI #{duplicate_npis.join(",")} record is duplicated in the uploaded CSV file. In this case we are simply passing unique record for each." : success_message
+          else
+            error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+          end
         else
-          error_message = "Providers required fields can't be blank, please correct " + required_field_errors.join(", ") + " fields before proceeding " + invalid_providers.join(", ")
+          error_message = "Uploaded providers csv file is empty."
         end
       else
-        error_message = "Uploaded providers csv file is empty."
+        error_message = "For EPCS, the NPI must be unique for each record in the file. Please remove duplicate NPI #{duplicate_npis.join(",")} record from CSV file before proceeding."
       end
       if error_message.present?
         flash[:error] = error_message
+        AuditTrailsLog.error error_message 
       else
         flash[:notice] = success_message
+        AuditTrailsLog.warn success_message 
       end
-      redirect_to application_admin_providers_path
     rescue => e
       flash[:error] = "We are sorry something went wrong. we will look into it"
-      redirect_to application_admin_providers_path
     end
+    redirect_to application_admin_providers_path
   end
   
   # Pull audit trail record to verify file upload status
@@ -108,6 +115,13 @@ class Admin::ProvidersController < ApplicationController
   # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
     Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
+    resque_info = Resque.info
+    if resque_info[:workers] == 0
+      admin = Role.where(:name => "Admin").first
+      UserMailer.send_resque_error(admin.caos.first).deliver
+      @audit_trail.update_attributes( status: "2", upload_status: true, total_providers: providers.count )
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working status", fk_audit_trail_id: @audit_trail.id)
+    end
   end
   
   # Store uploaded file
@@ -127,5 +141,25 @@ class Admin::ProvidersController < ApplicationController
                             file_url: file_name, fk_organization_id: @cao.organization.id, total_npi_processed: 0)
     audit.save
     audit
+  end
+
+  def check_provider_dublicate_records(providers)
+    temp_providers, duplicate_npis, duplicate_status = providers.to_s, [], true
+    if @application.app_name.eql?("EPCS-IDP")
+      npi_numbers = providers.collect { |p| p[:npi] }
+      duplicate_npis = npi_numbers.select { |item| npi_numbers.count(item) > 1 }
+      if duplicate_npis.present?
+        temp = true
+        duplicate_npis.uniq.each do |dup_npi|
+          b = providers.collect{|x| x if dup_npi.eql?(x[:npi])}.compact
+          b.collect{|x| x.delete(:npi)}
+          duplicate_status = b.uniq.count == 1
+          temp = temp && duplicate_status
+        end
+        duplicate_status = temp
+      end
+    end
+    modified_providers = eval(temp_providers)
+    [duplicate_status, duplicate_npis.uniq, modified_providers.uniq]
   end
 end

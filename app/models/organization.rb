@@ -14,12 +14,15 @@ class Organization < ActiveRecord::Base
 
   EMAIL = /^.+@.+\..+$/.freeze
   PERSON_NAME  = /^[a-zA-Z'-]+$/.freeze
+  ZIP_FORMAT = /(^\d{5}$)|(^\d{9}$)/.freeze
 
   validates :name, presence: true, :uniqueness => true
   validates :contact_first_name, :format => { :with => PERSON_NAME }
   validates :contact_last_name, :format => { :with => PERSON_NAME }
   validates :contact_email, :format => { :with => EMAIL }
-
+  validates :zip_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
+  validates :postal_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
+  
   #
   # Scopes
   #

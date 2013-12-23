@@ -17,7 +17,7 @@
   </div>
   <div>
     <%= f.label :state_code, 'State' %>
-    <%= f.text_field :state_code %>
+    <%= f.select :state_code, US_STATES, { prompt: 'Select State' } %>
   </div>
   <div>
     <%= f.label :zip_code, 'Zip Code' %>
@@ -50,18 +50,6 @@
   <div>
     <%= f.label :contact_email, 'Contact Email' %>
     <%= f.text_field :contact_email %>
-  </div>
-  <div>
-    <%= f.label :idp_vendor_id, 'IDP Vendor ID' %>
-    <%= f.text_field :idp_vendor_id %>
-  </div>
-  <div>
-    <%= f.label :vendor_label, 'EPCS Vendor Label' %>
-    <%= f.text_field :vendor_label %>
-  </div>
-  <div>
-    <%= f.label :vendor_node_label, 'EPCS Vendor Label Node' %>
-    <%= f.text_field :vendor_node_label %>
   </div>
   <div>
     <%= f.submit :class => "btn btn-primary" %>

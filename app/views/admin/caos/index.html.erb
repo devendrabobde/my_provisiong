@@ -6,13 +6,10 @@
 <table class="table table-striped table-bordered table-condensed" id="cao_table">
   <thead>
     <tr>
-        <th>User Id</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
         <th>Email</th>
-        <!--<th>Is Active</th> -->
-        <!--<th>Organization</th>-->
         <th>Profile</th>
         <th> Status </th>
         <th> Action </th>
@@ -22,13 +19,10 @@
     <% @organization.caos.each do |cao| %>
       <% unless cao.is_admin? %>
         <tr>
-          <td><%= cao.user_id %></td>
           <td><%= cao.first_name %></td>
           <td><%= cao.last_name %></td>
           <td><%= cao.username %></td>
           <td><%= cao.email %></td>
-          <!-- <td><%#= cao.is_active %></td> -->
-          <!--<td><%#= cao.organization.name rescue nil %></td>-->
           <td><%= cao.profile.profile_name rescue nil %></td>
           <td>
             <% status = cao.active_for_authentication? %>
@@ -42,7 +36,6 @@
             <% if status %>
               <%= link_to 'Show', admin_organization_cao_path(@organization.id, cao.id)%> |
               <%= link_to 'Edit', edit_admin_organization_cao_path(@organization.id, cao.id) %> |
-              <%# if status %>
                 <a data-toggle="modal" href="#deactivate-<%= cao.id %>" type="button">Deactivate</a>
                 <%= render 'deactivate', :cao => cao, :organization => @organization %>
             <% else %>

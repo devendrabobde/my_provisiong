@@ -54,8 +54,15 @@ OneStop::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
+ # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.default_url_options = { :host => '10.100.10.212' }
+  
+  config.action_mailer.delivery_method = :smtp
+
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = true
 
   # Enable threaded mode
   # config.threadsafe!
@@ -70,5 +77,13 @@ OneStop::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  config.action_mailer.smtp_settings = {
+    :address              => "63.166.192.19",
+    :port                 => 25,
+    :domain               => "63.166.192.19",
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
 
 end
