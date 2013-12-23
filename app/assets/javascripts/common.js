@@ -15,6 +15,16 @@ var getProgressReport = function(dataId){
         $("#audit_link_"+data.sys_audit_trail_id).html(dataLink);
         return false;
       }
+      else if (data.status)
+      {
+        $("#progress_bar_"+data.sys_audit_trail_id).hide();
+        $("#npi_loaded_count_"+data.sys_audit_trail_id).text(data.total_npi_processed + " / " + data.total_providers  );
+        $('.auditProgressBar').remove("#progress_bar_"+data.sys_audit_trail_id);
+        linkName= $("#audit_link_"+data.sys_audit_trail_id).text();
+        dataLink = "<a href='/admin/providers/"+data.sys_audit_trail_id+"'+>"+linkName+"</a>";
+        $("#audit_link_"+data.sys_audit_trail_id).html(dataLink);
+        return false;
+      }
   }, dataType: "json"});
 }
 
