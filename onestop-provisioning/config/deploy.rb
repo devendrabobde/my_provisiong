@@ -47,6 +47,9 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
  set :domain, "10.100.10.203"
 set :rails_env, "production"
+
+set :copy_dir, "/home/sparkway/tmp"
+set :remote_copy_dir, "/tmp"
 set :deploy_to, "/home/sparkway/apps/www/#{application}"
 
 # roles (servers)
