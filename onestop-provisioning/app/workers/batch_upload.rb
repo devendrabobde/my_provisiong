@@ -70,6 +70,7 @@ class BatchUpload
     end
     rescue => e
       ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: audit_trail.id)
+      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: providers.count)
       Rails.logger.error e
     end
     [provider_app_detail_ids, total_npi_processed]
