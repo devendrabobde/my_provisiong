@@ -31,7 +31,8 @@ class BatchUpload
               provider = Provider.where("first_name like (?) and last_name like (?) and fk_provider_app_detail_id in (?)", "%#{provider_record[:first_name]}%", "%#{provider_record[:last_name]}%", provider_app_detail_ids.flatten).first
               if provider.present?
                 error_msg = application.app_name + " OIS: " + provider_record[:error]
-                provider.provider_app_detail.update_attributes(status_code: 500, status_text: error_msg)
+                error_code = provider_record[:status].present? ? provider_record[:status] : "500"
+                provider.provider_app_detail.update_attributes(status_code: error_code, status_text: error_msg)
               end
           end
         end
