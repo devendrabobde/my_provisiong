@@ -68,7 +68,7 @@ namespace :deploy do
     run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "cp -r #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
     run "cp -r #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
-    run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/og"
+    run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/log"
     run "ln -nfs #{shared_path}/tmp #{release_path}/onestop-provisioning/tmp"
 
     sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp/"
