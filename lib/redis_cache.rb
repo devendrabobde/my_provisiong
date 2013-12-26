@@ -7,7 +7,7 @@ class RedisCache
       # pick each group
       register_app_group.each do |each_application|
   	  	# pick all validation from each app
-  	  	value = each_application.app_upload_fields.includes(:app_upload_field_validations)
+  	  	value = each_application.app_upload_fields.includes(:app_upload_field_validations).all
 	      Rails.cache.write(each_application.app_name, value)
 	  end # end each_application
     end # end register_app_group
@@ -20,7 +20,7 @@ class RedisCache
 
   # Below method will set validation cached
   def self.set_validation_cached(application)
- 	  value = application.app_upload_fields.includes(:app_upload_field_validations)
+ 	  value = application.app_upload_fields.includes(:app_upload_field_validations).all
 	  Rails.cache.write(application.app_name, value)
   end # end of get_cached
 
