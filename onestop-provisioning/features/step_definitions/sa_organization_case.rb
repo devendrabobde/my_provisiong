@@ -8,7 +8,7 @@ Given(/^a valid SA$/) do
   Organization.unscoped.delete_all
   @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
   address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
-  contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email)
+  contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", postal_code: "54321")
   @e_org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
   password: "password", password_confirmation: "password", fk_role_id: role_cao.id, fk_organization_id: @organization.id)
@@ -36,9 +36,13 @@ When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_name", with: Faker::Company.name
   fill_in "organization_address1", with: Faker::Address.street_address
   fill_in "organization_address2", with: Faker::Address.street_address
+  fill_in "organization_city", with: Faker::Address.city
   fill_in "organization_contact_first_name", with: Faker::Name.first_name
   fill_in "organization_contact_last_name", with: Faker::Name.last_name
   fill_in "organization_contact_email", with: Faker::Internet.email
+  fill_in "organization_zip_code", with: "12345"
+  fill_in "organization_postal_code", with: "54321"
+  select "DC", from: 'organization_state_code'
   click_button "Create Organization"
 end
 
@@ -73,12 +77,14 @@ When(/^I make changes and update the organization$/) do
   @o_name = Faker::Company.name
   @o_addr = Faker::Address.street_address
   @o_addr2 = Faker::Address.street_address
+  @o_city = Faker::Address.city
   @o_fname = Faker::Name.first_name
   @o_lname = Faker::Name.last_name
   @o_email = Faker::Internet.email
   fill_in "organization_name", with: @o_name
   fill_in "organization_address1", with: @o_addr
   fill_in "organization_address2", with: @o_addr2
+  fill_in "organization_city", with: @o_city
   fill_in "organization_contact_first_name", with: @o_fname
   fill_in "organization_contact_last_name", with: @o_lname
   fill_in "organization_contact_email", with: @o_email
@@ -91,6 +97,7 @@ Then(/^I should see success message for organization update and organization det
   page.should have_content(@o_name)
   page.should have_content(@o_addr)
   page.should have_content(@o_addr2)
+  page.should have_content(@o_city)
   page.should have_content(@o_fname)
   page.should have_content(@o_lname)
   page.should have_content(@o_email)
