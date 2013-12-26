@@ -1,11 +1,10 @@
-#require 'capistrano/ext/multistage'
 require "bundler/capistrano"
 require "rvm/capistrano"
 
-set :user, 'root' 
+set :user, 'sparkway' 
 #set :user, 'ubuntu'
 set :application, "onestop-provisioning"
-set :use_sudo, false
+set :use_sudo, true
 set :bundle_gemfile, "onestop-provisioning/Gemfile"
 
 
@@ -20,10 +19,11 @@ set :rvm_type, :system
 set :default_environment, {
   'PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448/bin:/usr/local/rvm/gems/ruby-1.9.3-p448@global/bin:$PATH",
   'RUBY_VERSION' => 'ruby-1.9.3-p448',
-  'GEM_HOME'     => "/usr/local/rvm/gems/ruby-1.9.3-p448",
-  'GEM_PATH'     => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
-  'BUNDLE_PATH'  => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global"  # If you are using bundler.
+  'GEM_HOME' => "/usr/local/rvm/gems/ruby-1.9.3-p448",
+  'GEM_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
+  'BUNDLE_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global" # If you are using bundler.
 }
+
 
 set :scm, 'git'
 set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
@@ -31,8 +31,13 @@ set :scm_passphrase, ""
 set :branch, "master"
 
 set :git_shallow_clone, 1
-set :deploy_via, :remote_cache
-#set :deploy_via, :copy
+
+#NOTE: remote_cache will be only active if, the initial deployment process is completed. 
+#set :deploy_via, :remote_cache
+
+#NOTE: set "deploy_via" "copy" for the first time deployment, so that it will clone the application to the mentioned path and once successful deployment is done change it to "remote_cache". 
+set :deploy_via, :copy
+
 set :keep_releases, 3
 set :scm_verbose, true
 
@@ -40,11 +45,12 @@ set :migrate_target, :latest
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
- set :domain, "10.100.10.212"
+ set :domain, "10.100.10.203"
 set :rails_env, "production"
-#set :deploy_to, "/home/ubuntu/apps/www/#{application}"
+
+set :copy_dir, "/home/sparkway/tmp"
+set :remote_copy_dir, "/tmp"
 set :deploy_to, "/home/sparkway/apps/www/#{application}"
-#set :deploy_to, "/var/www/#{application}"
 
 # roles (servers)
 role :web, domain
@@ -59,31 +65,24 @@ namespace :deploy do
   desc "Copy config files"
   after "deploy:update_code" do
     run "export RAILS_ENV=production"
-  # run "mkdir #{release_path}/config"
     run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "cp -r #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
-  # run "mkdir #{release_path}/config/environments"
     run "cp -r #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
-  # run "mkdir -p #{release_path}/public/images/ProfilePics"
+    run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/og"
+    run "ln -nfs #{shared_path}/tmp #{release_path}/onestop-provisioning/tmp"
 
-#    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp/"
-#    sudo "chmod -R 666 #{release_path}/onestop-provisioning/log/"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp/"
+    sudo "chmod -R 0666 #{release_path}/onestop-provisioning/log/"
   end
 
   task :restart, roles: :app, except: { no_release: true } do
-  #  run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
+    run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
   end
 
   desc 'run bundle install'
   task :bundle_install, roles: :app do
     run "cd #{current_path}/onestop-provisioning && bundle exec bundle install --deployment --path #{shared_path}/bundle"
   end
-
-  # desc "Reset the database"
-  # task :reset do
-  #   # on_rollback { deploy.db.restore }
-  #   run "cd #{current_path}; bundle exec rake db:reset RAILS_ENV=production"
-  # end
 
   desc "Import seed data in the database"
   task :seed do
@@ -111,23 +110,5 @@ namespace :deploy do
 
 end
 
-# Below codes are out of date after bundler 1.0 released. You don't need add such codes into your cap file. Now you can add only one line in capistrano to use the bundler
-# require 'bundler/capistrano'
-
-#namespace :bundler do
-#  task :create_symlink, roles: :app do
-#    shared_dir = File.join(shared_path, 'bundle')
-#    release_dir = File.join(current_release, '.bundle')
-#    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
-#  end
-
-#  task :bundle_new_release, roles: :app do
-#    bundler.create_symlink
-#    run "cd #{release_path} && source $HOME/.bash_profile && bundle install"
-#  end
-#end
-
-#after 'deploy:finalize_update', 'bundler:bundle_new_release'
-# after 'deploy:bundle_install', 'deploy:start_solr_server'
 after 'deploy:bundle_install', 'deploy:clean_redis'
-#after 'deploy:clean_redis', 'deploy:resque_work'
+after 'deploy:clean_redis', 'deploy:resque_work'
