@@ -1,4 +1,5 @@
 And (/^I should be successfully logged out of the application$/) do
+  sleep 5
 	click_on('Setting')
 	click_on('Logout')
 	page.should have_link("Login")
