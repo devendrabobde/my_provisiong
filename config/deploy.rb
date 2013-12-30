@@ -45,7 +45,7 @@ set :migrate_target, :latest
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
- set :domain, "10.100.10.203"
+set :domain, "10.100.10.203"
 set :rails_env, "production"
 
 set :copy_dir, "/home/sparkway/tmp"
@@ -68,11 +68,11 @@ namespace :deploy do
     run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "cp -r #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
     run "cp -r #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
-    run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/og"
+    run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/log"
     run "ln -nfs #{shared_path}/tmp #{release_path}/onestop-provisioning/tmp"
 
-    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp/"
-    sudo "chmod -R 0666 #{release_path}/onestop-provisioning/log/"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
+    sudo "chmod -R 0666 #{release_path}/onestop-provisioning/log"
   end
 
   task :restart, roles: :app, except: { no_release: true } do
