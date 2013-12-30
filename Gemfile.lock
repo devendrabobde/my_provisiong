@@ -345,6 +345,7 @@ DEPENDENCIES
   redis-rails
   resque
   rest-client
+  rspec-core
   rspec-rails (>= 2.12.2)
   ruby-oci8
   rvm-capistrano

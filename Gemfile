@@ -54,6 +54,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'selenium'
   gem 'headless'
+  gem 'rspec-core'
 end
 
 # gem "bullet", :group => "development"
