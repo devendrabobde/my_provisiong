@@ -1,4 +1,4 @@
-Feature: COA upload NPI providers and completes successfully
+Feature: COA upload providers and onestop-router application is unavailable after upload begin.In this case provisioing system should be showing connection error message along with error code on UI (provider detail page) corresponding to each provider.
   In order to upload NPI providers in the onestop provisioning
   As a COA
   I want to be able to upload a CSV file with the providers' data
@@ -9,13 +9,6 @@ Background:
   And I fill in the username and password
   And I press "Sign in"
   Then I should see success message
-
-  @selenium
-  @no-database-cleaner
-  Scenario: COA selects to start new upload
-    Given I go to application page
-    And I click on file upload button
-    Then I should see message Please select application and a CSV file to initiate the provisioning process
 
   @selenium
   @no-database-cleaner
