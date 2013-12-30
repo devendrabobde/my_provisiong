@@ -1,4 +1,4 @@
-Feature: COA upload multiple records of the same provider in csv i.e entire record is duplicated (all fields are an exact match). For EPCS provisoing system is simply passing unique record for each duplicate record.
+Feature: EPCS UI validation fails test case - COA upload multiple records of the same provider in csv i.e entire record is duplicated (all fields are an exact match). For EPCS provisoing system is simply passing unique record for each duplicate record.
   In order to upload NPI providers in the onestop provisioning
   As a COA
   I want to be able to upload a CSV file with the providers' data
