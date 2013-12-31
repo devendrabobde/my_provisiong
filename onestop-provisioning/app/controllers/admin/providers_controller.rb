@@ -136,7 +136,7 @@ class Admin::ProvidersController < ApplicationController
     directory = "#{Rails.root}" + "/public/csv_files"
     Dir.mkdir(directory) unless File.exists?(directory)
     path = File.join(directory, name)
-    File.open(path, "w") { |f| f.write(upload.read) }
+    File.open(path, "w") { |f| f.write(upload.read.gsub(/[\"\'\-\!\$\%\^\&\*\(\)\+\=\{\}\;\`\?\|\<\>\]\[]/, "")) }
     [path,name]
   end
   
