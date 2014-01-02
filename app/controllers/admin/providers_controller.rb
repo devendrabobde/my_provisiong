@@ -61,7 +61,7 @@ class Admin::ProvidersController < ApplicationController
       if upload_file_status
         providers = providers.collect { |x| x if x.present? }.compact
         if providers.present?
-          duplicate_record_status, duplicate_npis, providers = check_provider_dublicate_records(providers)
+          duplicate_record_status, duplicate_npis, providers = check_provider_duplicate_records(providers)
           if duplicate_record_status
             required_field_status, required_field_errors, invalid_providers = ProvisioingCsvValidation::validate_required_field(providers, @application)
             if required_field_status
@@ -148,7 +148,7 @@ class Admin::ProvidersController < ApplicationController
     audit
   end
 
-  def check_provider_dublicate_records(providers)
+  def check_provider_duplicate_records(providers)
     temp_providers, duplicate_npis, duplicate_status = providers.to_s, [], true
     if @application.app_name.eql?("EPCS-IDP")
       npi_numbers = providers.collect { |p| p[:npi] }
