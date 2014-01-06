@@ -5,7 +5,7 @@ end
 
 And /^I should be able to see success or failure message corresponding to each uploaded providers$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
-    # td.text.split(" ").last.should =~ /Success/
+    td.text.split(" ").last.should_not == ""
   end
 end
 

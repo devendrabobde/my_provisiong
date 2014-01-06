@@ -12,7 +12,7 @@ Background:
   
   @selenium
   @no-database-cleaner
-  Scenario: COA selects an EPCS application and upload a CSV file which is containing one single provider who has all required fields
+  Scenario: COA selects an EPCS application and upload a CSV file which is containing one single batch of multiple providers, some pass WsBatchIdp, while the others fail WsBatchIdp
     Given I select an application
     When I select a csv file which is containing one single batch of multiple providers, some pass WsBatchIdp, while the others fail WsBatchIdp
     And I clicks upload button
@@ -25,7 +25,7 @@ Background:
 
   @selenium
   @no-database-cleaner
-  Scenario: COA selects an EPCS application and upload a CSV file which is containing one single provider who has all required fields
+  Scenario: COA selects an EPCS application and upload a CSV file which is containing more than one batch of providers from the same spreadsheet, some pass WsBatchIdp, while the others fail WsBatchIdp
     Given I select an application
     When I select a csv file which is containing more than one batch of providers from the same spreadsheet, some pass WsBatchIdp, while the others fail WsBatchIdp
     And I clicks upload button
