@@ -10,22 +10,6 @@ Background:
   And I press "Sign in"
   Then I should see success message
   
-@selenium
-@no-database-cleaner
-  Scenario: COA logs in
-    And I should see correct screen title
-    And I should see application selection list
-    And I should see file selection button
-    And I should see application csv template download button
-    And I should see correct section names
-
-  @selenium
-  @no-database-cleaner
-  Scenario: COA selects to start new upload
-    Given I go to application page
-    And I click on file upload button
-    Then I should see message Please select application and a CSV file to initiate the provisioning process
-
   @selenium
   @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
