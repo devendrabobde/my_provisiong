@@ -51,7 +51,7 @@ Scenario: SA to view a COA from any organization
 
 @selenium
 @no-database-cleaner
-Scenario: SA to view a COA from any organization
+Scenario: SA to activate a COA from any organization
 	Given I select an organization to see the COAs
 	Then I should see the list of all COAs of that organization
 	Then I should be able to activate an inactive COA
