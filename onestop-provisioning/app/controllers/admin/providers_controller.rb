@@ -89,6 +89,7 @@ class Admin::ProvidersController < ApplicationController
         AuditTrailsLog.warn success_message 
       end
     rescue => e
+      puts e.inspect
       flash[:error] = "We are sorry something went wrong. we will look into it"
     end
     redirect_to application_admin_providers_path
