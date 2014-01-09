@@ -36,6 +36,8 @@ Background:
     And I should be able to see progress bar
     And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
     And I should be able to see the error message from WsBatchIdp
+    When I redirect back to home page
+    Given I select an application
     When I select csv file having single provider failing WsBatchIdp and with already registered Organization
     And I clicks upload button
     And I should be able to see correct file upload message
