@@ -25,7 +25,16 @@ Before do
   end
 end
 
-
+AfterConfiguration do |config|
+  # delete providers details
+  Provider.delete_all
+  ProviderAppDetail.delete_all
+  ProviderDeaNumber.delete_all
+  ProviderErrorLog.delete_all
+  AuditTrail.delete_all
+  Organization.delete_all
+  Cao.delete_all
+end
 Capybara.register_driver :selen do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.dir'] = Rails.root.join("tmp").to_s
