@@ -135,7 +135,7 @@ module ProvisioingCsvValidation
   # This method is responsible for applying different validation classes to verify providers record
   #
   def self.validate_provider(providers, application, upload_field_validations)
-    modified_providers = []
+    modified_providers, valid_providers, invalid_providers = [], [], []
     providers.each do |provider|
       if provider.present?
         provider = provider.symbolize_keys
@@ -156,7 +156,16 @@ module ProvisioingCsvValidation
         modified_providers << provider
       end
     end
-    validated_providers = class_eval(("NpiValidation")).validate(modified_providers, application) rescue nil
-    validated_providers
+    modified_providers.each do |provider| 
+      if provider[:validation_error_message].present?
+        invalid_providers << provider
+      else
+        valid_providers << provider
+      end
+    end
+    # validated_providers = class_eval(("NpiValidation")).validate(modified_providers, application) rescue nil
+    validated_providers = class_eval(("NpiValidation")).validate(valid_providers, application) rescue nil
+    total_providers = validated_providers.present? ? validated_providers + invalid_providers : invalid_providers
+    total_providers
   end
 end
