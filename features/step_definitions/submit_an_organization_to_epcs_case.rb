@@ -12,7 +12,7 @@ end
 
 And /^I should be able to see the error message from WsBatchIdp$/ do
 	@app_validation = RegisteredApp.where(app_name: "EPCS-IDP").first.app_upload_fields.where(name: 'state').first
-  @app_validation.update_attribute(:required, true)
+	@app_validation.update_attribute(:required, true)
 	page.all(:css, "#table1 tbody tr").each do |td|
     	td.text.split(" ").last.should_not =~ /Success/
   	end

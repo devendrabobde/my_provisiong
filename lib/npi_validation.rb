@@ -26,7 +26,7 @@ module NpiValidation
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record]}
       end
       payload = { :providers => { "" => modified_providers } }
-      response = RestClient::Request.execute(:method => :get, :url => url , :payload => payload )
+      response = RestClient::Request.execute(:method => :get, :url => url , :payload => payload, :timeout => 720 )
       if response.present?
         response = JSON.parse(response)
         providers = response["valid_providers"] + response["invalid_providers"]
