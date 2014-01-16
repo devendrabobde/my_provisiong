@@ -90,7 +90,8 @@ class Admin::ProvidersController < ApplicationController
       end
     rescue => e
       puts e.inspect
-      flash[:error] = "We are sorry something went wrong. we will look into it"
+      err = (e.class.to_s == "CSV::MalformedCSVError") ? "Error IN CSV File: " : "Error: "
+      flash[:error] = err + e.message
     end
     redirect_to application_admin_providers_path
   end
@@ -98,6 +99,13 @@ class Admin::ProvidersController < ApplicationController
   # Pull audit trail record to verify file upload status
   def pull_redis_job_status
     audit_trail = AuditTrail.where(sys_audit_trail_id: params[:audit_id]).first
+    resque_info = Resque.info
+    if resque_info[:workers] == 0
+      admin = Role.where(:name => "Admin").first
+      UserMailer.send_resque_error(admin.caos.first).deliver
+      audit_trail.update_attributes( status: "2", upload_status: true, total_providers: providers.count )
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working", fk_audit_trail_id: @audit_trail.id)
+    end
     render :json => audit_trail
   end
 
@@ -126,7 +134,7 @@ class Admin::ProvidersController < ApplicationController
       admin = Role.where(:name => "Admin").first
       UserMailer.send_resque_error(admin.caos.first).deliver
       @audit_trail.update_attributes( status: "2", upload_status: true, total_providers: providers.count )
-      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working status", fk_audit_trail_id: @audit_trail.id)
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working", fk_audit_trail_id: @audit_trail.id)
     end
   end
   
