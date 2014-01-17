@@ -1,23 +1,23 @@
 <%= form_for([:admin, @organization, @cao]) do |f| %>
   <div>
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name, :autofocus => true %>
+    <%= label_tag "First Name *" %>
+    <%= f.text_field :first_name, autofocus: true, required: true %>
   </div>
   <div>
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
+    <%= label_tag "Last Name *" %>
+    <%= f.text_field :last_name, required: true %>
   </div>
   <div>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
+    <%= label_tag "Username *" %>
+    <%= f.text_field :username, required: true %>
   </div>
   <div>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
+    <%= label_tag "Email *" %>
+    <%= f.email_field :email, required: true %>
   </div>
   <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= label_tag "Password *" %>
+    <%= f.password_field :password, required: true %>
   </div>
   <div>
     <%= f.label :profile_id %>
