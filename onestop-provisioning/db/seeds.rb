@@ -53,7 +53,8 @@ app_upload_fields = [
   { name: "middle_name", field_type: "string", required: false, field_format: nil, display_name: "Provider Middle Name" },
   { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Provider Prefix" },
   { name: "gender", field_type: "string", required: true, field_format: "^[M|F]$", display_name: "Provider Gender" },
-  { name: "birth_date", field_type: "string", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider Dateofbirth" },
+  # { name: "birth_date", field_type: "string", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider Dateofbirth" },
+   { name: "birth_date", field_type: "string", required: true, field_format: nil, display_name: "Provider Dateofbirth" },
   { name: "social_security_number", field_type: "string", required: false, field_format: nil, display_name: "Provider SocialSecurityNumber" }
 ]
 
