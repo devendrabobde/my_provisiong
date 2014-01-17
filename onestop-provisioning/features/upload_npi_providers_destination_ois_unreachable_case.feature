@@ -18,7 +18,11 @@ Background:
 @no-database-cleaner
 Scenario: COA selects an application and upload a CSV file of 4 providers
   Given I select an application
-  And Health status should say router is unreachable
-  And Upload Button Should be disabled
-  And Message should be displayed to inform COA status
-  And No data should be uploaded in the provisioning db
+  When I select a csv file of 4 providers
+  And I clicks upload button
+  And I should be able to see correct file upload message
+  And I should be able to see progress bar
+  And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+  And I should be able to add audit data in Provisioning DB
+  And I should be able to see job in history
+  And I should be able to see error messages and status for the OIS being unreachable
