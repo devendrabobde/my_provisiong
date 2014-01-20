@@ -39,7 +39,6 @@ app_upload_fields = [
   { name: "city", field_type: "string", required: true, field_format: nil, display_name: "Provider Home City" },
   { name: "state", field_type: "string", required: true, field_format: "^[A-Z]{2}$", display_name: "Provider Home State" },
   { name: "zip", field_type: "string", required: true, field_format: "^\\d{5}((-|\\s)?\\d{4})?$", display_name: "Provider Home Zip" },
-  { name: "phone", field_type: "string", required: false, field_format: "^\\+?[\\d.-]+$", display_name: "Provider Work phone" },
   { name: "email", field_type: "string", required: true, field_format: "^.+@.+\\..+$", display_name: "Provider Primary Contact Email" },
   { name: "provider_otp_token_serial", field_type: "string", required: true, field_format: nil, display_name: "Provider OTP token serial #" },
   { name: "resend_flag", field_type: "string", required: false, field_format: nil, display_name: "Resend Flag" },
