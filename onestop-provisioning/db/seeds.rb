@@ -48,7 +48,6 @@ app_upload_fields = [
   { name: "idp_performed_time", field_type: "timestamp", required: true, field_format: "[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$", display_name: "IDP performed time" },
   { name: "hospital_idp_transaction_id", field_type: "string", required: false, field_format: nil, display_name: "Hospital IDP transactionID" },
   { name: "fqdn", field_type: "string", required: false, field_format: nil, display_name: "FQDN" },
-
   { name: "middle_name", field_type: "string", required: false, field_format: nil, display_name: "Provider Middle Name" },
   { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Provider Prefix" },
   { name: "gender", field_type: "string", required: true, field_format: "^[M|F]$", display_name: "Provider Gender" },
