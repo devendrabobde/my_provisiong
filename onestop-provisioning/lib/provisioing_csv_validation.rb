@@ -45,8 +45,9 @@ module ProvisioingCsvValidation
   def self.process_record(record, application, app_upload_fileds)
     provider = {}
     record.each do |key,value|
+      key = key.strip rescue nil
       app_upload_fileds.each do |field|
-        if field.display_name == key.strip
+        if field.display_name == key
           provider[field.name] = value.strip rescue nil
         end
       end
