@@ -7,7 +7,8 @@ class Provider < ActiveRecord::Base
                   :last_name, :suffix, :degrees, :npi, :birth_date, :email, :address_1, :address_2,
                   :city, :state, :postal_code, :phone, :fax, :department, :provider_otp_token_serial,
                   :resend_flag, :hospital_admin_first_name, :hospital_admin_last_name, :idp_performed_date,
-                  :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip, :fqdn
+                  :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip, :fqdn,
+                  :gender, :social_security_number
 
   alias_attribute :sys_provider_id, :id
 
