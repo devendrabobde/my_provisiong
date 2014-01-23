@@ -1032,3 +1032,13 @@ ALTER TRIGGER "TRI_BIU_ROLES" ENABLE
 --   EPCS: Added new Biometric FQDN field in PROVIDER table
 --------------------------------------------------------
 ALTER TABLE SPARKWAY.PROVIDERS ADD (fqdn VARCHAR2(255));
+/
+
+--------------------------------------------------------
+--   EPCS: Added GENDER, SOCIAL_SECURITY_NUMBER in Providers Table
+--------------------------------------------------------
+
+
+  ALTER TABLE SPARKWAY.PROVIDERS ADD (
+  GENDER VARCHAR2(1 CHAR),
+  SOCIAL_SECURITY_NUMBER VARCHAR2(255 CHAR));
