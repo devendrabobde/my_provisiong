@@ -26,4 +26,4 @@ Scenario: COA selects an application and uploads a CSV file of 4 providers
   And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
   And I should be able to add audit data in Provisioning DB
   And I should be able to see job in history
-  I should be able to see error messages and Pending status from destination OIS
+  Then I should be able to see error messages and Pending status from destination OIS
