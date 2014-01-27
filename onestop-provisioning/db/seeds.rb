@@ -39,7 +39,6 @@ app_upload_fields = [
   { name: "city", field_type: "string", required: true, field_format: nil, display_name: "Provider Home City" },
   { name: "state", field_type: "string", required: true, field_format: "^[A-Z]{2}$", display_name: "Provider Home State" },
   { name: "zip", field_type: "string", required: true, field_format: "^\\d{5}((-|\\s)?\\d{4})?$", display_name: "Provider Home Zip" },
-  { name: "phone", field_type: "string", required: true, field_format: "^\\+?[\\d.-]+$", display_name: "Provider Work phone" },
   { name: "email", field_type: "string", required: true, field_format: "^.+@.+\\..+$", display_name: "Provider Primary Contact Email" },
   { name: "provider_otp_token_serial", field_type: "string", required: true, field_format: nil, display_name: "Provider OTP token serial #" },
   { name: "resend_flag", field_type: "string", required: false, field_format: nil, display_name: "Resend Flag" },
@@ -47,8 +46,13 @@ app_upload_fields = [
   { name: "hospital_admin_last_name", field_type: "string", required: true, field_format: nil, display_name: "Hospital Admin Last Name" },
   { name: "idp_performed_date", field_type: "datetime", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "IDP performed date" },
   { name: "idp_performed_time", field_type: "timestamp", required: true, field_format: "[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$", display_name: "IDP performed time" },
-  { name: "hospital_idp_transaction_id", field_type: "string", required: true, field_format: nil, display_name: "Hospital IDP transactionID" },
-  { name: "fqdn", field_type: "string", required: false, field_format: nil, display_name: "FQDN" }
+  { name: "hospital_idp_transaction_id", field_type: "string", required: false, field_format: nil, display_name: "Hospital IDP transactionID" },
+  { name: "fqdn", field_type: "string", required: false, field_format: nil, display_name: "FQDN" },
+  { name: "middle_name", field_type: "string", required: false, field_format: nil, display_name: "Provider Middle Name" },
+  { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Provider Prefix" },
+  { name: "gender", field_type: "string", required: true, field_format: "^[M|F]$", display_name: "Provider Gender" },
+  { name: "birth_date", field_type: "string", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider Dateofbirth" },
+  { name: "social_security_number", field_type: "string", required: false, field_format: nil, display_name: "Provider SocialSecurityNumber" }
 ]
 
 app_upload_fields.each do |f|
