@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 
 # Oracle interface ruby gem
-gem 'ruby-oci8'
-gem 'activerecord-oracle_enhanced-adapter'
+gem 'ruby-oci8', '2.1.5'
+gem 'activerecord-oracle_enhanced-adapter', '1.4.2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -74,3 +74,4 @@ gem 'settingslogic'
 gem 'redis-rails'
 gem 'redis-rack-cache'
 #gem 'newrelic_rpm'
+gem 'encryptor'
