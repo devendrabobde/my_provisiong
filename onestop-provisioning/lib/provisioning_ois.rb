@@ -33,15 +33,15 @@ module ProvisioningOis
     if provider_records.present?
       provider_records.each do |provider|
         provider = provider.symbolize_keys
-        if provider[:status] == "EPCS-900"
+        if provider[:status] == "902"
           status_codes = []
           provisioing_providers = Provider.where(npi: provider[:npi]).all
           provisioing_providers.each do |p|
             status_codes << p.provider_app_detail.status_code rescue nil
-            unless status_codes.compact.include? "200"
-              temp_providers << provider
-              providers_with_npi << provider.slice(:npi, :first_name, :last_name)
-            end
+          end
+          unless status_codes.compact.include? "200"
+            temp_providers << provider
+            providers_with_npi << provider.slice(:npi, :first_name, :last_name)
           end
         end
         if !provider[:error].present? and provider[:npi].present?
