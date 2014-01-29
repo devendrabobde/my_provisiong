@@ -18,7 +18,12 @@ module OnestopRouter
       response = RestClient.post url, body, header
       return JSON.parse(response)
     rescue => e
+      Rails.logger.error e
       return {:error => e.message }
+    ensure
+      Rails.logger.info \
+        "Onestop-Provisioning: Onestop-Router OIS communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
+          \n\n#{body}\n\nReceived from Onestop-Router:\n\n#{response rescue nil}"
     end
   end
   

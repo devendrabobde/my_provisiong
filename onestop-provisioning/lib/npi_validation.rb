@@ -32,11 +32,16 @@ module NpiValidation
         providers = response["valid_providers"] + response["invalid_providers"]
       end
     rescue  => e
+      Rails.logger.error e
       providers_records.each do |provider|
         provider[:validation_error_message] = "SuperNPI OIS " + e.message
         updated_providers <<  provider
       end
       providers = updated_providers
+    ensure
+      Rails.logger.info \
+        "Onestop-Provisioning: SuperNPI-OIS communication summary:\n\nURL:#{url}\n\nSent to SuperNPI-OIS:\
+          \n\n#{payload}\n\nReceived from SuperNPI-OIS:\n\n#{providers rescue nil}"
     end
     providers.present? ? providers : []
   end
