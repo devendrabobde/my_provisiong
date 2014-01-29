@@ -27,6 +27,10 @@ module ProvisioningOis
           updated_providers <<  provider
         end
         provider_records = updated_providers
+      ensure
+        Rails.logger.info \
+          "Onestop-Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
+            \n\n#{payload}\n\nReceived from EPCS-OIS:\n\n#{provider_records}"
       end
     end
     providers_with_npi, invalid_providers, batch_upload_response,temp_providers = [], [], nil, []
