@@ -93,11 +93,13 @@ module ProvisioingCsvValidation
   # This method is responsible for validating providers record. In this we are checking present field condition.
   #
   def self.validate_required_field(providers, application)
-    required_field_errors, invalid_providers = [], []
+    required_field_errors = []
     provider_keys, provider_dea_keys = [], []
+    req_field_err_hash = {}
     provider_validations = application_upload_field_validations(application)
     provider_validations = provider_validations.each.select {|v| v.required }
-    providers.each do |provider|
+    providers.each_with_index do |provider, index|
+      req_field_err_hash[index] = [ ]
       if provider.present?
         provider_keys = provider.keys
         if provider[:provider_dea_record].present?
@@ -122,14 +124,15 @@ module ProvisioingCsvValidation
             end
           rescue ValidateRecord::FieldPresenceError => e
             required_field_errors << vf.name
-            invalid_providers << provider
+            req_field_err_hash[index] << vf.name
+            # invalid_providers << provider
           end
         end
       end
     end
     required_field_status = required_field_errors.present? ? false : true
     required_field_errors = required_field_errors.uniq.compact.map!{ |c| c.titleize.strip }
-    [required_field_status, required_field_errors, invalid_providers]
+    [required_field_status, req_field_err_hash]
   end
 
   #
