@@ -1,0 +1,19 @@
+development: &dev
+  service_name: "OneStop Provisioining"
+  server_instance_name: "development"
+  code_version: 1.0.2
+  #tokens_expire_in: 86400 # in seconds
+production:
+  service_name: "OneStop Router"
+  server_instance_name: "production"
+  code_version: 1.0.2
+  #tokens_expire_in: 86400
+test:
+  <<: *dev
+  server_instance_name: "test"
+cucumber:
+  <<: *dev
+  server_instance_name: "test"
+performance:
+  <<: *dev
+  server_instance_name: "demo"
