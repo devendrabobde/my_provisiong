@@ -1,6 +1,6 @@
 development: &dev
   onestop_service_name: "OneStop Provisioining"
-  onestop_server_instance_name: "development"
+  onestop_server_instance_name: "Development"
   onestop_code_version: 1.0.2
   #tokens_expire_in: 86400 # in seconds
 
