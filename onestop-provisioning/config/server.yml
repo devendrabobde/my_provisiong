@@ -1,13 +1,45 @@
 development: &dev
-  service_name: "OneStop Provisioining"
-  server_instance_name: "development"
-  code_version: 1.0.2
+  onestop_service_name: "OneStop Provisioining"
+  onestop_server_instance_name: "development"
+  onestop_code_version: 1.0.2
   #tokens_expire_in: 86400 # in seconds
+
+  #EPCS
+  epcs_service_name: "EPCS"
+  epcs_server_instance_name: "Development"
+  epcs_code_version: 1.0.2
+
+  #SuperNPI
+  supernpi_service_name: "SuperNPI"
+  supernpi_server_instance_name: "Development"
+  supernpi_code_version: 1.0.2
+
+  #Router
+  router_service_name: "Router"
+  router_server_instance_name: "Development"
+  router_code_version: 1.0.2
+
 production:
-  service_name: "OneStop Router"
-  server_instance_name: "production"
-  code_version: 1.0.2
-  #tokens_expire_in: 86400
+  onestop_service_name: "OneStop Provisioining"
+  onestop_server_instance_name: "Production"
+  onestop_code_version: 1.0.2
+  #tokens_expire_in: 86400 # in seconds
+
+  #EPCS
+  epcs_service_name: "EPCS"
+  epcs_server_instance_name: "Production"
+  epcs_code_version: 1.0.2
+
+  #SuperNPI
+  supernpi_service_name: "SuperNPI"
+  supernpi_server_instance_name: "Production"
+  supernpi_code_version: 1.0.2
+
+  #Router
+  router_service_name: "Router"
+  router_server_instance_name: "Production"
+  router_code_version: 1.0.2
+  
 test:
   <<: *dev
   server_instance_name: "test"

@@ -1,4 +1,6 @@
 OneStop::Application.routes.draw do
+  match "monitor" => "monitor#monitor", as: :monitor
+  
   devise_for :caos
   resources :providers
   resources :home
