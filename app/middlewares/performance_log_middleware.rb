@@ -4,10 +4,8 @@ class PerformanceLogMiddleware
   end
 
   def call(env)
-    puts "--------------------------------------------------"
     @env     = env
     @request = Rack::Request.new(@env)
-
     if api_request?
       start_time = Time.now
       user_agent = UserAgent.parse(@request.user_agent)
@@ -45,22 +43,21 @@ class PerformanceLogMiddleware
       db_response_time                    = @response.request.env['action_controller.instance'].db_runtime rescue nil
       performance_log.db_response_time    = db_response_time
       performance_log.total_response_time = response_time + db_response_time.to_i
-      performance_log.controller_name     = rails_route_params['controller']
-      performance_log.action_name         = rails_route_params['action']
+      performance_log.controller_name     = rails_route_params['controller'] rescue nil
+      performance_log.action_name         = rails_route_params['action'] rescue nil
       performance_log.save
     else
       call_rails
     end
-
     [@status, @headers, @response]
   end
 
   private
-  def api_request?
-    !(@request.path =~ /^\/assets\//)
-  end
+    def api_request?
+      !(@request.path =~ /^\/assets\//)
+    end
 
-  def call_rails
-    @status, @headers, @response = @app.call(@env)
-  end
+    def call_rails
+      @status, @headers, @response = @app.call(@env)
+    end
 end
