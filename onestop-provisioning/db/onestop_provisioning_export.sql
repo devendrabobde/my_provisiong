@@ -1108,7 +1108,7 @@ END;
 /
 
 --------------------------------------------------------
---  Constraints for Table PROVIDERS
+--  Constraints for Table PERFORMANCE_LOGS
 --------------------------------------------------------
 ALTER TABLE PERFORMANCE_LOGS ADD CONSTRAINT "PK_PERFORMANCE_LOGS" PRIMARY KEY ("SYS_PERFORMANCE_LOG_ID") ENABLE;
 ALTER TABLE PERFORMANCE_LOGS ADD CONSTRAINT "UQ_PERFORMANCE_LOGS" UNIQUE ("PERFORMANCE_LOG_ID") ENABLE;
