@@ -27,21 +27,27 @@ module ProvisioningOis
           updated_providers <<  provider
         end
         provider_records = updated_providers
+      ensure
+        Rails.logger.info \
+          "Onestop-Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
+            \n\n#{payload}\n\nReceived from EPCS-OIS:\n\n#{provider_records}"
       end
     end
-    providers_with_npi, invalid_providers, batch_upload_response = [], [], nil
-
-    # if providers.present?
-    #   providers.each do |provider|
-    #     provider = provider.symbolize_keys
-    #     if provider[:npi].present?
-    #       providers_with_npi << provider.slice(:npi, :first_name, :last_name)
-    #     end
-    #   end
-    # end
+    providers_with_npi, invalid_providers, batch_upload_response,temp_providers = [], [], nil, []
     if provider_records.present?
       provider_records.each do |provider|
         provider = provider.symbolize_keys
+        if provider[:status] == "902"
+          status_codes = []
+          provisioing_providers = Provider.where(npi: provider[:npi]).all
+          provisioing_providers.each do |p|
+            status_codes << p.provider_app_detail.status_code rescue nil
+          end
+          unless status_codes.compact.include? "200"
+            temp_providers << provider
+            providers_with_npi << provider.slice(:npi, :first_name, :last_name)
+          end
+        end
         if !provider[:error].present? and provider[:npi].present?
           providers_with_npi << provider.slice(:npi, :first_name, :last_name)
         else
@@ -52,6 +58,6 @@ module ProvisioningOis
     if providers_with_npi.present?
       batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application)
     end
-    [invalid_providers, batch_upload_response]
+    [invalid_providers - temp_providers, batch_upload_response]
   end
 end
