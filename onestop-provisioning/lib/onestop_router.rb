@@ -26,15 +26,15 @@ module OnestopRouter
           \n\n#{body}\n\nReceived from Onestop-Router:\n\n#{response rescue nil}"
     end
   end
-  
+
   private
 
   def self.batch_upload_url
     server_url + "/" + CONSTANT["ONESTOP_ROUTER"]["BATCH_UPLOAD_API_URL"]
   end
-  
+
   def self.server_url
     CONSTANT["ONESTOP_ROUTER"]["SERVER_URL"]
   end
-  
+
 end
