@@ -2,6 +2,7 @@ development: &dev
   onestop_service_name: "OneStop Provisioining"
   onestop_server_instance_name: "Development"
   onestop_code_version: 1.0.2
+  onestop_server_ip: 10.100.10.212
   #tokens_expire_in: 86400 # in seconds
 
   #EPCS
@@ -23,6 +24,7 @@ production:
   onestop_service_name: "OneStop Provisioining"
   onestop_server_instance_name: "Production"
   onestop_code_version: 1.0.2
+  onestop_server_ip: 10.100.10.212
   #tokens_expire_in: 86400 # in seconds
 
   #EPCS
