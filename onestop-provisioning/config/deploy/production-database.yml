@@ -1,0 +1,40 @@
+<%= header %>
+profile:
+  adapter: oracle_enhanced
+  host: 172.16.10.105
+  port: 1521
+  database: qa1media
+  username: sparkway
+  password: <%= dbpassword%>
+
+development:
+  adapter: oracle_enhanced
+  host: 172.16.10.105
+  port: 1521
+  database: qa1media
+  username: sparkway
+  password: <%= dbpassword%>
+
+supernpi:
+  adapter: oracle_enhanced
+  host: 172.16.10.105
+  port: 1521
+  database: qa1ois
+  username: sparkway
+  password: <%= dbpassword%>
+
+production:
+  adapter: oracle_enhanced
+  host: 172.16.10.105
+  port: 1521
+  database: qa1media
+  username: sparkway
+  password: <%= dbpassword%>
+
+test: &test
+  adapter: oracle_enhanced
+  host: 172.16.10.105
+  port: 1521
+  database: qa1test
+  username: sparkway
+  password: <%= dbpassword%>
