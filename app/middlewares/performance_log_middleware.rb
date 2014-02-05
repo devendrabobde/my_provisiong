@@ -1,8 +1,12 @@
 class PerformanceLogMiddleware
+    
+  # initialize the application
   def initialize(app)
     @app = app
   end
 
+  # This method is responds to Rack call(), It takes exactly one argument, the environment and 
+  # returns an Array of exactly three values [http_status_code, response_headers_hash, body]
   def call(env)
     @env     = env
     @request = Rack::Request.new(@env)
@@ -15,6 +19,8 @@ class PerformanceLogMiddleware
       performance_log.request_content = "#{@request.request_method} #{@request.path}"
       performance_log.client_platform = user_agent.browser
       performance_log.client_version  = user_agent.version.to_s
+
+      # if request contains csv attachment then store attached csv file on file system
       upload = @request.params["upload"]
       if upload.present?
         directory = "#{Rails.root}" + "/public/csv_files"
@@ -24,6 +30,7 @@ class PerformanceLogMiddleware
         File.open(path, "w") { |f| f.write(upload[:tempfile].read.gsub(/[\"\'\-\!\$\%\^\&\*\(\)\+\=\{\}\;\`\?\|\<\>\]\[]/, "")) }
       end
       performance_log.request_params        = @request.params.to_json[0..1998]
+      # Read server configuration from config/server.yml file
       performance_log.server_name           = SERVER_CONFIGURATION["onestop_service_name"]
       performance_log.server_version        = SERVER_CONFIGURATION['onestop_code_version']
       performance_log.server_ip             = SERVER_CONFIGURATION['onestop_server_ip']
@@ -32,6 +39,8 @@ class PerformanceLogMiddleware
       call_rails
 
       rails_route_params = env['action_dispatch.request.parameters']
+
+      # calculate total response body
       response_body = ""
       @response.each { |part| response_body += part }
       performance_log.client_id           = @request.ip
@@ -53,10 +62,13 @@ class PerformanceLogMiddleware
   end
 
   private
+
+    # return true if request is for controller action o.w false
     def api_request?
       !(@request.path =~ /^\/assets\//)
     end
 
+    # Returns an Array of [http_status_code, response_headers_hash, body]
     def call_rails
       @status, @headers, @response = @app.call(@env)
     end
