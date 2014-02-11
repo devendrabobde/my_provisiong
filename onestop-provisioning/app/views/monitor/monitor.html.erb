@@ -6,9 +6,9 @@
 		<h3>OneStop Monitoring Page</h3>
 	</div>
 	<div class="monitor-application">
-		<h5><%= SERVER_CONFIGURATION[Rails.env]["onestop_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION[Rails.env]["onestop_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION[Rails.env]["onestop_server_instance_name"] %></p>
+		<h5><%= SERVER_CONFIGURATION["onestop_service_name"] %></h5>
+		<p>Application Version: <%= SERVER_CONFIGURATION["onestop_code_version"] %></p>
+		<p>Instance Name: <%= SERVER_CONFIGURATION["onestop_server_instance_name"] %></p>
 
 		<%# NOTE: This is hard coded because if the application database is not running then in that case we
 		won't be able to view this page. %>
@@ -17,25 +17,25 @@
 	</div>
 
 	<div class="monitor-application">
-		<h5><%= SERVER_CONFIGURATION[Rails.env]["epcs_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION[Rails.env]["epcs_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION[Rails.env]["epcs_server_instance_name"] %></p>
+		<h5><%= SERVER_CONFIGURATION["epcs_service_name"] %></h5>
+		<p>Application Version: <%= SERVER_CONFIGURATION["epcs_code_version"] %></p>
+		<p>Instance Name: <%= SERVER_CONFIGURATION["epcs_server_instance_name"] %></p>
 		<p>Database Server: No Database</p>
 		<p>Application Status: <%= display_server_status(@connectivity[:epcs]) %></p>
 	</div>
 
 	<div class="monitor-application">
-		<h5><%= SERVER_CONFIGURATION[Rails.env]["supernpi_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION[Rails.env]["supernpi_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION[Rails.env]["supernpi_server_instance_name"] %></p>
+		<h5><%= SERVER_CONFIGURATION["supernpi_service_name"] %></h5>
+		<p>Application Version: <%= SERVER_CONFIGURATION["supernpi_code_version"] %></p>
+		<p>Instance Name: <%= SERVER_CONFIGURATION["supernpi_server_instance_name"] %></p>
 		<p>Database Server: <%= display_server_status(@connectivity[:super_npi]) %></p>
 		<p>Application Status: <%= display_server_status(@connectivity[:super_npi]) %></p>
 	</div>
 
 	<div class="monitor-application">
-		<h5><%= SERVER_CONFIGURATION[Rails.env]["router_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION[Rails.env]["router_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION[Rails.env]["router_server_instance_name"] %></p>
+		<h5><%= SERVER_CONFIGURATION["router_service_name"] %></h5>
+		<p>Application Version: <%= SERVER_CONFIGURATION["router_code_version"] %></p>
+		<p>Instance Name: <%= SERVER_CONFIGURATION["router_server_instance_name"] %></p>
 		<p>Database Server: <%= display_server_status(@connectivity[:router]) %></p>
 		<p>Application Status: <%= display_server_status(@connectivity[:router]) %></p>
 	</div>
