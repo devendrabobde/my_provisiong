@@ -141,7 +141,8 @@ class Admin::ProvidersController < ApplicationController
   # Store uploaded file
   def store_csv
     upload = params[:upload]
-    name =  upload.original_filename
+    # name =  upload.original_filename
+    name = $file_name
     directory = "#{Rails.root}" + "/public/csv_files"
     # Dir.mkdir(directory) unless File.exists?(directory)
     path = File.join(directory, name)
