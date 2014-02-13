@@ -25,11 +25,16 @@ class PerformanceLogMiddleware
       if upload.present?
         directory = "#{Rails.root}" + "/public/csv_files"
         Dir.mkdir(directory) unless File.exists?(directory)
-        name =  upload[:filename]
-        path = File.join(directory, name)
+        fname = upload[:filename]
+        upload[:filename] = fname.chomp(File.extname(fname)) + "_" + DateTime.now.to_s + File.extname(fname)
+        file_name = upload[:filename]
+        path = File.join(directory, file_name)
         File.open(path, "w") { |f| f.write(upload[:tempfile].read.gsub(/[\"\'\-\!\$\%\^\&\*\(\)\+\=\{\}\;\`\?\|\<\>\]\[]/, "")) }
+        size = File.size(path)
+        performance_log.request_params        = @request.params.merge(file_size: size).to_json[0..1998] rescue @request.params.to_json[0..1998]
+      else
+        performance_log.request_params        = @request.params.to_json[0..1998]
       end
-      performance_log.request_params        = @request.params.to_json[0..1998]
       # Read server configuration from config/server.yml file
       performance_log.server_name           = SERVER_CONFIGURATION["onestop_service_name"]
       performance_log.server_version        = SERVER_CONFIGURATION['onestop_code_version']
