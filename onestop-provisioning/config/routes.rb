@@ -29,4 +29,10 @@ OneStop::Application.routes.draw do
   end
   root :to => 'admin/providers#application'
   mount Resque::Server, :at => "/resque"
+
+  namespace :api do
+    namespace :v1 do
+      get "versions/check_version", to: "versions#check_version"
+    end
+  end
 end
