@@ -19,7 +19,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 gem "twitter-bootstrap-rails"
-gem "therubyracer"
+gem "therubyracer", :platform => :ruby
 gem 'devise', "=2.1.0"
 gem 'rest-client'
 gem 'smarter_csv'
