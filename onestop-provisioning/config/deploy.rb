@@ -46,7 +46,7 @@ set :rails_env, "production"
 
 #set :copy_dir, "/usr/local/onestop_temp/tmp"
 #set :remote_copy_dir, "/tmp"
-set :deploy_to, "/usr/local/#{application}"
+set :deploy_to, "/usr/local/onestop/#{application}"
 
 # roles (servers)
 role :web, domain
