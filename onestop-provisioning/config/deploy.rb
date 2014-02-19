@@ -1,12 +1,9 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
 
-#set :user, 'sparkway' 
 set :user, 'root'
 set :application, "onestop-provisioning"
-#set :use_sudo, true
 set :bundle_gemfile, "onestop-provisioning/Gemfile"
-
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 set :rvm_path,          "/usr/local/rvm/"
@@ -47,9 +44,9 @@ ssh_options[:forward_agent] = true
 set :domain, "10.100.10.203"
 set :rails_env, "production"
 
-set :copy_dir, "/usr/local/onestop_temp/tmp"
-set :remote_copy_dir, "/tmp"
-set :deploy_to, "/usr/local/apps/www/#{application}"
+#set :copy_dir, "/usr/local/onestop_temp/tmp"
+#set :remote_copy_dir, "/tmp"
+set :deploy_to, "/usr/local/#{application}"
 
 # roles (servers)
 role :web, domain
@@ -64,13 +61,13 @@ namespace :deploy do
   desc "Copy config files"
   after "deploy:update_code" do
     run "export RAILS_ENV=production"
-   # run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
+    # run "cp -r #{shared_path}/config/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "cp -r #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
     run "cp -r #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
     run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/log"
     run "ln -nfs #{shared_path}/tmp #{release_path}/onestop-provisioning/tmp"
 
-   # sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
+    # sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
     sudo "chmod -R 0666 #{release_path}/onestop-provisioning/log"
   end
 
@@ -98,13 +95,13 @@ namespace :deploy do
   end
 
   desc "start resque job queue"
- task :resque_work do
-   run "cd #{current_path}/onestop-provisioning && RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
+  task :resque_work do
+    run "cd #{current_path}/onestop-provisioning && RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
   end
 
   desc "clean redis queue"
   task :clean_redis do
-   run "cd #{current_path}/onestop-provisioning && redis-cli FLUSHALL"
+    run "cd #{current_path}/onestop-provisioning && redis-cli FLUSHALL"
   end
 
 end
@@ -120,26 +117,26 @@ end
 namespace :db do
 
   task :configfile do
-# Generate key
+    # Generate key
     run "mkdir -p #{shared_path}/config"
     key=Digest::SHA256.hexdigest(Time.now.to_s)
     put Base64.encode64(key),
-    "#{shared_path}/config/.dbpass"
+      "#{shared_path}/config/.dbpass"
 
-# Create conf file
-        location = fetch(:template_dir, "config/deploy") + "/production-database.yml.erb"
-        template = File.read(location)
-        password=Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
-        dbpassword="<%= Util::Encrypt.decrypt('#{password}') %>"
-        header="<% require 'util/encrypt' %>"
-        config = ERB.new(template)
-        run "mkdir -p #{shared_path}/db"
-        put config.result(binding), "#{shared_path}/db/database.yml"
+    # Create conf file
+    location = fetch(:template_dir, "config/deploy") + "/production-database.yml.erb"
+    template = File.read(location)
+    password=Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    dbpassword="<%= Util::Encrypt.decrypt('#{password}') %>"
+    header="<% require 'util/encrypt' %>"
+    config = ERB.new(template)
+    run "mkdir -p #{shared_path}/db"
+    put config.result(binding), "#{shared_path}/db/database.yml"
 
-# Setup links
-        #run "touch database.yml"
-        run "ln -nfs #{shared_path}/db/database.yml #{release_path}/onestop-provisioning/config/database.yml"
-        run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/onestop-provisioning/config/.dbpass"
+    # Setup links
+    #run "touch database.yml"
+    run "ln -nfs #{shared_path}/db/database.yml #{release_path}/onestop-provisioning/config/database.yml"
+    run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/onestop-provisioning/config/.dbpass"
   end
 
   after "deploy:finalize_update", "db:configfile"
