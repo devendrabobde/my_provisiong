@@ -45,6 +45,16 @@ set :migrate_target, :latest
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
+
+#Need to parse a tag while deployment
+set :branch do
+  default_tag = `git tag`.split("\n").last
+
+  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
+  tag = default_tag if tag.empty?
+  tag
+end
+
 require 'capistrano/cli'
 require 'base64'
 require 'encryptor'
