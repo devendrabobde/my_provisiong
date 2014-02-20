@@ -32,6 +32,7 @@ gem "spreadsheet", "0.7.7"
 # Deploy with Capistrano
 #gem 'capistrano'
 gem 'capistrano'#, '2.14.2'
+gem 'capistrano-ext'
 gem 'rvm-capistrano'
 gem 'strong_parameters'
 gem 'pry'
