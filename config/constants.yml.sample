@@ -1,0 +1,51 @@
+ONESTOP_ROUTER:
+  SERVER_URL: http://localhost:3003
+  BATCH_UPLOAD_API_URL: api/v1/ois/batch-upload.json
+  EPCS_IDP:
+    OISID: epcs
+    OISPASSWORD: RxDfyergtWmuMWNWXaTTium430aWJH3KHVEsUh1ysuUjoA52TJODoP2QEmPVFrQvpJqgQ1PeYT
+  
+  REQUEST_IDP:
+    API_URL: api/v1/client/request-idp.json
+    CLIENT_APPLICATION:
+      CLIENTID: onestop
+      CLIENTPASSWORD: mRuJ8jwzR6S8U4u78V7ft6GPi917i6Wz3iTPlFDoKzoy0g8KGAZ9BN1ahu
+
+  VERIFY_IDENTITY:
+    API_URL: api/v1/client/verify-identity.json
+    CLIENT_APPLICATION:
+      CLIENTID: onestop
+      CLIENTPASSWORD: mRuJ8jwzR6S8U4u78V7ft6GPi917i6Wz3iTPlFDoKzoy0g8KGAZ9BN1ahu
+
+  OIS:
+    EPCS_IDP:
+      OISID: epcs
+      OISPASSWORD: RxDfyergtWmuMWNWXaTTium430aWJH3KHVEsUh1ysuUjoA52TJODoP2QEmPVFrQvpJqgQ1PeYT
+
+  API:
+    SAVE_PROVIDER:
+      URL: api/v1/ois/save-provider.json
+
+EPCS:
+  EPCS_URL: http://10.100.10.103:2001
+  SETUP_ORG_WS: WSSetUpOrganizationStatus
+  BATCH_UPLOAD_WS: WSBatchIDP
+  VENDOR_KEY_VERSION: rmc-001
+  ISSUE_TIMESTAMP: 22:04:2011-11:07:01
+  SHARED_SECRET: uidyweyf8986328992
+  VENDOR_NAME: Meditech
+  VENDOR_LABEL: Meditech 1
+  VENDOR_NODE_NAME: Meditech Node 1
+  VENDOR_NODE_LABEL: MeditechNode
+  APP_NAME: OneStop
+  APP_VERSION: 1.0.0
+  EPCS_API_VERSION: 1.3
+
+
+EPCS_OIS:
+  SERVER_URL: http://localhost:3001
+  BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
+  
+SUPERNPI_OIS:
+  SERVER_URL: http://localhost:3002
+  VIEW_USER_URL: api/v1/ois/supernpis/view-user.json
