@@ -99,7 +99,14 @@ class Provider < ActiveRecord::Base
           csv << product.attributes.values_at(*column_names - remove_columns)
         end
       end
+    elsif application.app_name.eql?("Rcopia")
+      remove_columns = []
+      CSV.generate(options) do |csv|
+      csv << column_names - remove_columns
+        all.each do |product|
+          csv << product.attributes.values_at(*column_names - remove_columns)
+        end
+      end
     end
   end
-
 end
