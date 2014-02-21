@@ -16,12 +16,9 @@ module FormatValidation
    error_messages = []
    provider_keys = provider_record.keys
    field_name  = field_validation.app_upload_field.name.to_sym
-   binding.pry
    if provider_keys.include? field_name
      if provider_record[field_name].present?
-      binding.pry
        unless provider_record[field_name].match Regexp.new(field_validation.field_format)
-        binding.pry
          error_messages << field_validation.error_message
        end
      end
@@ -42,7 +39,6 @@ module FormatValidation
     end
     error_messages = error_messages.uniq.compact
     format_validation_status = error_messages.present? ? false : true
-    binding.pry
     [format_validation_status, error_messages]
   end
 end

@@ -36,7 +36,6 @@ module ProvisioingCsvValidation
     end
     # File.delete(path) if File.exist?(path)
     file_status = providers.present? ? true : false
-    binding.pry
     [providers, file_status]
   end
 
@@ -150,7 +149,6 @@ module ProvisioingCsvValidation
             validation_class = field_validation.validation.classify
             if (validation_class != "Npi")
               validate, error_message = class_eval((validation_class + "Validation")).validate(provider, field_validation) rescue nil
-              binding.pry
               unless validate
                 provider_error_messages << error_message
               end
@@ -169,11 +167,9 @@ module ProvisioingCsvValidation
         valid_providers << provider
       end
     end
-    binding.pry
     # validated_providers = class_eval(("NpiValidation")).validate(modified_providers, application) rescue nil
     validated_providers = class_eval(("NpiValidation")).validate(valid_providers, application) rescue nil
     total_providers = validated_providers.present? ? validated_providers + invalid_providers : invalid_providers
-    binding.pry
     total_providers
   end
 end
