@@ -15,7 +15,7 @@ cao.save!
 profile_list = ["Doctor","Nurse"]
 profile_list.each {|profile| Profile.where(profile_name: profile).first_or_create! }
 
-applications = ["EPCS-IDP","Backline"]
+applications = ["EPCS-IDP","Backline", "Rcopia"]
 applications.each {|app| RegisteredApp.where(app_name: app).first_or_create! }
 
 #
@@ -97,6 +97,42 @@ backline_app_upload_fields.each do |f|
   if f.present?
     p = AppUploadField.new(f.except(:field_format))
     p.fk_registered_app_id = RegisteredApp.where( app_name: "Backline").first_or_create.id
+    p.save!
+    p.app_upload_field_validations.create!([{ validation: f[:name].classify, error_message: "" }])
+    if f[:field_format].present?
+      p.app_upload_field_validations.create!([{ validation: "Format", error_message: "#{f[:name].classify} is not in correct format", field_format: f[:field_format] }])
+    end
+  end
+end
+
+## Rcopia Application Validation
+
+rcopia_app_upload_fields = [
+  { name: "npi", field_type: "string", required: false, field_format: "^\\d{10}$", display_name: "National Provider Identifier" },
+  { name: "username", field_type: "string", required: false, field_format: "^[a-zA-Z0-9_.-]+$", display_name: "Preferred Rcopia Username" },
+  { name: "role", field_type: "string", required: true, field_format: nil, display_name: "Rcopia Roles"},
+  { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Prefix"},
+  { name: "last_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "LAST NAME" },
+  { name: "first_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "FIRST NAME" },
+  { name: "middle_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "MIDDLE NAME" },
+  { name: "suffix", field_type: "string", required: false, field_format: nil, display_name: "SUFFIX" },
+  { name: "use_existing_account", field_type: "string", required: false, field_format: "^[y||n]$", display_name: "Use Existing Account" },
+  { name: "member_type", field_type: "string", required: true, field_format: nil, display_name: "Member Type" },
+  { name: "email", field_type: "string", required: false, field_format: "^.+@.+\\..+$", display_name: "E-MAIL ADDRESS" },
+  { name: "practice_group", field_type: "string", required: false, field_format: nil, display_name: "Practice Group / Location External IDs" },
+  { name: "medical_license_number", field_type: "string", required: false, field_format: nil, display_name: "Med LIC #" },
+  { name: "medical_license_state", field_type: "string", required: true, field_format: "^[A-Z]{2}$", display_name: "Med Lic State" },
+  { name: "specialty", field_type: "string", required: true, field_format: "^[a-zA-Z0-9_.-]+$", display_name: "SPECIALTY 1" },
+  { name: "secondary_license", field_type: "string", required: false, field_format: nil, display_name: "Secondary License" },
+  { name: "external_id_1", field_type: "string", required: false, field_format: nil, display_name: "External ID 1" },
+  { name: "external_id_2", field_type: "string", required: false, field_format: nil, display_name: "External ID 2" },
+  { name: "provider_dea", field_type: "string", required: false, field_format: "^[a-zA-Z]{2}+\\d{7}$", display_name: "DEA #" }
+]
+
+rcopia_app_upload_fields.each do |f|
+  if f.present?
+    p = AppUploadField.new(f.except(:field_format))
+    p.fk_registered_app_id = RegisteredApp.where( app_name: "Rcopia").first_or_create.id
     p.save!
     p.app_upload_field_validations.create!([{ validation: f[:name].classify, error_message: "" }])
     if f[:field_format].present?
