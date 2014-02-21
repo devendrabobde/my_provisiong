@@ -11,8 +11,8 @@ module OnestopRouter
     url = batch_upload_url
     if application.app_name.eql?("EPCS-IDP")
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["EPCS_IDP"]
-    elsif application.app_name.eql?("Backline")
-      header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["Backline"]
+    elsif application.app_name.eql?("Rcopia")
+      header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["RCOPIA"]
     end
     begin
       response = RestClient.post url, body, header

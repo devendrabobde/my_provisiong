@@ -8,7 +8,8 @@ class Provider < ActiveRecord::Base
                   :city, :state, :postal_code, :phone, :fax, :department, :provider_otp_token_serial,
                   :resend_flag, :hospital_admin_first_name, :hospital_admin_last_name, :idp_performed_date,
                   :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip, :fqdn,
-                  :gender, :social_security_number
+                  :gender, :social_security_number,:use_existing_account, :member_type, :practice_group, 
+                  :medical_license_number, :medical_license_state, :specialty, :secondary_license, :external_id_1, :external_id_2
 
   alias_attribute :sys_provider_id, :id
 
@@ -39,7 +40,7 @@ class Provider < ActiveRecord::Base
           if provider_app_detail.present?
             providers_ids << provider_app_detail.id
             provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
-            if application.app_name.eql?("EPCS-IDP")
+            if ["EPCS-IDP", "Rcopia"].include?(application.app_name)
               provider_deas = provider[:provider_dea_record]
               if provider_deas.present?
                 provider_deas.each do |dea|

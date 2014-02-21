@@ -36,6 +36,7 @@ module ProvisioingCsvValidation
     end
     # File.delete(path) if File.exist?(path)
     file_status = providers.present? ? true : false
+    binding.pry
     [providers, file_status]
   end
 
@@ -53,7 +54,7 @@ module ProvisioingCsvValidation
       end
     end
     provider = provider.symbolize_keys
-    if application.app_name.eql?("EPCS-IDP")
+    if ["EPCS-IDP", "Rcopia"].include?(application.app_name)
       provider_dea_info, dea_numbers, dea_states, dea_expiration_times = [], [], [], []
       if provider[:provider_dea].present?
         dea_numbers = provider[:provider_dea].strip.split("~")
@@ -75,7 +76,7 @@ module ProvisioingCsvValidation
         provider_dea_info = dea_result.collect{|x|{ provider_dea: x[0], provider_dea_state: x[1], provider_dea_expiration_date: x[2] }}
       end
       provider[:provider_dea_record] = provider_dea_info
-      provider = provider.except(:provider_dea, :provider_dea_state, :provider_dea_expiration_date)
+      provider = provider.except(:provider_dea, :provider_dea_state, :provider_dea_expiration_date)      
     end
     provider
   end
@@ -147,8 +148,9 @@ module ProvisioingCsvValidation
         upload_field_validations.each do |f_validation|
           f_validation.app_upload_field_validations.each do |field_validation|
             validation_class = field_validation.validation.classify
-            if validation_class != "Npi"
+            if (validation_class != "Npi")
               validate, error_message = class_eval((validation_class + "Validation")).validate(provider, field_validation) rescue nil
+              binding.pry
               unless validate
                 provider_error_messages << error_message
               end
@@ -167,9 +169,11 @@ module ProvisioingCsvValidation
         valid_providers << provider
       end
     end
+    binding.pry
     # validated_providers = class_eval(("NpiValidation")).validate(modified_providers, application) rescue nil
     validated_providers = class_eval(("NpiValidation")).validate(valid_providers, application) rescue nil
     total_providers = validated_providers.present? ? validated_providers + invalid_providers : invalid_providers
+    binding.pry
     total_providers
   end
 end
