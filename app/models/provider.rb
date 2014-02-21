@@ -30,7 +30,10 @@ class Provider < ActiveRecord::Base
   def self.save_provider(providers, cao, application)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
     upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
-    upload_field_validations = upload_field_validations.each.select {|v| v.required }
+    if application.app_name.eql?("EPCS-IDP")
+      upload_field_validations = upload_field_validations.each.select {|v| v.required }
+    end
+    # upload_field_validations = upload_field_validations.each.select {|v| v.required }
     validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
     if validated_providers.present?
       validated_providers.each do |provider|
