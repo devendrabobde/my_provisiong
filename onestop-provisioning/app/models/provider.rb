@@ -9,7 +9,10 @@ class Provider < ActiveRecord::Base
                   :resend_flag, :hospital_admin_first_name, :hospital_admin_last_name, :idp_performed_date,
                   :idp_performed_time, :hospital_idp_transaction_id, :fk_provider_app_detail_id, :zip, :fqdn,
                   :gender, :social_security_number,:use_existing_account, :member_type, :practice_group, 
-                  :medical_license_number, :medical_license_state, :specialty, :secondary_license, :external_id_1, :external_id_2
+                  :medical_license_number, :medical_license_state, :specialty, :secondary_license, :external_id_1, :external_id_2,
+                  :display_name, :user_type, :resident, :security_question, :security_answer, :phone_extension,
+                  :fax_extension, :country, :office_address_line_1, :office_address_line_2, :office_address_city,
+                  :office_address_state, :office_address_country, :office_address_zip
 
   alias_attribute :sys_provider_id, :id
 
