@@ -153,7 +153,7 @@ moxy_app_upload_fields = [
   { name: "middle_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "Middle Name" },
   { name: "suffix", field_type: "string", required: false, field_format: nil, display_name: "Suffix" },
   { name: "gender", field_type: "string", required: true, field_format: "^[O|M|F|U]$", display_name: "Gender" },
-  { name: "user_type", field_type: "string", required: false, field_format: "\\b(apple|orange|pear|banana|kiwi)\\b", display_name: "User Type" },
+  { name: "user_type", field_type: "string", required: false, field_format: "\\b(Staff|Provider|Patient|Academic)\\b", display_name: "User Type" },
   { name: "npi", field_type: "string", required: false, field_format: "^\\d{10}$", display_name: "NPI" },
   { name: "degrees", field_type: "string", required: false, field_format: nil, display_name: "Degree" },
   { name: "resident", field_type: "string", required: true, field_format: nil, display_name: "Resident"},
