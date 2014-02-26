@@ -93,7 +93,7 @@ class Admin::ProvidersController < ApplicationController
       err = (e.class.to_s == "CSV::MalformedCSVError") ? "Error IN CSV File: " : "Error: "
       flash[:error] = err + e.message
     end
-    redirect_to application_admin_providers_path
+    redirect_to application_admin_providers_path(registered_app_id: @application.id)
   end
   
   # Pull audit trail record to verify file upload status

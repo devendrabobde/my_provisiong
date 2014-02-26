@@ -29,7 +29,7 @@ class PerformanceLogMiddleware
         upload[:filename] = fname.chomp(File.extname(fname)) + "_" + DateTime.now.to_s + File.extname(fname)
         file_name = upload[:filename]
         path = File.join(directory, file_name)
-        File.open(path, "w") { |f| f.write(upload[:tempfile].read.gsub(/[\"\'\-\!\$\%\^\&\*\(\)\+\=\{\}\;\`\?\|\<\>\]\[]/, "")) }
+        File.open(path, "w") { |f| f.write(upload[:tempfile].read.gsub(/[\"\'\-\!\$\%\^\&\*\(\)\+\=\{\}\;\`\|\<\>\]\[]/, "")) }
         size = File.size(path)
         performance_log.request_params        = @request.params.merge(file_size: size).to_json[0..1998] rescue @request.params.to_json[0..1998]
       else

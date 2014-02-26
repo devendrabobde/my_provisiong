@@ -55,6 +55,29 @@ module ProvisioningOis
           "Onestop-Provisioning- batch_upload_dest(): RCOPIA-OIS communication summary:\n\nURL:#{url}\n\nSent to RCOPIA-OIS:\
             \n\n#{payload}\n\nReceived from RCOPIA-OIS:\n\n#{provider_records}"
       end
+    elsif application.app_name.eql?("Moxy")
+      # providers = providers.collect do |provider|
+      #   provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
+      #   provider
+      # end
+      payload = { :providers => { "" => providers }}
+      url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      begin
+        response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload)
+        response = JSON.parse(response)
+        provider_records = response["providers"]
+      rescue => e
+        Rails.logger.error e
+        providers.each do |provider|
+          provider[:error] = application.app_name + " " + e.message
+          updated_providers <<  provider
+        end
+        provider_records = updated_providers
+      ensure
+        Rails.logger.info \
+          "Onestop-Provisioning- batch_upload_dest(): MOXY_OIS communication summary:\n\nURL:#{url}\n\nSent to MOXY_OIS:\
+            \n\n#{payload}\n\nReceived from MOXY_OIS:\n\n#{provider_records}"
+      end
     end
     providers_with_npi, invalid_providers, batch_upload_response,temp_providers = [], [], nil, []
     if provider_records.present?

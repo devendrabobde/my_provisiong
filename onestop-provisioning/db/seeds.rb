@@ -15,7 +15,7 @@ cao.save!
 profile_list = ["Doctor","Nurse"]
 profile_list.each {|profile| Profile.where(profile_name: profile).first_or_create! }
 
-applications = ["EPCS-IDP","Backline", "Rcopia"]
+applications = ["EPCS-IDP","Backline", "Rcopia", "Moxy"]
 applications.each {|app| RegisteredApp.where(app_name: app).first_or_create! }
 
 #
@@ -133,6 +133,55 @@ rcopia_app_upload_fields.each do |f|
   if f.present?
     p = AppUploadField.new(f.except(:field_format))
     p.fk_registered_app_id = RegisteredApp.where( app_name: "Rcopia").first_or_create.id
+    p.save!
+    p.app_upload_field_validations.create!([{ validation: f[:name].classify, error_message: "" }])
+    if f[:field_format].present?
+      p.app_upload_field_validations.create!([{ validation: "Format", error_message: "#{f[:name].classify} is not in correct format", field_format: f[:field_format] }])
+    end
+  end
+end
+
+## MOXY Application Validation
+
+moxy_app_upload_fields = [
+  { name: "username", field_type: "string", required: true, field_format: "^[a-zA-Z0-9_.-]+$", display_name: "Username" },
+  { name: "password", field_type: "string", required: true, field_format: nil, display_name: "Password" },
+  { name: "display_name", field_type: "string", required: false, field_format: nil, display_name: "Display Name" },
+  { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Prefix" },
+  { name: "last_name", field_type: "string", required: true, field_format: "^[a-zA-Z'-]+$", display_name: "Last Name" },
+  { name: "first_name", field_type: "string", required: true, field_format: "^[a-zA-Z'-]+$", display_name: "First Name" },
+  { name: "middle_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "Middle Name" },
+  { name: "suffix", field_type: "string", required: false, field_format: nil, display_name: "Suffix" },
+  { name: "gender", field_type: "string", required: true, field_format: "^[O|M|F|U]$", display_name: "Gender" },
+  { name: "user_type", field_type: "string", required: false, field_format: "\\b(apple|orange|pear|banana|kiwi)\\b", display_name: "User Type" },
+  { name: "npi", field_type: "string", required: false, field_format: "^\\d{10}$", display_name: "NPI" },
+  { name: "degrees", field_type: "string", required: false, field_format: nil, display_name: "Degree" },
+  { name: "resident", field_type: "string", required: true, field_format: nil, display_name: "Resident"},
+  { name: "security_question", field_type: "string", required: false, field_format: nil, display_name: "Security Question"},
+  { name: "security_answer", field_type: "string", required: false, field_format: nil, display_name: "Security Answer"},
+  { name: "email", field_type: "string", required: true, field_format: "^.+@.+\\..+$", display_name: "Email" },
+  { name: "phone", field_type: "string", required: true, field_format: "^\\+?[\\d.-]+$", display_name: "Phone Number" },
+  { name: "phone_extension", field_type: "string", required: false, field_format: nil, display_name: "Phone Extension"},
+  { name: "fax", field_type: "string", required: false, field_format: nil, display_name: "Fax Number" },
+  { name: "fax_extension", field_type: "string", required: false, field_format: nil, display_name: "Fax Extension"},
+  { name: "address_1", field_type: "text", required: false, field_format: nil, display_name: "Home Address Line 1" },
+  { name: "address_2", field_type: "text", required: false, field_format: nil, display_name: "Home Address Line 2" },
+  { name: "city", field_type: "string", required: false, field_format: nil, display_name: "Home Address City" },
+  { name: "state", field_type: "string", required: false, field_format: "^[A-Z]{2}$", display_name: "Home Address State" },
+  { name: "country", field_type: "string", required: false, field_format: "^[A-Z]{2}$", display_name: "Home Address Country" },
+  { name: "zip", field_type: "string", required: false, field_format: "^\\d{5}((-|\\s)?\\d{4})?$", display_name: "Home Address Zip" },
+  { name: "office_address_line_1", field_type: "text", required: false, field_format: nil, display_name: "Office Address Line 1" },
+  { name: "office_address_line_2", field_type: "text", required: false, field_format: nil, display_name: "Office Address Line 2" },
+  { name: "office_address_city", field_type: "string", required: false, field_format: nil, display_name: "Office Address City" },
+  { name: "office_address_state", field_type: "string", required: false, field_format: "^[A-Z]{2}$", display_name: "Office Address State" },
+  { name: "office_address_country", field_type: "string", required: false, field_format: "^[A-Z]{2}$", display_name: "Office Address Country" },
+  { name: "office_address_zip", field_type: "string", required: false, field_format: "^\\d{5}((-|\\s)?\\d{4})?$", display_name: "Office Address Zip" }
+]
+
+moxy_app_upload_fields.each do |f|
+  if f.present?
+    p = AppUploadField.new(f.except(:field_format))
+    p.fk_registered_app_id = RegisteredApp.where( app_name: "Moxy").first_or_create.id
     p.save!
     p.app_upload_field_validations.create!([{ validation: f[:name].classify, error_message: "" }])
     if f[:field_format].present?

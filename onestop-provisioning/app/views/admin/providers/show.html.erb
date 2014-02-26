@@ -18,6 +18,8 @@
   <%= render 'backline_provider_list', providers: @providers %>
 <% elsif @audit_trail.registered_app.app_name.eql?("Rcopia") %>
   <%= render 'rcopia_provider_list', providers: @providers %>
+<% elsif @audit_trail.registered_app.app_name.eql?("Moxy") %>
+  <%= render 'moxy_provider_list', providers: @providers %>
 <% end %>
 
 <div id="dialog" title="Message">
