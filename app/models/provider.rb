@@ -57,6 +57,7 @@ class Provider < ActiveRecord::Base
               end
             end
             unless provider[:validation_error_message].present?
+              provider[:sys_provider_app_detail_id] = provider_app_detail.id 
               valid_providers << provider
             else
              # update status code and message

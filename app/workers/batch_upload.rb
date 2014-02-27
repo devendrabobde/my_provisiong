@@ -75,12 +75,13 @@ class BatchUpload
           provider_app_details.update_all(status_code: error_res["code"], status_text: error_res["message"])
         end
       end
-
+      # Handle providers without npi number
       if npiless_providers.present?
         npiless_providers.each do |provider_record|
-          provider = Provider.where("(member_type = (?) and medical_license_state = (?) and specialty = (?)) and fk_provider_app_detail_id in (?)", provider_record[:member_type], provider_record[:medical_license_state], provider_record[:specialty], provider_app_detail_ids.flatten).first
-          if provider.present?
-            provider.provider_app_detail.update_attributes(status_code: 200, status_text: "Succesfully authenticated provider without NPI from Rcopia OIS")
+          if provider_record.present?
+            provider_app_detail = ProviderAppDetail.where(sys_provider_app_detail_id: provider_record[:sys_provider_app_detail_id]).first
+            status_text = "Succesfully authenticated provider without NPI " +  application.app_name
+            provider_app_detail.update_attributes(status_code: 200, status_text: status_text )
             total_npi_processed = total_npi_processed + 1
           end
         end
