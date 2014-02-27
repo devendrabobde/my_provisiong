@@ -13,6 +13,8 @@ module OnestopRouter
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["EPCS_IDP"]
     elsif application.app_name.eql?("Rcopia")
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["RCOPIA"]
+    elsif application.app_name.eql?("Moxy")
+      header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["MOXY"]
     end
     begin
       response = RestClient.post url, body, header
