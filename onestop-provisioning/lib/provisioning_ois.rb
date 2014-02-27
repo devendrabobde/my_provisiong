@@ -79,7 +79,7 @@ module ProvisioningOis
             \n\n#{payload}\n\nReceived from MOXY_OIS:\n\n#{provider_records}"
       end
     end
-    providers_with_npi, invalid_providers, batch_upload_response,temp_providers = [], [], nil, []
+    providers_with_npi, invalid_providers, npiless_providers, batch_upload_response,temp_providers = [], [], [], nil, []
     if provider_records.present?
       provider_records.each do |provider|
         provider = provider.symbolize_keys
@@ -96,6 +96,8 @@ module ProvisioningOis
         end
         if !provider[:error].present? and provider[:npi].present?
           providers_with_npi << provider.slice(:npi, :first_name, :last_name)
+        elsif !provider[:error].present? and !provider[:npi].present?
+          npiless_providers << provider
         else
           invalid_providers << provider
         end
@@ -104,6 +106,6 @@ module ProvisioningOis
     if providers_with_npi.present?
       batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application)
     end
-    [invalid_providers - temp_providers, batch_upload_response]
+    [invalid_providers - temp_providers, npiless_providers, batch_upload_response]
   end
 end

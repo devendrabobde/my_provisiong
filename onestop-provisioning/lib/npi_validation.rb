@@ -7,11 +7,16 @@ module NpiValidation
   # Find the application and verify application specific conditions, for EPCS we are verifying providers against SuperNPI DB 
   #
   def self.validate(providers, application)
-    response = providers
+    # response = providers
+    #
+    # validate providers npi checksum
+    #
+    response, invalid_npi_providers = validate_provider_npi(providers)
+
     if application.app_name.eql?("EPCS-IDP")
       response = check_supernpi_acceptance(providers)
     end
-    response
+    response + invalid_npi_providers
   end
   
   #
@@ -44,5 +49,38 @@ module NpiValidation
           \n\n#{payload}\n\nReceived from SuperNPI-OIS:\n\n#{providers rescue nil}"
     end
     providers.present? ? providers : []
+  end
+
+  def self.validate_provider_npi(providers)
+    invalid_npi_provs = []
+    provs = []
+    providers.each do |provider|
+      if provider[:npi].blank?
+        provs << provider
+      else
+        npi = provider[:npi]
+        if npi.length == 10
+          sum = 0
+          for i in 0..npi.length - 2
+            if i % 2 == 0
+              num = npi[i].to_i * 2
+              sum += num >= 10 ? (1 + num - 10) :  num
+            else
+              sum += npi[i].to_i
+            end
+          end
+          sum += 24
+          round = sum.round(-1) > sum ? sum.round(-1) : sum.round(-1) + 10
+          check = round - sum
+          if npi[-1].to_i == check
+            provs << provider
+          else
+            provider[:validation_error_message] = "NPI Checksum Invalid"
+            invalid_npi_provs << provider
+          end
+        end
+      end
+    end
+    [provs, invalid_npi_provs]
   end
 end

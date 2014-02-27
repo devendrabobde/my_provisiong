@@ -15,13 +15,13 @@ class BatchUpload
   # Process and add provider data in provisioning db
   def self.save_providers(providers, cao, application, audit_trail)
     begin
-    provider_app_detail_ids, provider_invalid_ids = [], []
+    provider_app_detail_ids, provider_invalid_ids, provi_invalid_ids  = [], [], []
     total_npi_processed = 0
     if providers.present?
       provider_app_detail_ids, valid_providers, provider_invalid_ids = Provider.save_provider(providers, cao, application)
       providers = valid_providers
       if providers.present?
-        invalid_providers, response = ProvisioningOis::batch_upload_dest(providers, cao, application)
+        invalid_providers, npiless_providers, response = ProvisioningOis::batch_upload_dest(providers, cao, application)
       end
       
       # Update invalid providers status_code and status_text
@@ -32,7 +32,9 @@ class BatchUpload
               if provider.present?
                 error_msg = application.app_name + " OIS: " + provider_record[:error]
                 error_code = provider_record[:status].present? ? provider_record[:status] : "500"
-                provider.provider_app_detail.update_attributes(status_code: error_code, status_text: error_msg)
+                pro = provider.provider_app_detail
+                provi_invalid_ids << pro.id
+                pro.update_attributes(status_code: error_code, status_text: error_msg)
               end
           end
         end
@@ -53,7 +55,7 @@ class BatchUpload
           end
         else
           if response[:error].present?
-            provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
+            provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - (provider_invalid_ids + provi_invalid_ids))
             provider_app_details.update_all(status_code: 503, status_text: "Connection Error")
           end
         end
@@ -71,6 +73,16 @@ class BatchUpload
           error_res = response["errors"].first
           provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
           provider_app_details.update_all(status_code: error_res["code"], status_text: error_res["message"])
+        end
+      end
+
+      if npiless_providers.present?
+        npiless_providers.each do |provider_record|
+          provider = Provider.where("(member_type = (?) and medical_license_state = (?) and specialty = (?)) and fk_provider_app_detail_id in (?)", provider_record[:member_type], provider_record[:medical_license_state], provider_record[:specialty], provider_app_detail_ids.flatten).first
+          if provider.present?
+            provider.provider_app_detail.update_attributes(status_code: 200, status_text: "Succesfully authenticated provider without NPI from Rcopia OIS")
+            total_npi_processed = total_npi_processed + 1
+          end
         end
       end
     end
