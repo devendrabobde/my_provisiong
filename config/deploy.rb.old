@@ -96,7 +96,7 @@ namespace :deploy do
 
   desc "start resque job queue"
   task :resque_work do
-    run "cd #{current_path}; RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes"
+    run "cd #{current_path}; RAILS_ENV=production QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes"
   end
 
   desc "clean redis queue"
