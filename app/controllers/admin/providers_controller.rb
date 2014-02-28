@@ -70,7 +70,7 @@ class Admin::ProvidersController < ApplicationController
               success_message = "Thanks for uploading providers, we are processing uploaded file."
               success_message = duplicate_npis.count > 0 ? success_message + " As NPI #{duplicate_npis.join(",")} record is duplicated in the uploaded CSV file. In this case we are simply passing unique record for each." : success_message
             else
-              error_message = "Providers required fields can't be blank, please correct: <br />" + req_field_err_hash.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
+              error_message = "Providers required fields can't be blank, please correct: <br />" + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
             end
           else
             error_message = "For EPCS, the NPI must be unique for each record in the file. Please remove duplicate NPI #{duplicate_npis.join(",")} record from CSV file before proceeding."
