@@ -73,7 +73,7 @@ namespace :db do
       "#{shared_path}/config/.dbpass"
 
     # Create conf file
-    location = fetch(:template_dir, "config/deploy") + "/production-database.yml.erb"
+    location = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
     template = File.read(location)
     password=Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
     dbpassword="<%= Util::Encrypt.decrypt('#{password}') %>"
@@ -86,6 +86,8 @@ namespace :db do
     #run "touch database.yml"
     run "ln -nfs #{shared_path}/db/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/onestop-provisioning/config/.dbpass"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/log"
   end
 
   after "deploy:finalize_update", "db:configfile"
