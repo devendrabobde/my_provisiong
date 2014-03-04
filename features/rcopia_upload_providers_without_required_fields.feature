@@ -1,4 +1,4 @@
-Feature: COA upload NPI providers without required fields to Rcopia and completes successfully
+Feature: COA upload NPI providers without required fields to Rcopia 
   In order to upload NPI providers in the onestop provisioning
   As a COA
   I want to be able to upload a CSV file with the providers' data
@@ -17,5 +17,5 @@ Background:
     Given I select rcopia application
     When I select a csv file of providers without required fields for rcopia
     And I clicks upload button
-    And I should be able to see error message for Rcopia required fields
+    And I should be able to see error message for required fields
     And the file should not be uploaded

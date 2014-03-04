@@ -1,9 +1,9 @@
-When /^I select a csv file of providers without required fields for rcopia$/ do
-    attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'rcopia', 'rcopia_providers_without_required_fields.csv') # id
+When /^I select a csv file of providers without required fields for (.+?)$/ do |app_name|
+    attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', app_name, "#{app_name}_providers_without_required_fields.csv") # id
 end
 
 
-And /^I should be able to see error message for Rcopia required fields$/ do
+And /^I should be able to see error message for required fields$/ do
   page.should have_content("Providers required fields can't be blank, please correct")
 end
 
