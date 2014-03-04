@@ -97,3 +97,12 @@
   .status-error {
     color: red;
   }
+
+  .application_waiting_image {
+    left: 559px;
+    opacity: 0.6;
+    position: absolute;
+    top: 390px;
+    width: 99px;
+    z-index: 100;
+  }
