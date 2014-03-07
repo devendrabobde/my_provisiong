@@ -1,15 +1,16 @@
 set :domain, "10.100.10.203"
 set :rails_env, "production"
 set :deploy_to, "/usr/local/onestop/#{application}"
+set :branch, 'master'
 
 #Need to parse a tag while deployment
-set :branch do
-  default_tag = `git tag`.split("\n").last
-
-  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
-  tag = default_tag if tag.empty?
-  tag
-end
+#set :branch do
+#  default_tag = `git tag`.split("\n").last
+#
+#  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
+#  tag = default_tag if tag.empty?
+#  tag
+#end
 
 # roles (servers)
 role :web, domain
