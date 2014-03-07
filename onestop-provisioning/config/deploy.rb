@@ -5,31 +5,29 @@ require 'capistrano/ext/multistage'
 set :stages, %w(qaonestop05)
 set :default_stage, "qaonestop05"
 
-set :user, 'root'
 set :application, "onestop-provisioning"
 set :bundle_gemfile, "onestop-provisioning/Gemfile"
+set :user, 'sparkway'
+set :use_sudo, false
 
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-set :rvm_path,          "/usr/local/rvm/"
-set :rvm_bin_path,      "#{rvm_path}/bin"
-set :rvm_lib_path,      "#{rvm_path}/lib"
+#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#set :rvm_path,          "/usr/local/rvm/"
+#set :rvm_bin_path,      "#{rvm_path}/bin"
+#set :rvm_lib_path,      "#{rvm_path}/lib"
+#
+#set :rvm_ruby_string, 'ruby-1.9.3-p448'
+#set :rvm_type, :system
+#
+#set :default_environment, {
+#  'PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448/bin:/usr/local/rvm/gems/ruby-1.9.3-p448@global/bin:/usr/local/src/redis-stable/src:$PATH",
+#  'RUBY_VERSION' => 'ruby-1.9.3-p448',
+#  'GEM_HOME' => "/usr/local/rvm/gems/ruby-1.9.3-p448",
+#  'GEM_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
+#  'BUNDLE_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global" # If you are using bundler.
+#}
 
-set :rvm_ruby_string, 'ruby-1.9.3-p448'
-set :rvm_type, :system
 
-set :default_environment, {
-  'PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448/bin:/usr/local/rvm/gems/ruby-1.9.3-p448@global/bin:/usr/local/src/redis-stable/src:$PATH",
-  'RUBY_VERSION' => 'ruby-1.9.3-p448',
-  'GEM_HOME' => "/usr/local/rvm/gems/ruby-1.9.3-p448",
-  'GEM_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
-  'BUNDLE_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global" # If you are using bundler.
-}
-
-
-set :scm, 'git'
 set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
-set :scm_passphrase, ""
-
 set :git_shallow_clone, 1
 
 #NOTE: remote_cache will be only active if, the initial deployment process is completed. 
@@ -38,21 +36,54 @@ set :git_shallow_clone, 1
 set :deploy_via, :copy
 
 set :keep_releases, 3
-set :scm_verbose, true
-
-set :migrate_target, :latest
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
+#create config and environments folder inside shared folder at the time of cap {{stage}} deploy:setup
+after("deploy:setup", "deploy:create_config_and_environment_folder")
+after("deploy:create_symlink", "deploy:copy_constants_and_production")
+after("deploy:create_symlink", "deploy:bundle_install")
 
-#Need to parse a tag while deployment
-set :branch do
-  default_tag = `git tag`.split("\n").last
+namespace :deploy do
 
-  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
-  tag = default_tag if tag.empty?
-  tag
+  desc "create config and environments folder inside shared folder at the time of cap {{stage}} deploy:setup"
+  task :create_config_and_environment_folder do
+    run "mkdir #{shared_path}/config"
+    run "mkdir #{shared_path}/config/environments"
+  end
+  
+  task :restart, roles: :app, except: { no_release: true } do
+    run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
+  end
+
+  desc 'run bundle install'
+  task :bundle_install, roles: :app do
+    run "cd #{current_path}/onestop-provisioning && bundle exec bundle install --deployment --path #{shared_path}/bundle"
+  end
+
+
+  desc "Start redis server"
+  task :start_redis do
+    run  "cd /usr/local/src/redis-stable"
+  end
+
+  desc "clean redis queue"
+  task :clean_redis do
+    run "cd #{current_path}/onestop-provisioning && redis-cli FLUSHALL"
+  end
+
+  desc "Copy if the constants.yml and production.rb file is not present from constants.yml.sample and production.rb.sample"
+  task :copy_constants_and_production do
+    #copy constants.yml file form constants.yml.sample if the constants.yml file does not exists.
+    run "if [[ ! -f #{shared_path}/config/constants.yml ]]; then cp #{release_path}/onestop-provisioning/config/constants.yml.sample #{shared_path}/config/constants.yml; fi"
+    run "ln -nfs #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
+
+    #copy production.rb file form production.rb.sample if the production.rb file does not exists.
+    run "if [[ ! -f #{shared_path}/config/environments/production.rb ]]; then cp #{release_path}/onestop-provisioning/config/environments/production.rb.sample #{shared_path}/config/environments/production.rb; fi"
+    run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
+  end
+
 end
 
 require 'capistrano/cli'
