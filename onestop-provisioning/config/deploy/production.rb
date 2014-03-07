@@ -27,7 +27,8 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/log #{release_path}/onestop-provisioning/log"
     run "ln -nfs #{shared_path}/tmp #{release_path}/onestop-provisioning/tmp"
 
-    sudo "chmod -R 0666 #{release_path}/onestop-provisioning/log"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
+    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/log"
   end
 
   desc "Import seed data in the database"
