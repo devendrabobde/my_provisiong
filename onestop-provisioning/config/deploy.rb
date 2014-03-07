@@ -1,8 +1,7 @@
 require "bundler/capistrano"
-require "rvm/capistrano"
 require 'capistrano/ext/multistage'
 
-set :stages, %w(qaonestop05)
+set :stages, %w(qaonestop05 production sparkway)
 set :default_stage, "qaonestop05"
 
 set :application, "onestop-provisioning"
@@ -10,24 +9,8 @@ set :bundle_gemfile, "onestop-provisioning/Gemfile"
 set :user, 'sparkway'
 set :use_sudo, false
 
-#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-#set :rvm_path,          "/usr/local/rvm/"
-#set :rvm_bin_path,      "#{rvm_path}/bin"
-#set :rvm_lib_path,      "#{rvm_path}/lib"
-#
-#set :rvm_ruby_string, 'ruby-1.9.3-p448'
-#set :rvm_type, :system
-#
-#set :default_environment, {
-#  'PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448/bin:/usr/local/rvm/gems/ruby-1.9.3-p448@global/bin:/usr/local/src/redis-stable/src:$PATH",
-#  'RUBY_VERSION' => 'ruby-1.9.3-p448',
-#  'GEM_HOME' => "/usr/local/rvm/gems/ruby-1.9.3-p448",
-#  'GEM_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global",
-#  'BUNDLE_PATH' => "/usr/local/rvm/gems/ruby-1.9.3-p448:/usr/local/rvm/gems/ruby-1.9.3-p448@global" # If you are using bundler.
-#}
-
-
 set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
+set :bundle_flags, "--quiet"
 set :git_shallow_clone, 1
 
 #NOTE: remote_cache will be only active if, the initial deployment process is completed. 
