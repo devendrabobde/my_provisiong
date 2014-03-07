@@ -9,6 +9,7 @@ set :bundle_gemfile, "onestop-provisioning/Gemfile"
 set :user, 'sparkway'
 set :use_sudo, false
 
+set :scm, :git
 set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
 set :bundle_flags, "--quiet"
 set :git_shallow_clone, 1
@@ -34,6 +35,7 @@ namespace :deploy do
   task :create_config_and_environment_folder do
     run "mkdir #{shared_path}/config"
     run "mkdir #{shared_path}/config/environments"
+    run "mkdir #{shared_path}/tmp"
   end
   
   task :restart, roles: :app, except: { no_release: true } do
@@ -100,8 +102,6 @@ namespace :db do
     #run "touch database.yml"
     run "ln -nfs #{shared_path}/db/database.yml #{release_path}/onestop-provisioning/config/database.yml"
     run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/onestop-provisioning/config/.dbpass"
-    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/tmp"
-    sudo "chmod -R 0777 #{release_path}/onestop-provisioning/log"
   end
 
   after "deploy:finalize_update", "db:configfile"
