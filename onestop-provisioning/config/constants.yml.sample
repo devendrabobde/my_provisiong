@@ -1,44 +1,38 @@
 ONESTOP_ROUTER:
-  SERVER_URL: http://localhost:3003
+  SERVER_URL: http://10.100.10.213
   BATCH_UPLOAD_API_URL: api/v1/ois/batch-upload.json
   EPCS_IDP:
-    OISID: epcs
-    OISPASSWORD: RxDfyergtWmuMWNWXaTTium430aWJH3KHVEsUh1ysuUjoA52TJODoP2QEmPVFrQvpJqgQ1PeYT
+    OISID: epcsidp
+    OISPASSWORD: fWqFFLRqtbO10b7RVUVryX2yJ2JFzeT5XsKcH6F8FldmeZOpvFA
   
   REQUEST_IDP:
     API_URL: api/v1/client/request-idp.json
     CLIENT_APPLICATION:
-      CLIENTID: onestop
-      CLIENTPASSWORD: mRuJ8jwzR6S8U4u78V7ft6GPi917i6Wz3iTPlFDoKzoy0g8KGAZ9BN1ahu
+      CLIENTID: provisioningsystem
+      CLIENTPASSWORD: TitMykIiGeyoKLGIJcYI4FPKCLC4tJYpeFgTQk0NyZ98OP0kncSAlrR7DS1aeXpuS
 
   VERIFY_IDENTITY:
     API_URL: api/v1/client/verify-identity.json
     CLIENT_APPLICATION:
-      CLIENTID: onestop
-      CLIENTPASSWORD: mRuJ8jwzR6S8U4u78V7ft6GPi917i6Wz3iTPlFDoKzoy0g8KGAZ9BN1ahu
+      CLIENTID: provisioningsystem
+      CLIENTPASSWORD: TitMykIiGeyoKLGIJcYI4FPKCLC4tJYpeFgTQk0NyZ98OP0kncSAlrR7DS1aeXpuS
 
   OIS:
     EPCS_IDP:
-      OISID: epcs
-      OISPASSWORD: RxDfyergtWmuMWNWXaTTium430aWJH3KHVEsUh1ysuUjoA52TJODoP2QEmPVFrQvpJqgQ1PeYT
-    RCOPIA:
-      OISID: rcopia
-      OISPASSWORD: dj1RaoFU8M9oKehOxBOJ6EAWSNmRQAfhjlpPDgYZjmkrrb0JLztSeKineaLhcrN
-    MOXY:
-      OISID: moxy
-      OISPASSWORD: l8GuOvd3Qx748VgPrJ5expPuWqEbGP0kToVzUCBftT906wTZf1mVHqCA0NqhhMzIbi1AaP
+      OISID: epcsidp
+      OISPASSWORD: fWqFFLRqtbO10b7RVUVryX2yJ2JFzeT5XsKcH6F8FldmeZOpvFA
 
   API:
     SAVE_PROVIDER:
       URL: api/v1/ois/save-provider.json
 
 EPCS_OIS:
-  SERVER_URL: http://localhost:3001
+  SERVER_URL: http://10.100.10.211
   BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
 SUPERNPI_OIS:
-  SERVER_URL: http://localhost:3002
+  SERVER_URL: http://10.100.10.210
   VIEW_USER_URL: api/v1/ois/supernpis/view-user.json
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
@@ -47,5 +41,5 @@ RCOPIA_OIS:
   BATCH_UPLOAD_DEST_URL: api/v1/ois/rcopia/batch_upload_dest.json
 
 MOXY_OIS:
-  SERVER_URL: http://localhost:3002
+  SERVER_URL: http://192.168.1.204:3003
   BATCH_UPLOAD_DEST_URL: api/v1/ois/moxy/batch_upload_dest.json
