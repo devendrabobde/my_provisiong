@@ -37,9 +37,9 @@ SUPERNPI_OIS:
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
 RCOPIA_OIS:
-  SERVER_URL: http://192.168.1.204:3002
+  SERVER_URL: http://10.100.10.45:3002
   BATCH_UPLOAD_DEST_URL: api/v1/ois/rcopia/batch_upload_dest.json
 
 MOXY_OIS:
-  SERVER_URL: http://192.168.1.204:3003
+  SERVER_URL: http://10.100.10.45:3003
   BATCH_UPLOAD_DEST_URL: api/v1/ois/moxy/batch_upload_dest.json
