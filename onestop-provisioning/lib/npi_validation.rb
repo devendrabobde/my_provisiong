@@ -70,7 +70,7 @@ module NpiValidation
             end
           end
           sum += 24
-          round = sum.round(-1) > sum ? sum.round(-1) : sum.round(-1) + 10
+          round = sum.round(-1) >= sum ? sum.round(-1) : sum.round(-1) + 10
           check = round - sum
           if npi[-1].to_i == check
             provs << provider
