@@ -15,7 +15,7 @@ Background:
   Scenario: COA selects an application and upload a CSV file with provider without required field
     Given I go to application page
     Given I select moxy application
-    When I select a csv file of providers without required fields for Moxy
+    When I select a csv file of providers with missing required field for moxy
     And I clicks upload button
     And I should be able to see error message for required fields
     And the file should not be uploaded
@@ -25,7 +25,7 @@ Background:
   Scenario: COA selects an application and upload a CSV file with providers missing multiple required fields
     Given I go to application page
     Given I select moxy application
-    When I select a csv file of providers with missing multiple required fields for Moxy
+    When I select a csv file of providers with missing multiple required fields for moxy
     And I clicks upload button
     And I should be able to see error message for required fields
     And the file should not be uploaded
