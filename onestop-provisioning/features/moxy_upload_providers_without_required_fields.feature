@@ -1,5 +1,5 @@
-Feature: COA upload NPI providers without required fields to Moxy
-  In order to upload NPI providers in the onestop provisioning
+Feature: COA upload providers without required fields to Moxy
+  In order to upload providers in the onestop provisioning
   As a COA
   I want to be able to upload a CSV file with the providers' data
 
