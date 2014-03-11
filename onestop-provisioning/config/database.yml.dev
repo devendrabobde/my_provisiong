@@ -1,11 +1,10 @@
-<%= header %>
 production:
   adapter: oracle_enhanced
   host: 172.16.10.103
   port: 1521
   database: Dv1ois
   username: dev_ois
-  password: <%= dbpassword %>
+  password: drfirst
 
 test:
   adapter: oracle_enhanced
@@ -13,4 +12,4 @@ test:
   port: 1521
   database: Dv1ois
   username: dev_ois_test
-  password: <%= dbpassword %>
+  password: drfirst

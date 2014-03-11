@@ -1,26 +1,27 @@
 ONESTOP_ROUTER:
-  SERVER_URL: http://10.100.10.213
+  SERVER_URL: http://10.100.10.199:80
   BATCH_UPLOAD_API_URL: api/v1/ois/batch-upload.json
   EPCS_IDP:
     OISID: epcsidp
-    OISPASSWORD: fWqFFLRqtbO10b7RVUVryX2yJ2JFzeT5XsKcH6F8FldmeZOpvFA
+    OISPASSWORD: sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ
   
   REQUEST_IDP:
     API_URL: api/v1/client/request-idp.json
     CLIENT_APPLICATION:
-      CLIENTID: provisioningsystem
-      CLIENTPASSWORD: TitMykIiGeyoKLGIJcYI4FPKCLC4tJYpeFgTQk0NyZ98OP0kncSAlrR7DS1aeXpuS
+      CLIENTID: onestop
+      CLIENTPASSWORD: 19yv3zfkrZiWuPL90w7DbX5D5R4BkDhL70lS5ROJbBeSB8p8nNNxMWJ
 
   VERIFY_IDENTITY:
     API_URL: api/v1/client/verify-identity.json
     CLIENT_APPLICATION:
-      CLIENTID: provisioningsystem
-      CLIENTPASSWORD: TitMykIiGeyoKLGIJcYI4FPKCLC4tJYpeFgTQk0NyZ98OP0kncSAlrR7DS1aeXpuS
+      CLIENTID: onestop
+      CLIENTPASSWORD: 19yv3zfkrZiWuPL90w7DbX5D5R4BkDhL70lS5ROJbBeSB8p8nNNxMWJ
+
 
   OIS:
     EPCS_IDP:
       OISID: epcsidp
-      OISPASSWORD: fWqFFLRqtbO10b7RVUVryX2yJ2JFzeT5XsKcH6F8FldmeZOpvFA
+      OISPASSWORD: sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ
     RCOPIA:
       OISID: rcopia
       OISPASSWORD: dj1RaoFU8M9oKehOxBOJ6EAWSNmRQAfhjlpPDgYZjmkrrb0JLztSeKineaLhcrN
@@ -32,13 +33,15 @@ ONESTOP_ROUTER:
     SAVE_PROVIDER:
       URL: api/v1/ois/save-provider.json
 
+  VERIFY_CONNECTIVITY: connectivity/verify.json
+
 EPCS_OIS:
-  SERVER_URL: http://10.100.10.211
+  SERVER_URL: http://10.100.10.45
   BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
 SUPERNPI_OIS:
-  SERVER_URL: http://10.100.10.210
+  SERVER_URL: http://10.100.10.46
   VIEW_USER_URL: api/v1/ois/supernpis/view-user.json
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
