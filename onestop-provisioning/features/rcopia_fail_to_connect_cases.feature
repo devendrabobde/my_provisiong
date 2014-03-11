@@ -15,7 +15,7 @@ Background:
   Scenario: COA upload providers and Rcopia application is unreachable (network interruption) after upload begin
     Given I go to application page
     Given I select rcopia application
-    When I select a csv file of invalid providers for rcopia
+    When I select a csv file of valid rcopia providers
     And I clicks upload button
     And I should be able to see correct file upload message
     And I should be able to see progress bar
@@ -24,10 +24,10 @@ Background:
 
   @selenium
   @no-database-cleaner
-  Scenario: COA selects an application and upload a CSV file of 4 providers
+  Scenario: COA upload providers and onestop router application is unreachable (network interruption) after upload begin
     Given I go to application page
     Given I select rcopia application
-    When I select a csv file of invalid providers for rcopia
+    When I select a csv file of valid rcopia providers
     And I clicks upload button
     And I should be able to see correct file upload message
     And I should be able to see progress bar
