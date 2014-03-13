@@ -7,12 +7,12 @@ module ProviderDeaValidation
   # Validate provider DEA Number
   #
   def self.validate(provider, vf)
-   error_messages = []
-   provider = provider.symbolize_keys
-   dea_numbers = provider[:provider_dea_record]
+    error_messages = []
+    provider = provider.symbolize_keys
+    dea_numbers = provider[:provider_dea_record]
     if dea_numbers.present?
       dea_numbers.each do |dea_number|
-       dea_number = dea_number.symbolize_keys
+        dea_number = dea_number.symbolize_keys
         if dea_number[:provider_dea].present?
           unless validate_provider_dea(dea_number[:provider_dea])
             error_messages << VALIDATION_MESSAGE["EPCS"]["DEA_NUMBER"]["CHECKSUM_ERROR_MESSAGE"]
@@ -24,7 +24,7 @@ module ProviderDeaValidation
     final_status = error_messages.present? ? false : true
     [final_status, error_messages]
   end
-  
+
   #
   # Calculate DEA checksum
   #

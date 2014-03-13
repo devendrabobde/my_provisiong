@@ -54,11 +54,11 @@ OneStop::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
- # Don't care if the mailer can't send
+  # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.default_url_options = { :host => '10.100.10.203' }
-  
+
   config.action_mailer.delivery_method = :smtp
 
   # Disable delivery errors, bad email addresses will be ignored

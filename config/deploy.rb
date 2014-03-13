@@ -14,9 +14,9 @@ set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
 set :bundle_flags, "--quiet"
 set :git_shallow_clone, 1
 
-#NOTE: remote_cache will be only active if, the initial deployment process is completed. 
+#NOTE: remote_cache will be only active if, the initial deployment process is completed.
 #set :deploy_via, :remote_cache
-#NOTE: set "deploy_via" "copy" for the first time deployment, so that it will clone the application to the mentioned path and once successful deployment is done change it to "remote_cache". 
+#NOTE: set "deploy_via" "copy" for the first time deployment, so that it will clone the application to the mentioned path and once successful deployment is done change it to "remote_cache".
 set :deploy_via, :copy
 
 set :keep_releases, 3
@@ -37,7 +37,7 @@ namespace :deploy do
     run "mkdir #{shared_path}/config/environments"
     run "mkdir #{shared_path}/tmp"
   end
-  
+
   task :restart, roles: :app, except: { no_release: true } do
     run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
   end

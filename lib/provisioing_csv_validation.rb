@@ -1,8 +1,8 @@
 #
-# This class is basically used for Exception handling 
+# This class is basically used for Exception handling
 #
 module ValidateRecord
-  
+
   #
   # Raise exception if provider record field is not present o.w return true
   #
@@ -18,12 +18,12 @@ end
 
 
 #
-# This class is basically used for Processing CSV and Validating providers records 
+# This class is basically used for Processing CSV and Validating providers records
 #
 module ProvisioingCsvValidation
 
   include ValidateRecord
-  
+
   #
   # Processing providers CSV file
   #
@@ -75,7 +75,7 @@ module ProvisioingCsvValidation
         provider_dea_info = dea_result.collect{|x|{ provider_dea: x[0], provider_dea_state: x[1], provider_dea_expiration_date: x[2] }}
       end
       provider[:provider_dea_record] = provider_dea_info
-      provider = provider.except(:provider_dea, :provider_dea_state, :provider_dea_expiration_date)      
+      provider = provider.except(:provider_dea, :provider_dea_state, :provider_dea_expiration_date)
     end
     provider
   end
@@ -160,7 +160,7 @@ module ProvisioingCsvValidation
         modified_providers << provider
       end
     end
-    modified_providers.each do |provider| 
+    modified_providers.each do |provider|
       if provider[:validation_error_message].present?
         invalid_providers << provider
       else
