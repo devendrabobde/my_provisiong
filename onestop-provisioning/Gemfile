@@ -41,6 +41,7 @@ gem 'savon'
 
 # Rspec
 group :development, :test do
+  gem "brakeman", :require => false
   gem "rspec-rails", ">= 2.12.2"
   gem 'cucumber-rails', :require => false
   gem "shoulda"
