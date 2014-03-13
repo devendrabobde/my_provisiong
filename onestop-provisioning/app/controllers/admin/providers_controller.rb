@@ -48,7 +48,7 @@ class Admin::ProvidersController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @providers.to_csv(reg_app, {}), :type => 'text/csv; charset=utf-8; header=present',
-                   :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
+        :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
     end
   end
 
@@ -83,10 +83,10 @@ class Admin::ProvidersController < ApplicationController
       end
       if error_message.present?
         flash[:error] = error_message
-        AuditTrailsLog.error error_message 
+        AuditTrailsLog.error error_message
       else
         flash[:notice] = success_message
-        AuditTrailsLog.warn success_message 
+        AuditTrailsLog.warn success_message
       end
     rescue => e
       puts e.inspect
@@ -95,7 +95,7 @@ class Admin::ProvidersController < ApplicationController
     end
     redirect_to application_admin_providers_path(registered_app_id: @application.id)
   end
-  
+
   # Pull audit trail record to verify file upload status
   def pull_redis_job_status
     audit_trail = AuditTrail.where(sys_audit_trail_id: params[:audit_id]).first
@@ -111,7 +111,7 @@ class Admin::ProvidersController < ApplicationController
 
   private
 
-  # Assign current user to session. 
+  # Assign current user to session.
   def find_cao
     @cao = current_cao
   end
@@ -137,7 +137,7 @@ class Admin::ProvidersController < ApplicationController
       ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working", fk_audit_trail_id: @audit_trail.id)
     end
   end
-  
+
   # Store uploaded file
   def store_csv
     upload = params[:upload]
@@ -146,11 +146,11 @@ class Admin::ProvidersController < ApplicationController
     path = File.join(directory, name)
     [path,name]
   end
-  
+
   # Save Audit Trail record
   def save_audit_trails(file_name)
     audit = @cao.audit_trails.build(file_name: file_name, fk_registered_app_id: @application.id, total_providers: "0",
-                            file_url: file_name, fk_organization_id: @cao.organization.id, total_npi_processed: 0)
+      file_url: file_name, fk_organization_id: @cao.organization.id, total_npi_processed: 0)
     audit.save
     audit
   end

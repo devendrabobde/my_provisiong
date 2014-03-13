@@ -1,11 +1,11 @@
 class PerformanceLogMiddleware
-    
+
   # initialize the application
   def initialize(app)
     @app = app
   end
 
-  # This method is responds to Rack call(), It takes exactly one argument, the environment and 
+  # This method is responds to Rack call(), It takes exactly one argument, the environment and
   # returns an Array of exactly three values [http_status_code, response_headers_hash, body]
   def call(env)
     @env     = env
@@ -68,13 +68,13 @@ class PerformanceLogMiddleware
 
   private
 
-    # return true if request is for controller action o.w false
-    def api_request?
-      !(@request.path =~ /^\/assets\//)
-    end
+  # return true if request is for controller action o.w false
+  def api_request?
+    !(@request.path =~ /^\/assets\//)
+  end
 
-    # Returns an Array of [http_status_code, response_headers_hash, body]
-    def call_rails
-      @status, @headers, @response = @app.call(@env)
-    end
+  # Returns an Array of [http_status_code, response_headers_hash, body]
+  def call_rails
+    @status, @headers, @response = @app.call(@env)
+  end
 end
