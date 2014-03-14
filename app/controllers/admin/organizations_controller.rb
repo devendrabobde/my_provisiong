@@ -1,4 +1,5 @@
 class Admin::OrganizationsController < ApplicationController
+  before_filter :find_organization, only: [:show, :edit, :update, :destroy, :activate]
 
   # Get all organizations
   def index
@@ -7,12 +8,12 @@ class Admin::OrganizationsController < ApplicationController
 
   # Get new organization form
   def new
-   @organization = Organization.new
+    @organization = Organization.new
   end
 
   # Create an Organization. Next step after new.
   def create
-   @organization = Organization.new(params[:organization])
+    @organization = Organization.new(params[:organization])
     if @organization.save
       flash[:notice] = "Organization was created successfully."
       redirect_to admin_organization_path(@organization.id)
@@ -23,32 +24,26 @@ class Admin::OrganizationsController < ApplicationController
   end
 
   # Get Details of an organization
-  def show
-    @organization = Organization.find(params[:id])
-  end
+  def show; end
 
   # Get edit organization form
-  def edit
-    @organization = Organization.find(params[:id])
-  end
+  def edit; end
 
   # Update an organization with provided details. Step after edit
   def update
-    @organization = Organization.find(params[:id])
     respond_to do |format|
-    if @organization.update_attributes(params[:organization])
-      flash[:notice] = "Organization was updated successfully."
-      format.html { redirect_to admin_organization_path(@organization.id) }
-    else
-      flash[:error] = @organization.errors.full_messages.join(",  ")
-      format.html { render :action => "edit",:id => @organization.id }
-    end
+      if @organization.update_attributes(params[:organization])
+        flash[:notice] = "Organization was updated successfully."
+        format.html { redirect_to admin_organization_path(@organization.id) }
+      else
+        flash[:error] = @organization.errors.full_messages.join(",  ")
+        format.html { render :action => "edit",:id => @organization.id }
+      end
     end
   end
 
   # Delete/Deactivate an organization
   def destroy
-    @organization = Organization.find(params[:id])
     @organization.caos.each do |cao|
       cao.update_attributes(deleted_at: Time.now, deleted_reason: params["organization"]["deleted_reason"])
     end
@@ -59,7 +54,6 @@ class Admin::OrganizationsController < ApplicationController
 
   # Change the state of an organization from inactive to active.
   def activate
-    @organization = Organization.unscoped.find(params[:id])
     @organization.caos.each do |cao|
       cao.update_attributes(deleted_at: nil, deleted_reason: nil)
     end
@@ -103,7 +97,14 @@ class Admin::OrganizationsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @providers.to_csv(reg_app, {}), :type => 'text/csv; charset=utf-8; header=present',
-                   :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
+        :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
     end
   end
+
+  private
+
+  def find_organization
+    @organization = Organization.find(params[:id])
+  end
+
 end

@@ -1,5 +1,5 @@
 class Api::V1::VersionsController < ApplicationController
-  
+
   skip_before_filter :authenticate_cao!
 
   # This method is responsible for verifying application up and runining status, DB status
