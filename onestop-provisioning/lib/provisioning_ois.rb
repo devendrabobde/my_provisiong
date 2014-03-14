@@ -104,7 +104,10 @@ module ProvisioningOis
       end
     end
     if providers_with_npi.present?
+      request_time = Time.now
       batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application)
+      response_time = Time.now
+      Rails.logger.info "Benchmarking - Onestop Router - batch_upload() elapsed time:#{response_time - request_time} sec"
     end
     [invalid_providers - temp_providers, npiless_providers, batch_upload_response]
   end
