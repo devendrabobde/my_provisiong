@@ -17,7 +17,10 @@ module ProvisioningOis
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
       url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       begin
+        request_time = Time.now
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
+        response_time = Time.now
+        Rails.logger.info "Benchmarking - EPCS OIS - btach_upload_dest() elapsed time:#{response_time - request_time} sec"
         response = JSON.parse(response)
         provider_records = response["providers"]
       rescue => e
