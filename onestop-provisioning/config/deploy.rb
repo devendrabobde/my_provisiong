@@ -28,6 +28,10 @@ ssh_options[:forward_agent] = true
 after("deploy:setup", "deploy:create_config_and_environment_folder")
 after("deploy:create_symlink", "deploy:copy_constants_and_production")
 after("deploy:create_symlink", "deploy:bundle_install")
+after("deploy:restart", "deploy:kill_redis")
+after("deploy:restart", "deploy:start_redis")
+after("deploy:restart", "deploy:clean_redis")
+after("deploy:restart", "deploy:resque_work")
 
 namespace :deploy do
 
@@ -47,6 +51,10 @@ namespace :deploy do
     run "cd #{current_path}/onestop-provisioning && bundle exec bundle install --deployment --path #{shared_path}/bundle"
   end
 
+  desc "kill redis server"
+  task :kill_redis do
+    run "killall -9 redis-server"
+  end
 
   desc "Start redis server"
   task :start_redis do

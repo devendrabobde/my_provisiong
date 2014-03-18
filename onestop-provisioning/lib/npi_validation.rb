@@ -14,7 +14,10 @@ module NpiValidation
     response, invalid_npi_providers = validate_provider_npi(providers)
 
     if application.app_name.eql?("EPCS-IDP")
+      request_time = Time.now
       response = check_supernpi_acceptance(response)
+      response_time = Time.now
+      Rails.logger.info "Benchmarking - SUPERNPI OIS - NpiValidation elapsed time:#{response_time - request_time} sec"
     end
     response + invalid_npi_providers
   end
