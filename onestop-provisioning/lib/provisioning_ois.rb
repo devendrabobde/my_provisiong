@@ -94,11 +94,11 @@ module ProvisioningOis
           end
           unless status_codes.compact.include? "200"
             temp_providers << provider
-            providers_with_npi << provider.slice(:npi, :first_name, :last_name)
+            providers_with_npi << provider.slice(:npi, :first_name, :last_name, :sys_provider_app_detail_id, :address_1, :address_2, :city, :state, :zip, :email, :middle_name, :prefix, :gender, :birth_date, :social_security_number)
           end
         end
         if !provider[:error].present? and provider[:npi].present?
-          providers_with_npi << provider.slice(:npi, :first_name, :last_name, :sys_provider_app_detail_id)
+          providers_with_npi << provider.slice(:npi, :first_name, :last_name, :sys_provider_app_detail_id, :address_1, :address_2, :city, :state, :zip, :email, :middle_name, :prefix, :gender, :birth_date, :social_security_number)
         elsif !provider[:error].present? and !provider[:npi].present?
           npiless_providers << provider
         else
