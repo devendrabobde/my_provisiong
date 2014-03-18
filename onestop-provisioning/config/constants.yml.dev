@@ -22,12 +22,12 @@ ONESTOP_ROUTER:
     EPCS_IDP:
       OISID: epcsidp
       OISPASSWORD: sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ
-    RCOPIA:
-      OISID: rcopia
-      OISPASSWORD: dj1RaoFU8M9oKehOxBOJ6EAWSNmRQAfhjlpPDgYZjmkrrb0JLztSeKineaLhcrN
     MOXY:
       OISID: moxy
-      OISPASSWORD: l8GuOvd3Qx748VgPrJ5expPuWqEbGP0kToVzUCBftT906wTZf1mVHqCA0NqhhMzIbi1AaP
+      OISPASSWORD: Nr7aICD51pBigc9pac3LBjYobvavptxfF0yNON6nktOwjP8ZmQT7UxxR8wxWUQQ6H5Il
+    RCOPIA:
+      OISID: rcopia
+      OISPASSWORD: vCr8eTgeYE6grgjePkNA135iG6OU0W36z8py1jSM5bzco6dWfamaMlPjl2iiXogI7xc
 
   API:
     SAVE_PROVIDER:

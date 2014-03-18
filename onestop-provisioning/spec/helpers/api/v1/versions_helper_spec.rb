@@ -10,6 +10,6 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe Api::V1::VersionsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
+# describe Api::V1::VersionsHelper do
+#   pending "add some examples to (or delete) #{__FILE__}"
+# end

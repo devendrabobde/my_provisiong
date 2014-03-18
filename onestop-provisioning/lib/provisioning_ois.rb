@@ -95,7 +95,7 @@ module ProvisioningOis
           end
         end
         if !provider[:error].present? and provider[:npi].present?
-          providers_with_npi << provider.slice(:npi, :first_name, :last_name)
+          providers_with_npi << provider.slice(:npi, :first_name, :last_name, :sys_provider_app_detail_id)
         elsif !provider[:error].present? and !provider[:npi].present?
           npiless_providers << provider
         else
