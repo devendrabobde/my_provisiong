@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.17'
 
 # Oracle interface ruby gem
 gem 'ruby-oci8', '2.1.5'
@@ -47,7 +47,6 @@ group :development, :test do
   gem "shoulda"
   gem "factory_girl_rails", ">= 4.2.0"
   gem 'faker'
-  gem 'brakeman', :require => false
   gem "database_cleaner", ">= 1.0.0.RC1"
   gem "email_spec", ">= 1.4.0"
   gem "capybara", ">= 2.0.3"

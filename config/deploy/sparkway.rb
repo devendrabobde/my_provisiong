@@ -1,7 +1,7 @@
 set :domain, "10.100.10.45"
 set :rails_env, "production"
 set :deploy_to, "/usr/local/onestop/#{application}"
-set :branch, "master"
+set :branch, "staging"
 
 # roles (servers)
 role :web, domain
