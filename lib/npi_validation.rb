@@ -14,7 +14,7 @@ module NpiValidation
     response, invalid_npi_providers = validate_provider_npi(providers)
 
     if application.app_name.eql?("EPCS-IDP")
-      response = check_supernpi_acceptance(providers)
+      response = check_supernpi_acceptance(response)
     end
     response + invalid_npi_providers
   end
