@@ -62,10 +62,10 @@ class BatchUpload
               end
             end
           end
-          if response["errors"].present?
-            error_res = response["errors"].first
+        else
+          if response[:error].present?
             provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
-            provider_app_details.update_all(status_code: error_res["code"], status_text: error_res["message"])
+            provider_app_details.update_all(status_code: 503, status_text: "Connection Error")
           end
         end
         if response["valid_users"].present?
@@ -78,6 +78,11 @@ class BatchUpload
               total_npi_processed = total_npi_processed + 1
             end
           end
+        end
+        if response["errors"].present?
+            error_res = response["errors"].first
+            provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
+            provider_app_details.update_all(status_code: error_res["code"], status_text: error_res["message"])
         end
       end
       # Handle providers without npi number
