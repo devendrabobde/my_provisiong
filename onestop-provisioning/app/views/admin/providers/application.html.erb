@@ -14,7 +14,7 @@
       <p/>
       <p>
         <div>
-          <%= select_tag 'provider[registered_app_id]', options_from_collection_for_select(@registered_applications, "id", "app_name"), "data-href" => application_admin_providers_path, prompt: "Select Application" %>
+          <%= select_tag 'provider[registered_app_id]', options_from_collection_for_select(@registered_applications, "id", "registered_app_name"), "data-href" => application_admin_providers_path, prompt: "Select Application" %>
         </div>
       </p>
       <% end %>
