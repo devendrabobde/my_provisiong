@@ -59,7 +59,7 @@ Then /^I should see message Please select application and a CSV file to initiate
 end
 
 Given /^I select an application$/ do
-  select "EPCS-IDP", from: 'provider_registered_app_id'
+  select "DrFirst - EPCS-IDP", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of 4 providers$/ do
