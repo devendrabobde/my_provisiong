@@ -50,31 +50,17 @@ class BatchUpload
 
       # OneStop Router Response
       if response.present?
-        if response["invalid_users"].present?
-          response["invalid_users"].each do |record|
-            record.each do |key,val|
-              # provider_fullname = key.strip.split(" ")
-              # provider = Provider.where("first_name like (?) and last_name like (?) and fk_provider_app_detail_id in (?)", "%#{provider_fullname.first}%", "%#{provider_fullname.last}%", provider_app_detail_ids.flatten).first
-               provider_app_detail = ProviderAppDetail.where(sys_provider_app_detail_id: key).first
-              if provider_app_detail.present?
-                error_msg = "Bad Request: " + val.to_s
-                provider_app_detail.update_attributes(status_code: 500,status_text: error_msg)
-              end
-            end
-          end
-        else
-          if response[:error].present?
-            provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
-            provider_app_details.update_all(status_code: 503, status_text: "Connection Error")
-          end
+        if response[:error].present?
+          provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
+          provider_app_details.update_all(status_code: 503, status_text: "Connection Error")
         end
-        if response["valid_users"].present?
-          response["valid_users"].each do |provider_app_detail_id|
-            # provider_fullname = record.strip.split(" ")
-            # provider = Provider.where("first_name like (?) and last_name like (?) and fk_provider_app_detail_id in (?)", "%#{provider_fullname.first}%", "%#{provider_fullname.last}%", provider_app_detail_ids.flatten).first
-             provider_app_detail = ProviderAppDetail.where(sys_provider_app_detail_id: provider_app_detail_id).first
+        if response["providers"].present?
+          response["providers"].each do |provider|
+            provider_app_detail = ProviderAppDetail.where(sys_provider_app_detail_id: provider[:sys_provider_app_detail_id]).first
             if provider_app_detail.present?
-              provider_app_detail.update_attributes(status_code: 200, status_text: "Success")
+              status_code = provider[:status]
+              status_text = provider[:status_text]
+              provider_app_detail.update_attributes(status_code: status_code, status_text: status_text)
               total_npi_processed = total_npi_processed + 1
             end
           end
