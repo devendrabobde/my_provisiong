@@ -52,16 +52,15 @@ class BatchUpload
       if response.present?
         if response[:error].present?
           provider_app_details = ProviderAppDetail.find_provider_app_details(provider_app_detail_ids - provider_invalid_ids)
-          provider_app_details.update_all(status_code: 503, status_text: "Connection Error")
+          provider_app_details.update_all(status_code: 503, status_text: "Connection Error - unable to connect Onestop Router")
         end
         if response["providers"].present?
           response["providers"].each do |provider|
+            provider = provider.symbolize_keys
             provider_app_detail = ProviderAppDetail.where(sys_provider_app_detail_id: provider[:sys_provider_app_detail_id]).first
             if provider_app_detail.present?
-              status_code = provider[:status]
-              status_text = provider[:status_text]
-              provider_app_detail.update_attributes(status_code: status_code, status_text: status_text)
-              total_npi_processed = total_npi_processed + 1
+              provider_app_detail.update_attributes(status_code: provider[:status], status_text: provider[:status_text])
+              total_npi_processed = total_npi_processed + 1 if provider[:status].to_i == 200
             end
           end
         end
@@ -71,6 +70,7 @@ class BatchUpload
             provider_app_details.update_all(status_code: error_res["code"], status_text: error_res["message"])
         end
       end
+
       # Handle providers without npi number
       if npiless_providers.present?
         npiless_providers.each do |provider_record|
