@@ -2,6 +2,7 @@ class Admin::ProvidersController < ApplicationController
   require 'csv'
   include ProvisioningOis
   include ProvisioingCsvValidation
+  include OnestopRouter
 
   before_filter :find_cao
   before_filter :require_coa_login
@@ -9,6 +10,8 @@ class Admin::ProvidersController < ApplicationController
 
   # Return list of uploaded files.
   def application
+    reg_applications = OnestopRouter.request_batchupload_responders(@cao)
+    Rails.logger.info reg_applications
     @registered_applications = RegisteredApp.all
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
