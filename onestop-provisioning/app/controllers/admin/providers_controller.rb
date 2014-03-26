@@ -57,7 +57,11 @@ class Admin::ProvidersController < ApplicationController
     begin
       error_message, success_message, invalid_providers = "", "", []
       file_path, file_name = store_csv
-      providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+      # Start Benchmark Code
+      t1 = Time.now
+        providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+      Rails.logger.info "Benchmarking - Process CSV  - elapsed time:#{Time.now - t1} sec"
+      # End Benchmark Code
       if upload_file_status
         providers = providers.collect { |x| x if x.present? }.compact
         if providers.present?

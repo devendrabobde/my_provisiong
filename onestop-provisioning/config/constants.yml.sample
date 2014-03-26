@@ -31,6 +31,8 @@ ONESTOP_ROUTER:
   API:
     SAVE_PROVIDER:
       URL: api/v1/ois/save-provider.json
+      
+  VERIFY_CONNECTIVITY: connectivity/verify.json
 
 EPCS_OIS:
   SERVER_URL: http://10.100.10.211
