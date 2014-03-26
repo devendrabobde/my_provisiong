@@ -28,18 +28,18 @@ ssh_options[:forward_agent] = true
 after("deploy:setup", "deploy:create_config_and_environment_folder")
 after("deploy:create_symlink", "deploy:copy_constants_and_production")
 after("deploy:create_symlink", "deploy:bundle_install")
-after("deploy:restart", "deploy:kill_redis")
-after("deploy:restart", "deploy:start_redis")
-after("deploy:restart", "deploy:clean_redis")
-after("deploy:restart", "deploy:resque_work")
+before("deploy:restart", "deploy:kill_redis")
+before("deploy:restart", "deploy:start_redis")
+before("deploy:restart", "deploy:clean_redis")
+before("deploy:restart", "deploy:resque_work")
 
 namespace :deploy do
 
   desc "create config and environments folder inside shared folder at the time of cap {{stage}} deploy:setup"
   task :create_config_and_environment_folder do
-    run "mkdir #{shared_path}/config"
-    run "mkdir #{shared_path}/config/environments"
-    run "mkdir #{shared_path}/tmp"
+    run "mkdir -p #{shared_path}/config"
+    run "mkdir -p #{shared_path}/config/environments"
+    run "mkdir -p #{shared_path}/tmp"
   end
 
   task :restart, roles: :app, except: { no_release: true } do
@@ -53,12 +53,13 @@ namespace :deploy do
 
   desc "kill redis server"
   task :kill_redis do
-    run "killall -9 redis-server"
+    sudo "killall -9 redis-server"
   end
 
   desc "Start redis server"
   task :start_redis do
     run  "cd /usr/local/src/redis-stable"
+    sudo "src/redis-server redis.conf"
   end
 
   desc "clean redis queue"
