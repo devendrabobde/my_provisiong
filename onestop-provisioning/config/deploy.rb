@@ -59,7 +59,7 @@ namespace :deploy do
 
   desc "Start redis server"
   task :start_redis do
-    run  "cd /usr/local/src/redis-stable && src/redis-server redis.conf"
+    run  "cd /usr/local/src/redis-stable && nohup src/redis-server redis.conf"
   end
 
   desc "clean redis queue"
