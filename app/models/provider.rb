@@ -32,12 +32,18 @@ class Provider < ActiveRecord::Base
   #
   def self.save_provider(providers, cao, application)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
-    upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
+    t1 = Time.now
+      upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
+    Rails.logger.info "Benchmarking - application_upload_field_validations  - elapsed time:#{Time.now - t1} sec"
+    
     if application.app_name.eql?("EPCS-IDP")
       upload_field_validations = upload_field_validations.each.select {|v| v.required }
     end
     # upload_field_validations = upload_field_validations.each.select {|v| v.required }
-    validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
+
+    t1 = Time.now
+      validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
+    Rails.logger.info "Benchmarking - validate_provider  - elapsed time:#{Time.now - t1} sec"
     if validated_providers.present?
       validated_providers.each do |provider|
         if provider.present?
