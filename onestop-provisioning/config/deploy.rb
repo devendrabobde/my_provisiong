@@ -115,6 +115,3 @@ namespace :db do
 
   after "deploy:finalize_update", "db:configfile"
 end
-
-after 'deploy:bundle_install', 'deploy:clean_redis'
-after 'deploy:clean_redis', 'deploy:resque_work'
