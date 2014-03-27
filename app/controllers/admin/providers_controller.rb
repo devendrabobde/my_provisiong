@@ -10,9 +10,19 @@ class Admin::ProvidersController < ApplicationController
 
   # Return list of uploaded files.
   def application
-    reg_applications = OnestopRouter.request_batchupload_responders(@cao)
-    Rails.logger.info reg_applications
-    @registered_applications = RegisteredApp.all
+    unless session[:router_reg_applications]
+      $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
+      session[:router_reg_applications] = $regapps unless $regapps.first[:error]
+    else
+      $regapps = session[:router_reg_applications]
+    end
+    if $regapps.first[:error]
+      @registered_applications = []
+      flash[:error] = $regapps.first[:error]
+    else
+      display_name = $regapps.collect{|ois| ois["ois_name"]}
+      @registered_applications = RegisteredApp.where(display_name: display_name)
+    end
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
     else

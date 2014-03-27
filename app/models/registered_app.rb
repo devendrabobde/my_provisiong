@@ -16,6 +16,7 @@ class RegisteredApp < ActiveRecord::Base
 
   # Method which return application name in the "DrFirst - EPCSIDP" format
   def registered_app_name
-  	"DrFirst - " + app_name
+    app= $regapps.each{|f| f if f["ois_name"] == app_name}.first
+  	app["organization_name"] + " - " + display_name if app.present?  
   end
 end

@@ -29,8 +29,8 @@ module OnestopRouter
     end
   end
 
-  def self.request_batchupload_responders(cao)
-    # body = { :organization => cao.organization }
+  def self.request_batchupload_responders(org)
+    # body = { :organization => org }
     body = {}
     url = request_batchupload_responders_url
     header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["PROVISIONING_UI"]
@@ -39,7 +39,7 @@ module OnestopRouter
       return JSON.parse(response)
     rescue => e
       Rails.logger.error e
-      return {:error => e.message }
+      return [{:error => "Onestop Router Error: " +  e.message }]
     ensure
       Rails.logger.info \
         "Onestop-Provisioning: Onestop-Router OIS request-batchupload-responders communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
