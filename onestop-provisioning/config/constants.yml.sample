@@ -1,6 +1,7 @@
 ONESTOP_ROUTER:
   SERVER_URL: http://10.100.10.213
   BATCH_UPLOAD_API_URL: api/v1/ois/batch-upload.json
+  REQUEST_BATCHUPLOAD_RESPONDERS_URL: api/v1/client/request-batchupload-responders
   EPCS_IDP:
     OISID: epcsidp
     OISPASSWORD: fWqFFLRqtbO10b7RVUVryX2yJ2JFzeT5XsKcH6F8FldmeZOpvFA
