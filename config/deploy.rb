@@ -28,6 +28,7 @@ ssh_options[:forward_agent] = true
 after("deploy:setup", "deploy:create_config_and_environment_folder")
 after("deploy:create_symlink", "deploy:copy_constants_and_production")
 after("deploy:create_symlink", "deploy:bundle_install")
+before("deploy:restart", "deploy:start_redis")
 before("deploy:restart", "deploy:kill_redis")
 before("deploy:restart", "deploy:start_redis")
 before("deploy:restart", "deploy:clean_redis")
@@ -58,8 +59,7 @@ namespace :deploy do
 
   desc "Start redis server"
   task :start_redis do
-    run  "cd /usr/local/src/redis-stable"
-    sudo "src/redis-server redis.conf"
+    run  "cd /usr/local/src/redis-stable && nohup src/redis-server redis.conf"
   end
 
   desc "clean redis queue"
@@ -115,6 +115,3 @@ namespace :db do
 
   after "deploy:finalize_update", "db:configfile"
 end
-
-after 'deploy:bundle_install', 'deploy:clean_redis'
-after 'deploy:clean_redis', 'deploy:resque_work'

@@ -7,10 +7,10 @@ production:
   username: dev_ois
   password: <%= dbpassword%>
 
-test: &test
+test:
   adapter: oracle_enhanced
-  host: 172.16.10.105
+  host: 172.16.10.103
   port: 1521
-  database: qa1test
-  username: sparkway
-  password: <%= dbpassword%>
+  database: Dv1ois
+  username: dev_ois_test
+  password: <%= dbpassword %>
