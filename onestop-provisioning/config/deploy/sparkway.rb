@@ -8,8 +8,6 @@ role :web, domain
 role :app, domain
 role :db,  domain, :primary => true
 
-after "deploy:restart", "deploy:cleanup"
-
 namespace :deploy do
 
   desc "Copy config files"
