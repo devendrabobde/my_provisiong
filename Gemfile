@@ -58,6 +58,12 @@ group :development, :test do
   gem 'rspec-core'
 end
 
+
+group :development do
+  gem 'quiet_assets'
+  gem 'thin'
+end
+
 # gem "bullet", :group => "development"
 # gem 'quiet_assets', :group => :development
 # gem 'awesome_print', group: :development

@@ -1,13 +1,13 @@
 <div class='container'>
   <fieldset class="fieldset">
     <legend class="scheduler-border">Upload CSV Data File</legend>
-      <div id="download_sample_data">
-        <% if @registered_applications.present? %>
-          <%-link_id =  @registered_applications.first.id -%>
+    <div id="download_sample_data">
+      <% if @registered_applications.present? %>
+        <%-link_id =  @registered_applications.first.id -%>
         <%= link_to "Download Sample Data File", admin_download_path(format: "csv", id: link_id.to_s) %>
-        <% end %>
-      </div>
-      <%= form_tag upload_admin_providers_path, id: "upload_csv_file", multipart: true do%>
+      <% end %>
+    </div>
+    <%= form_tag upload_admin_providers_path, id: "upload_csv_file", multipart: true do%>
       <p>
         <%= file_field_tag :upload %>
         <%= submit_tag "Upload", class: "btn btn-primary" %>
@@ -16,24 +16,24 @@
         <div>
           <%= select_tag 'provider[registered_app_id]', options_from_collection_for_select(@registered_applications, "id", "registered_app_name"), "data-href" => application_admin_providers_path, prompt: "Select Application" %>
         </div>
-      </p>
+       </p>
       <% end %>
-  </fieldset>
-</div></br>
-<div class='container'>
-  <fieldset class="fieldset" id="audit_data_table">
-    <legend class="scheduler-border">Previously Uploaded Data File</legend>
+    </fieldset>
+  </div><br />
+  <div class='container'>
+    <fieldset class="fieldset" id="audit_data_table">
+      <legend class="scheduler-border">Previously Uploaded Data File</legend>
       <div id="audit_data">
         <%= render "admin/providers/audit_trail_list", audit_trails: @audit_trails %>
       </div>
-    </br>
-  </fieldset>
-</div>
+      <br />
+    </fieldset>
+  </div>
 
-<div id="dialog" title="Message">
-  <div class="error_message_content"></div>
-</div>
+  <div id="dialog" title="Message">
+    <div class="error_message_content"></div>
+  </div>
 
-<div class="application_waiting_image" style="display:none;">
-  <%= image_tag("loading.gif") %>
-</div>
+  <div class="application_waiting_image" style="display:none;">
+    <%= image_tag("loading.gif") %>
+  </div>

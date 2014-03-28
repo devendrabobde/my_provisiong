@@ -1,4 +1,6 @@
 OneStop::Application.configure do
+  #quite assets warning message
+  #config.quiet_assets = false
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -59,20 +61,5 @@ OneStop::Application.configure do
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }
-
-  # config.after_initialize do
-  #   Bullet.enable = true
-  #   Bullet.alert = true
-  #   Bullet.bullet_logger = true
-  #   Bullet.console = true
-  #   #Bullet.growl = true
-  # #  Bullet.xmpp = { :account  => 'abhishek.shukla@novaquad.com',
-  # #   :password => 'bullets_password_for_jabber',
-  # #    :receiver => 'your_account@jabber.org',
-  # #    :show_online_status => true }
-  #   Bullet.rails_logger = true
-  #   Bullet.airbrake = true
-  # #  Bullet.add_footer = true
-  # end
 
 end
