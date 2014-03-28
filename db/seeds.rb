@@ -15,8 +15,21 @@ cao.save!
 profile_list = ["Doctor","Nurse"]
 profile_list.each {|profile| Profile.where(profile_name: profile).first_or_create! }
 
-applications = ["EPCS-IDP","Backline", "Rcopia", "Moxy"]
-applications.each {|app| RegisteredApp.where(app_name: app).first_or_create! }
+
+RegisteredApp.delete_all
+
+applications = [{ app_name: "EPCS-IDP", display_name: "epcsidp"},
+                { app_name: "Rcopia", display_name: "rcopia"},
+                { app_name: "Moxy", display_name: "moxy"},
+                { app_name: "Backline", display_name: nil }]
+
+
+applications.each do |app|
+  RegisteredApp.where(app_name: app[:app_name], display_name: app[:display_name]).first_or_create!
+end
+
+# applications = ["EPCS-IDP","Backline", "Rcopia", "moxy"]
+# applications.each {|app| RegisteredApp.where(app_name: app).first_or_create! }
 
 #
 # Provisioning CSV Upload Validation As per Batch Upload Model
