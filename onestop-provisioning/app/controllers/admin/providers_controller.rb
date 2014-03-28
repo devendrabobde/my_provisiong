@@ -2,6 +2,7 @@ class Admin::ProvidersController < ApplicationController
   require 'csv'
   include ProvisioningOis
   include ProvisioingCsvValidation
+  include OnestopRouter
 
   before_filter :find_cao
   before_filter :require_coa_login
@@ -10,8 +11,28 @@ class Admin::ProvidersController < ApplicationController
   # Return list of uploaded files.
   def application
     @registered_applications = RegisteredApp.all
-    @audit_trails = get_audit_trails(params[:registered_app_id], registered_applications)
+    #    @audit_trails = get_audit_trails(params[:registered_app_id], registered_applications)
 
+    unless session[:router_reg_applications]
+      $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
+      session[:router_reg_applications] = $regapps unless $regapps.first[:error]
+    else
+      $regapps = session[:router_reg_applications]
+    end
+    if $regapps.first[:error]
+      @registered_applications = []
+      flash[:error] = $regapps.first[:error]
+    else
+      display_name = $regapps.collect{|ois| ois["ois_name"]}
+      @registered_applications = RegisteredApp.where(display_name: display_name)
+    end
+    if params[:registered_app_id].present?
+      @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
+    else
+      if @registered_applications.first.present?
+        @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
+      end
+    end
     respond_to do |format|
       format.html
       format.js {
@@ -54,7 +75,7 @@ class Admin::ProvidersController < ApplicationController
       file_path, file_name = store_csv
       # Start Benchmark Code
       t1 = Time.now
-        providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+      providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
       Rails.logger.info "Benchmarking - Process CSV  - elapsed time:#{Time.now - t1} sec"
       # End Benchmark Code
       if upload_file_status

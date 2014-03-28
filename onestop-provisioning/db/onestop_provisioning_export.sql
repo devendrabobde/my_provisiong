@@ -1155,3 +1155,11 @@ OFFICE_ADDRESS_STATE VARCHAR2(255 CHAR),
 OFFICE_ADDRESS_COUNTRY VARCHAR2(255 CHAR),
 OFFICE_ADDRESS_ZIP VARCHAR2(255 CHAR));
 /
+
+
+---------------------------------------------------------------------------------------------------
+-- DLL for Adding field in RegisteredApp table for mapping Onestop Router ois_name with RegisteredApp's app_name
+---------------------------------------------------------------------------------------------------
+ALTER TABLE "REGISTERED_APPS" ADD (
+DISPLAY_NAME VARCHAR2(255 CHAR));
+/
