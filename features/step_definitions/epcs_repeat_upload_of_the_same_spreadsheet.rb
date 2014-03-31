@@ -5,7 +5,7 @@ end
 
 And /^I should be able to see success message corresponding to each valid providers$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
-    td.text.split(" ").last.should =~ /Success/
+    td.text.should =~ /Success/
   end
 end
 
