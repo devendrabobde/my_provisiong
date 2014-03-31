@@ -20,6 +20,7 @@ class Admin::ProvidersController < ApplicationController
     else
       $regapps = session[:router_reg_applications]
     end
+    
     if $regapps.first[:error]
       @registered_applications = []
       flash[:error] = $regapps.first[:error]
@@ -27,6 +28,7 @@ class Admin::ProvidersController < ApplicationController
       display_name = $regapps.collect{|x| x.values.flatten.collect{|x| x["ois_name"]}}.flatten
       @registered_applications = RegisteredApp.where(display_name: display_name)
     end
+
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
     else
@@ -34,6 +36,7 @@ class Admin::ProvidersController < ApplicationController
         @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
       end
     end
+
     respond_to do |format|
       format.html
       format.js {
