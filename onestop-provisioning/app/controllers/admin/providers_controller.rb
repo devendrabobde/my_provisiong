@@ -10,11 +10,12 @@ class Admin::ProvidersController < ApplicationController
 
   # Return list of uploaded files.
   def application
-    @registered_applications = RegisteredApp.all
+    # @registered_applications = RegisteredApp.all
     #    @audit_trails = get_audit_trails(params[:registered_app_id], registered_applications)
 
     unless session[:router_reg_applications]
       $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
+      binding.pry
       session[:router_reg_applications] = $regapps unless $regapps.first[:error]
     else
       $regapps = session[:router_reg_applications]
@@ -23,7 +24,7 @@ class Admin::ProvidersController < ApplicationController
       @registered_applications = []
       flash[:error] = $regapps.first[:error]
     else
-      display_name = $regapps.collect{|ois| ois["ois_name"]}
+      display_name = $regapps.collect{|x| x.values.flatten.collect{|x| x["ois_name"]}}.flatten
       @registered_applications = RegisteredApp.where(display_name: display_name)
     end
     if params[:registered_app_id].present?
