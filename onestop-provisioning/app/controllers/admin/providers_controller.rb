@@ -15,7 +15,7 @@ class Admin::ProvidersController < ApplicationController
 
     unless session[:router_reg_applications]
       $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
-      binding.pry
+      #binding.pry
       session[:router_reg_applications] = $regapps unless $regapps.first[:error]
     else
       $regapps = session[:router_reg_applications]
