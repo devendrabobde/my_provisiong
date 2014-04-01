@@ -17,6 +17,7 @@ OneStop::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.assets.digest = true
+  config.reload_classes_only_on_change = false
 
   # Added redis server
   config.cache_store = :redis_store
