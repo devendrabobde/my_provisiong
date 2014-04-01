@@ -16,6 +16,9 @@ module ProvisioningOis
       end
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
       url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      if Rails.env == "test"
+        url = CONSTANT["EPCS_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      end
       begin
         request_time = Time.now
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
