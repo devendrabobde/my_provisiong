@@ -5,6 +5,7 @@ end
 
 And /^I should be able to see acknowledgement messages$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
-    td.text.split(" ").last.should =~ /Success/
+    # td.text.split(" ").last.should =~ /Success/
+    td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end
