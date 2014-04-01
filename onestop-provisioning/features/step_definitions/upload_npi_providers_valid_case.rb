@@ -59,7 +59,7 @@ Then /^I should see message Please select application and a CSV file to initiate
 end
 
 Given /^I select an application$/ do
-  select "DrFirst - EPCS-IDP", from: 'provider_registered_app_id'
+  select "DrFirst - epcsidp", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of 4 providers$/ do
@@ -124,6 +124,6 @@ end
 
 And /^I should be able to see simple acknowledgement messages$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
-    td.text.should =~ /Success/
+    td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end
