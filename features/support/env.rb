@@ -99,6 +99,12 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+Capybara.register_driver :selenium do |app|
+  http_client = Selenium::WebDriver::Remote::Http::Default.new
+  http_client.timeout = 20000
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :http_client => http_client)
+end
+
 def wait_for_ajax
   Timeout.timeout(Capybara.default_wait_time) do
     loop do
