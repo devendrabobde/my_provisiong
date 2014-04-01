@@ -1,5 +1,5 @@
 Given /^I select rcopia application$/ do
-  select "DrFirst - Rcopia", from: 'provider_registered_app_id'
+  select "DrFirst - rcopia", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of valid rcopia providers$/ do

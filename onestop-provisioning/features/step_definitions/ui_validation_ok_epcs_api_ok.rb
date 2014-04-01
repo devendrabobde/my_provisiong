@@ -5,7 +5,8 @@ end
 
 And /^I should be able to see success message corresponding to each uploaded providers$/ do
   page.all(:css, "#table1 tbody tr").each do |td|
-    td.text.should =~ /Success/
+    # td.text.should =~ /Success/
+    td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end
 

@@ -6,5 +6,5 @@ end
 
 
 When /^I select a csv file which has providers that would be rejected by destination OIS$/ do
-  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_invalid.csv') # id
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_invalid_providers.csv')
 end
