@@ -113,4 +113,19 @@
 
 .error {
     color: red;
+    padding-left: 10px;
+}
+
+.new-organization-errors {
+    color: #FF0000;
+    float: left;
+    padding-left: 10px;
+}
+
+.col-sm-10 .error {
+    padding-left: 10px;
+}
+
+.left {
+    float: left;
 }

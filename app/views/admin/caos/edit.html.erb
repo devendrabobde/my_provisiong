@@ -1,5 +1,7 @@
-<h3>Edit COA</h3>
+<div class="organization-form" style="border: 1px solid grey;padding: 20px 0px 0px 50px; border-radius: 20px;">
+  <h3>Edit COA</h3>
 
-<%= render 'form' %>
+  <%= render 'form', organization: @organization, coa: @cao, id: "edit-coa" %>
+</div>
 
 <%= link_to 'Back', admin_organization_caos_path(@organization.id) %>
