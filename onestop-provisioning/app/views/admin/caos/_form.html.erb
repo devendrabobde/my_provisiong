@@ -1,22 +1,22 @@
-<%= form_for([:admin, @organization, @cao]) do |f| %>
+<%= form_for([:admin, organization, coa], html: { id: id }) do |f| %>
   <div>
-    <%= label_tag "First Name *" %>
+    <%= label_tag "First Name", "First Name <span class='red'>*</span>".html_safe %>
     <%= f.text_field :first_name, autofocus: true, required: true %>
   </div>
   <div>
-    <%= label_tag "Last Name *" %>
+    <%= label_tag "Last Name", "Last Name <span class='red'>*</span>".html_safe %>
     <%= f.text_field :last_name, required: true %>
   </div>
   <div>
-    <%= label_tag "Username *" %>
+    <%= label_tag "Username", "Username <span class='red'>*</span>".html_safe %>
     <%= f.text_field :username, required: true %>
   </div>
   <div>
-    <%= label_tag "Email *" %>
+    <%= label_tag "Email", "Email <span class='red'>*</span>".html_safe %>
     <%= f.email_field :email, required: true %>
   </div>
   <div>
-    <%= label_tag "Password *" %>
+    <%= label_tag "Password", "Password <span class='red'>*</span>".html_safe %>
     <%= f.password_field :password, required: true %>
   </div>
   <div>

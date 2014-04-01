@@ -1,57 +1,101 @@
-<%= form_for([:admin, @organization]) do |f| %>
-  <div>
-    <%= f.label :name, 'Organization Name' %>
-    <%= f.text_field :name, :autofocus => true %>
+<%= form_for([:admin, organization], html: { class: 'form-horizontal organization-form', id: id }) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :name, "Organization Name <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :name, :autofocus => true, class: "form-control", required: "required" %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= f.label :address1, 'Address1' %>
-    <%= f.text_field :address1 %>
+
+  <div class="form-group" style="padding-top: 20px;">
+    <%= f.label :address1, 'Address1', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :address1, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :address2, 'Address2' %>
-    <%= f.text_field :address2 %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :address2, 'Address2', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :address2, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :city, 'City' %>
-    <%= f.text_field :city %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :city, 'City', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :city, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :state_code, 'State' %>
-    <%= f.select :state_code, US_STATES, { prompt: 'Select State' } %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :state_code, 'State', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :state_code, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :zip_code, 'Zip Code' %>
-    <%= f.text_field :zip_code %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :zip_code, "Zip Code <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :zip_code, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :postal_code, 'Postal Code' %>
-    <%= f.text_field :postal_code %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :postal_code, "Postal Code <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :postal_code, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :country_code, 'Country Code' %>
-    <%= f.text_field :country_code %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :country_code, 'Country Code', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :country_code, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :contact_first_name, 'Contact First Name' %>
-    <%= f.text_field :contact_first_name %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :contact_first_name, "Contact First Name <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :contact_first_name, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :contact_last_name, 'Contact Last Name' %>
-    <%= f.text_field :contact_last_name %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :contact_last_name, "Contact Last Name <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :contact_last_name, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :contact_phone, 'Contact Phone' %>
-    <%= f.text_field :contact_phone %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :contact_phone, 'Contact Phone', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :contact_phone, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :contact_fax, 'Contact Fax' %>
-    <%= f.text_field :contact_fax %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :contact_fax, 'Contact Fax', class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :contact_fax, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.label :contact_email, 'Contact Email' %>
-    <%= f.text_field :contact_email %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    <%= f.label :contact_email, "Contact Email <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label", style: "margin-right: 40px !important;" %>
+    <div class="col-sm-10">
+      <%= f.text_field :contact_email, class: "form-control" %>
+    </div>
   </div>
-  <div>
-    <%= f.submit :class => "btn btn-primary" %>
+
+  <div class="form-group" style="padding-top: 10px;">
+    
+    <div class="col-sm-10" style="padding-left:200px">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
   </div>
 <% end %>
