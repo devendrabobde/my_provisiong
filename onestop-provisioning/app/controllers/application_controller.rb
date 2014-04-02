@@ -19,10 +19,12 @@ class ApplicationController < ActionController::Base
   private
 
   def set_cache_buster
+    p "1dasdads"
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
-    #response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
-    response.headers["Expires"] = Time.now.httpdate
+    # Set to expire far in the past.
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    #response.headers["Expires"] = Time.now.httpdate
   end
   
 end
