@@ -35,7 +35,7 @@
     <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
     <!-- <div class="navbar navbar-fixed-top"> -->
       <div class="navbar-inner">
         <div class="container">
@@ -45,7 +45,8 @@
             <span class="icon-bar"></span>
           </a>
           <%#= link_to "OneStop", "", :class=> "brand" %>
-          <p class="brand">OneStop</p>
+          <!-- <p class="brand" style="background-image: url(<#%= asset_path 'OneStopLogo.png' %>);">OneStop</p> -->
+          <%= image_tag "OneStopLogo.png", alt: "OneStop", class: "brand" %>
           <div class="container nav-collapse">
             <ul class="nav pull-right">
               <% unless cao_signed_in? %>
@@ -88,7 +89,7 @@
         </div>
       </div>
     </div>
-  <div class="container">
+  <div class="container"><br />
     <div class="row">
       <div class="span12">
         <%= bootstrap_flash %>
