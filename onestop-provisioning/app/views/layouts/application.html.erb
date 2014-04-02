@@ -35,7 +35,7 @@
     <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
     <!-- <div class="navbar navbar-fixed-top"> -->
       <div class="navbar-inner">
         <div class="container">
@@ -44,7 +44,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <%= link_to "OneStop", "", :class=> "brand" %>
+          <%#= link_to "OneStop", "", :class=> "brand" %>
+          <!-- <p class="brand" style="background-image: url(<#%= asset_path 'OneStopLogo.png' %>);">OneStop</p> -->
+          <%= image_tag "OneStopLogo.png", alt: "OneStop", class: "brand" %>
           <div class="container nav-collapse">
             <ul class="nav pull-right">
               <% unless cao_signed_in? %>
@@ -54,10 +56,16 @@
               <% else %>
                 <%= drop_down "Setting" do %>
                   <%= menu_item "Edit Account", edit_cao_registration_path %>
+                  <%#= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
+                <% end %>
+                <%= drop_down "#{current_cao.username.to_s.capitalize}" do %>
                   <%= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
                 <% end %>
                 <li>
-                  <%= link_to "Welcome: "+ current_cao.username.to_s.capitalize + " | Organization: " + current_cao.organization.name , "" rescue nil %>
+                  <%#= link_to "Welcome: "+ current_cao.username.to_s.capitalize + " | Organization: " + current_cao.organization.name , "" rescue nil %>                  
+                  <span class="brand" style="font-size: 14px; margin-left: -10px;">
+                    <%= "Organization : " + current_cao.organization.name rescue nil %>
+                  </span>
                 </li>
               </ul>
               <ul class="nav">
@@ -81,7 +89,7 @@
         </div>
       </div>
     </div>
-  <div class="container">
+  <div class="container"><br />
     <div class="row">
       <div class="span12">
         <%= bootstrap_flash %>

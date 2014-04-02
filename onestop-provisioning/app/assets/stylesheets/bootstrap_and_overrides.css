@@ -48,3 +48,6 @@ legend {
 #error_explanation h2 {
   font-size: 15.5px;
 }
+.nav {
+  margin-top: 10px !important;
+}
