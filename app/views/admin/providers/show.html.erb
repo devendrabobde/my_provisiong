@@ -1,3 +1,6 @@
+<div>
+  <%= link_to "Back", application_admin_providers_path %>
+</div>
 <% if @upload_error.present? %>
   <div class="alert alert-error">
     <button class="close" data-dismiss="alert" type="button">×</button>
@@ -25,5 +28,5 @@
 <div id="dialog" title="Message">
   <div class="error_message_content"></div>
 </div>
-<br/><br/>
+<br/>
 <%= link_to "Back", application_admin_providers_path %>
