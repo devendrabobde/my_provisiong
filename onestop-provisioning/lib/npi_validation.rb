@@ -13,7 +13,7 @@ module NpiValidation
     #
     response, invalid_npi_providers = validate_provider_npi(providers)
 
-    if application.app_name.eql?("EPCS-IDP")
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       request_time = Time.now
       response = check_supernpi_acceptance(response)
       response_time = Time.now
@@ -78,7 +78,7 @@ module NpiValidation
           if npi[-1].to_i == check
             provs << provider
           else
-            provider[:validation_error_message] = "NPI Checksum Invalid"
+            provider[:validation_error_message] = VALIDATION_MESSAGE["EPCS"]["NPI_NUMBER"]["CHECKSUM_ERROR_MESSAGE"]
             invalid_npi_provs << provider
           end
         end

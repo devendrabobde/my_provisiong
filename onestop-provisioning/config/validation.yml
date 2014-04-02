@@ -4,3 +4,5 @@ EPCS:
     PROVIDER_NAME_ERROR_MESSAGE: Provider Name is not matching with Super NPI record
   DEA_NUMBER:
     CHECKSUM_ERROR_MESSAGE: Invalid DEA Number checksum is not correct
+  NPI_NUMBER:
+    CHECKSUM_ERROR_MESSAGE: NPI Checksum Invalid
