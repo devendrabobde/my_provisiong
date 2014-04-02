@@ -15,7 +15,7 @@ class Admin::OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(params[:organization])
     if @organization.save
-      flash[:notice] = "Organization was created successfully."
+      flash[:notice] = VALIDATION_MESSAGE["ORGANIZATION"]["CREATE"]
       redirect_to admin_organization_path(@organization.id)
     else
       flash[:error] = @organization.errors.full_messages.join(",  ")
@@ -33,7 +33,7 @@ class Admin::OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        flash[:notice] = "Organization was updated successfully."
+        flash[:notice] = VALIDATION_MESSAGE["ORGANIZATION"]["UPDATE"]
         format.html { redirect_to admin_organization_path(@organization.id) }
       else
         flash[:error] = @organization.errors.full_messages.join(",  ")
@@ -49,7 +49,7 @@ class Admin::OrganizationsController < ApplicationController
     end
     @organization.update_attributes(deleted_at: Time.now, deleted_reason: params["organization"]["deleted_reason"])
 
-    redirect_to admin_organizations_path, :notice => "Organization " + @organization.name + " deactivated successfully."
+    redirect_to admin_organizations_path, :notice => VALIDATION_MESSAGE["ORGANIZATION"]["DEACTIVATE"]
   end
 
   # Change the state of an organization from inactive to active.
@@ -58,7 +58,7 @@ class Admin::OrganizationsController < ApplicationController
       cao.update_attributes(deleted_at: nil, deleted_reason: nil)
     end
     @organization.update_attributes(deleted_at: nil, deleted_reason: nil)
-    redirect_to admin_organizations_path, :notice => "Organization " + @organization.name + " activated successfully."
+    redirect_to admin_organizations_path, :notice => VALIDATION_MESSAGE["ORGANIZATION"]["ACTIVATE"]
   end
 
   # Get all the uploaded files for a particular organization and for a particular COA

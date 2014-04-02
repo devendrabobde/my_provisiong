@@ -91,19 +91,19 @@ class Admin::ProvidersController < ApplicationController
             if required_field_status
               @audit_trail = save_audit_trails(file_name)
               save_providers(providers)
-              success_message = "Thanks for uploading providers, we are processing uploaded file."
-              success_message = duplicate_npis.count > 0 ? success_message + " As NPI #{duplicate_npis.join(",")} record is duplicated in the uploaded CSV file. In this case we are simply passing unique record for each." : success_message
+              success_message = VALIDATION_MESSAGE["PROVIDER"]["UPLOAD_PROCESS"]
+              success_message = duplicate_npis.count > 0 ? success_message + "#{duplicate_npis.join(",")}" + VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] : success_message
             else
-              error_message = "Providers required fields can't be blank, please correct: <br />" + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
+              error_message = VALIDATION_MESSAGE["PROVIDER"]["BLANK"] + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
             end
           else
-            error_message = "For EPCS, the NPI must be unique for each record in the file. Please remove duplicate NPI #{duplicate_npis.join(",")} record from CSV file before proceeding."
+            error_message =  VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] + duplicate_npis.join(",")
           end
         else
-          error_message = "Please check uploaded csv file. A csv file from another application should not be uploaded into any other application."
+          error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
         end
       else
-        error_message = "Uploaded providers csv file is empty."
+        error_message = VALIDATION_MESSAGE["PROVIDER"]["EMPTY_FILE"]
       end
       if error_message.present?
         flash[:error] = error_message
@@ -128,7 +128,7 @@ class Admin::ProvidersController < ApplicationController
       admin = Role.where(:name => "Admin").first
       UserMailer.send_resque_error(admin.caos.first).deliver
       audit_trail.update_attributes( status: "2", upload_status: true, total_providers: audit_trail.total_providers )
-      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working", fk_audit_trail_id: audit_trail.id)
+      ProviderErrorLog.create( application_name: CONSTANT["APP_NAME"]["ONESTOP"], error_message: VALIDATION_MESSAGE["PROVIDER"]["REDIS_Q_FAIL"], fk_audit_trail_id: audit_trail.id)
     end
     render :json => audit_trail
   end
@@ -158,7 +158,7 @@ class Admin::ProvidersController < ApplicationController
       admin = Role.where(:name => "Admin").first
       UserMailer.send_resque_error(admin.caos.first).deliver
       @audit_trail.update_attributes( status: "2", upload_status: true, total_providers: providers.count )
-      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: redis queue is not working", fk_audit_trail_id: @audit_trail.id)
+      ProviderErrorLog.create( application_name: CONSTANT["APP_NAME"]["ONESTOP"], error_message: VALIDATION_MESSAGE["PROVIDER"]["REDIS_Q_FAIL"], fk_audit_trail_id: @audit_trail.id)
     end
   end
 
@@ -181,7 +181,7 @@ class Admin::ProvidersController < ApplicationController
 
   def check_provider_duplicate_records(providers)
     temp_providers, duplicate_npis, duplicate_status = providers.to_s, [], true
-    if @application.app_name.eql?("EPCS-IDP")
+    if @application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       npi_numbers = providers.collect { |p| p[:npi] }
       duplicate_npis = npi_numbers.select { |item| npi_numbers.count(item) > 1 }
       if duplicate_npis.present?

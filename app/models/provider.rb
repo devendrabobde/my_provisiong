@@ -36,7 +36,7 @@ class Provider < ActiveRecord::Base
       upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
     Rails.logger.info "Benchmarking - application_upload_field_validations  - elapsed time:#{Time.now - t1} sec"
     
-    if application.app_name.eql?("EPCS-IDP")
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       upload_field_validations = upload_field_validations.each.select {|v| v.required }
     end
     # upload_field_validations = upload_field_validations.each.select {|v| v.required }
@@ -52,7 +52,7 @@ class Provider < ActiveRecord::Base
           if provider_app_detail.present?
             providers_ids << provider_app_detail.id
             provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
-            if ["EPCS-IDP", "Rcopia"].include?(application.app_name)
+            if [CONSTANT["APP_NAME"]["EPCS"], CONSTANT["APP_NAME"]["RCOPIA"]].include?(application.app_name)
               provider_deas = provider[:provider_dea_record]
               if provider_deas.present?
                 provider_deas.each do |dea|
@@ -82,7 +82,7 @@ class Provider < ActiveRecord::Base
   # used to download provider csv file based on application conditions
   #
   def self.to_csv(application, options = {})
-    if application.app_name.eql?("EPCS-IDP")
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       csv_cols = ["Provider NPI", "Provider DEA", "Provider DEA State", "Provider DEA Expiration Date",
         "Provider Last Name", "Provider First Name", "Provider Home Address1", "Provider Home Address2",
         "Provider Home City","Provider Home State", "Provider Home Zip", "Provider Work phone",
@@ -99,7 +99,7 @@ class Provider < ActiveRecord::Base
             provider.idp_performed_time, provider.hospital_idp_transaction_id ]
         end
       end
-    elsif application.app_name.eql?("Backline")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["BACKLINE"])
       remove_columns = ["id","created_at","updated_at","provider_app_detail_id", "provider_otp_token_serial",
         "resend_flag", "hospital_admin_first_name", "hospital_admin_last_name", "idp_performed_date",
         "idp_performed_time", "hospital_idp_transaction_id", "zip"]
@@ -109,7 +109,7 @@ class Provider < ActiveRecord::Base
           csv << product.attributes.values_at(*column_names - remove_columns)
         end
       end
-    elsif application.app_name.eql?("Rcopia")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
       remove_columns = []
       CSV.generate(options) do |csv|
         csv << column_names - remove_columns

@@ -9,11 +9,11 @@ module OnestopRouter
   def self.batch_upload(providers, application)
     body = { :users => {"" => providers } }
     url = batch_upload_url
-    if application.app_name.eql?("EPCS-IDP")
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["EPCS_IDP"]
-    elsif application.app_name.eql?("Rcopia")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["RCOPIA"]
-    elsif application.app_name.eql?("Moxy")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
       header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["MOXY"]
     end
     begin

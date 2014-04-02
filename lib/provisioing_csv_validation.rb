@@ -53,7 +53,7 @@ module ProvisioingCsvValidation
       end
     end
     provider = provider.symbolize_keys
-    if ["EPCS-IDP", "Rcopia"].include?(application.app_name)
+    if [CONSTANT["APP_NAME"]["EPCS"], CONSTANT["APP_NAME"]["RCOPIA"]].include?(application.app_name)
       provider_dea_info, dea_numbers, dea_states, dea_expiration_times = [], [], [], []
       if provider[:provider_dea].present?
         dea_numbers = provider[:provider_dea].strip.split("~")
