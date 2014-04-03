@@ -28,7 +28,10 @@ OneStop::Application.routes.draw do
     end
     get '/download/:id', to: 'providers#download', as: 'download'
   end
-  root :to => 'admin/providers#application'
+
+  devise_scope :cao do
+    root to: "devise/sessions#new"
+  end
   mount Resque::Server, :at => "/resque"
 
   namespace :api do
