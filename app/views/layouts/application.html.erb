@@ -111,20 +111,23 @@
       <%= javascript_include_tag "application" %>
       <%= yield :javascript %>
       <script>
-        window.onload = function () {
-            if (typeof history.pushState === "function") {
-              history.pushState(document.URL, null, null);
-              window.onpopstate = function (val) {
-                var currentUser = "<%= current_cao %>";
-                if(currentUser != "") {
-                  if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
-                    location.href = "/back_button_destroy"
-                  }
-                }
-              };
-            }
+      //  window.onload = function () {
+       //   hisPush = history.pushState;
+        //  console.log(typeof history.pushstate)
+         //   if (typeof history.pushstate === "function") {
+          //    history.pushState(document.URL, null, null);
+           //   console.log(window.onpopstate)
+            //  window.onpopstate = function (val) {
+                //var currentUser = "<%= current_cao %>";
+                //if(currentUser != "") {
+                 // if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
+            //        location.href = "/back_button_destroy"
+                  //}
+                //}
+              //};
+           // }
 
-          }
+          //}
         </script>
 
     </body>
