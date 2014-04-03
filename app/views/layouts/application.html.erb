@@ -76,14 +76,14 @@
                     </li>
                   <% else %>
                     <li>
-                      <%= link_to "Applications", static_page_path(id: 'application') %>
+                      <%= link_to "Applications", application_admin_providers_path %>
                     </li>
                   <% end %>
               <% end %>
               </ul>
               <ul class="nav">
                 <li>
-                  <%= link_to 'About', static_page_path(id: 'about') %>
+                  <%#= link_to 'About', static_page_path(id: 'about') %>
                 </li>
               </ul>
             </div><!--/.nav-collapse -->
