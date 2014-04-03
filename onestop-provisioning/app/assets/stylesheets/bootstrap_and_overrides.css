@@ -13,26 +13,8 @@ body { padding-top: 60px; }
   background-image: none;
 }
 
-.navbar .nav > li > a {
-  color: #FFFFFF;
-  text-shadow: none;
-}
-
 .navbar .nav > li > a:hover {
-  color: #949CA1;
-}
-
-.navbar .nav > li > a:visited {
-  color: #FFFFFF;
-}
-
-.navbar .brand {
-  color: #FFFFFF;
-  text-shadow: none;
-}
-
-.navbar .brand:hover {
-  color: #949CA1;
+  color: #949CA1 !important;
 }
 
 .footer {
