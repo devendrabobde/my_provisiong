@@ -9,7 +9,7 @@ OneStop::Application.configure do
 
   # Below config updated because we need to check cached working in development. Please make  value 'false' when you are not checking cached in development.
   # config.cache_classes = false
-  config.cache_classes = false
+  config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -23,7 +23,7 @@ OneStop::Application.configure do
   config.cache_store = :redis_store
   # Below code commented because we need to check cached working in development. Please make  value 'false' when you are not checking cached in development.
   # config.action_controller.perform_caching = false
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
 
 
