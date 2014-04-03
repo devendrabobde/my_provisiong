@@ -18,7 +18,7 @@ class Admin::CaosController < ApplicationController
     @organization = Organization.find(params[:organization_id])
     @cao = @organization.caos.create(params[:cao])
     if @cao.save
-      flash[:notice] = "COA was created successfully."
+      flash[:notice] = VALIDATION_MESSAGE["COA"]["CREATE"]
       redirect_to admin_organization_cao_path(@organization.id, @cao.id)
     else
       flash[:error] = @cao.errors.full_messages.join(", ")
@@ -44,7 +44,7 @@ class Admin::CaosController < ApplicationController
     @cao = Cao.find(params[:id])
     respond_to do |format|
       if @cao.update_attributes(params[:cao])
-        flash[:notice] = "COA was updated successfully."
+        flash[:notice] = VALIDATION_MESSAGE["COA"]["UPDATE"]
         format.html { redirect_to admin_organization_cao_path(@organization.id, @cao.id)}
       else
         flash[:error] = @cao.errors.full_messages.join(", ")
@@ -58,7 +58,7 @@ class Admin::CaosController < ApplicationController
     @organization = Organization.find(params[:organization_id])
     @cao = Cao.find(params[:id])
     @cao.update_attributes(deleted_at: Time.now, deleted_reason: params["cao"]["deleted_reason"])
-    redirect_to admin_organization_caos_path(@organization.id), :notice => "COA " + @cao.username + " deactivated successfully."
+    redirect_to admin_organization_caos_path(@organization.id), :notice => VALIDATION_MESSAGE["COA"]["DEACTIVATE"]
   end
 
   # Revert an inactive CAO to active state. Thus, the CAO would be functional
@@ -66,7 +66,7 @@ class Admin::CaosController < ApplicationController
     @organization = Organization.find(params[:organization_id])
     @cao = Cao.find(params[:id])
     @cao.update_attributes(deleted_at: nil, deleted_reason: nil)
-    redirect_to admin_organization_caos_path(@organization.id), :notice => "COA " + @cao.username + " activated successfully."
+    redirect_to admin_organization_caos_path(@organization.id), :notice => VALIDATION_MESSAGE["COA"]["ACTIVATE"]
   end
 
   private

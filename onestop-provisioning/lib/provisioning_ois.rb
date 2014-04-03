@@ -9,7 +9,7 @@ module ProvisioningOis
   #
   def self.batch_upload_dest(providers, cao, application)
     updated_providers = []
-    if application.app_name.eql?("EPCS-IDP")
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       providers = providers.collect do |provider|
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
@@ -38,7 +38,7 @@ module ProvisioningOis
           "Onestop-Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
             \n\n#{payload}\n\nReceived from EPCS-OIS:\n\n#{provider_records}"
       end
-    elsif application.app_name.eql?("Rcopia")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
       providers = providers.collect do |provider|
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
@@ -61,7 +61,7 @@ module ProvisioningOis
           "Onestop-Provisioning- batch_upload_dest(): RCOPIA-OIS communication summary:\n\nURL:#{url}\n\nSent to RCOPIA-OIS:\
             \n\n#{payload}\n\nReceived from RCOPIA-OIS:\n\n#{provider_records}"
       end
-    elsif application.app_name.eql?("Moxy")
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
       # providers = providers.collect do |provider|
       #   provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
       #   provider

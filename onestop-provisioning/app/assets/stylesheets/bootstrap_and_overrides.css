@@ -69,7 +69,7 @@ legend {
 }
 
 #audit_data_table{
-  height: 450px;
+  height: auto;
 }
 
 #error_explanation h2 {

@@ -1,6 +1,7 @@
 OneStop::Application.routes.draw do
   match "monitor" => "monitor#monitor", as: :monitor
 
+
   devise_for :caos
   resources :providers
   resources :home
@@ -35,4 +36,6 @@ OneStop::Application.routes.draw do
       get "versions/check_version", to: "versions#check_version"
     end
   end
+
+    match '/*id', :to => 'high_voltage/pages#show', :as => :static_page, :via => :get, :format => false
 end

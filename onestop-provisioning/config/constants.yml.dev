@@ -57,3 +57,9 @@ RCOPIA_OIS:
 MOXY_OIS:
   SERVER_URL: http://localhost:3002
   BATCH_UPLOAD_DEST_URL: api/v1/ois/moxy/batch_upload_dest.json
+
+APP_NAME:
+  EPCS: EPCS-IDP
+  RCOPIA: Rcopia
+  MOXY: Moxy
+  BACKLINE: Backlin
