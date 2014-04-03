@@ -1,33 +1,66 @@
-<%= form_for([:admin, organization, coa], html: { id: id }) do |f| %>
-  <div>
-    <%= label_tag "First Name", "First Name <span class='red'>*</span>".html_safe %>
-    <%= f.text_field :first_name, autofocus: true, required: true %>
+<%= form_for([:admin, organization, coa], html: { class: 'form-horizontal organization-form', id: id }) do |f| %>
+
+<div class="form-group">
+  <%= label_tag "First Name", "First Name <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= f.text_field :first_name, autofocus: true, class: "form-control", required: "required"  %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= label_tag "Last Name", "Last Name <span class='red'>*</span>".html_safe %>
-    <%= f.text_field :last_name, required: true %>
+
+<div class="form-group padding-top-10">
+  <%= label_tag "Last Name", "Last Name <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= f.text_field :last_name, class: "form-control", required: "required" %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= label_tag "Username", "Username <span class='red'>*</span>".html_safe %>
-    <%= f.text_field :username, required: true %>
+
+<div class="form-group padding-top-10">
+  <%= label_tag "Username", "Username <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= f.text_field :username, class: "form-control", required: "required" %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= label_tag "Email", "Email <span class='red'>*</span>".html_safe %>
-    <%= f.email_field :email, required: true %>
+
+<div class="form-group padding-top-10">
+  <%= label_tag "Email", "Email <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= f.email_field :email, required: true, class: "form-control" %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= label_tag "Password", "Password <span class='red'>*</span>".html_safe %>
-    <%= f.password_field :password, required: true %>
+
+<div class="form-group padding-top-10">
+  <%= label_tag "Password", "Password <span class='red'>*</span>".html_safe, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= f.password_field :password, required: true, class: "form-control" %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= f.label :profile_id %>
-    <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name") %>
+
+<div class="form-group padding-top-10">
+  <%= f.label :profile_id, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name"), { class: "form-control" } %>
+      <span></span>
+    </div>
   </div>
-  <div>
-    <%= f.label :role_id %>
-    <%= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name") %>
-  </div><br/>
-  <div>
-    <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
+
+<div class="form-group padding-top-10">
+  <%= f.label :role_id, class: "col-sm-2 control-label right-margin-40" %>
+    <div class="col-sm-10">
+      <%= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name"), { class: "form-control" } %>
+      <span></span>
+    </div>
   </div>
+
+<div class="form-group padding-top-10" style="padding-top: 10px;">
+    <div class="col-sm-10" style="padding-left:200px">
+      <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
+      <%= link_to 'Back', admin_organization_caos_path(@organization.id), class: "btn btn-primary" %>
+    </div>
+  </div>
+                                
 <% end %>
