@@ -27,6 +27,10 @@ body { padding-top: 60px; }
   color: #949CA1 !important;
 }
 
+.navbar .brand:hover {
+  color: #949CA1;
+}
+
 .footer {
   background-color: #F5F5F5;
   border-top: 1px solid #E5E5E5;
