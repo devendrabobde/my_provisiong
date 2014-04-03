@@ -19,7 +19,6 @@ class ApplicationController < ActionController::Base
   private
 
   def set_cache_buster
-    p "1dasdads"
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     # Set to expire far in the past.

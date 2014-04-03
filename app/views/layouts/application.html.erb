@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title><%= content_for?(:title) ? yield(:title) : "OneStop" %></title>
     <%= csrf_meta_tags %>
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.core.min.js"></script> -->
@@ -33,6 +34,8 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
 <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
+    
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
@@ -110,13 +113,21 @@
       <%= javascript_include_tag "application" %>
       <%= yield :javascript %>
       <script>
-        $(document).ready(function(){
-            $('a.back').click(function(){
-              alert("test");
-              parent.history.back();
-              return false;
-            });
-          });
-      </script>
+        window.onload = function () {
+            if (typeof history.pushState === "function") {
+              history.pushState(document.URL, null, null);
+              window.onpopstate = function (val) {
+                var currentUser = "<%= current_cao %>";
+                if(currentUser != "") {
+                  if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
+                    location.href = "/back_button_destroy"
+                  }
+                }
+              };
+            }
+
+          }
+        </script>
+
     </body>
   </html>
