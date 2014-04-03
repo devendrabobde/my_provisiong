@@ -77,11 +77,16 @@ $(document).ready(function () {
   }
 
   $("#dialog").hide();
-
+  $('#download_sample_data').hide();
   $("#provider_registered_app_id").change(function() {
       var e = $(this);
+      if (e.val() !== ""){
+        $('#download_sample_data').find('a').attr('href', "/admin/download/"+e.val()+".csv");
+        $('#download_sample_data').show();
+      } else{
+        $('#download_sample_data').hide();
+      }
       $(".application_waiting_image").show();
-      $('#download_sample_data').find('a').attr('href', "/admin/download/"+e.val()+".csv")
       $.getJSON(e.attr('data-href'), {
         'registered_app_id': e.val()
         }, function(data) {
