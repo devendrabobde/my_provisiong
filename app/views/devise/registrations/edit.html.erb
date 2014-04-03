@@ -1,27 +1,51 @@
 <h3>Edit Account</h3>
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <div>
-    <%= f.label :email, "Email <span class='red'>*</span>".html_safe %>
-    <%= f.email_field :email, :autofocus => true, required: 'required' %>
-  </div>
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+<div class="coas-organization-form">
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { class: "form-horizontal", method: :put }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="form-group padding-top-10">
+      <%= f.label :email, "Email <span class='red'>*</span>".html_safe, class: "right-margin-40 col-sm-2 control-label"  %>
+      <div class="col-sm-10">
+        <%= f.email_field :email, :autofocus => true, required: 'required', class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group padding-top-10">
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    </div>
+
+    <div class="form-group padding-top-10">
+      <%= f.label :current_password, "Current Password <span class='red'>*</span>".html_safe, class: "right-margin-40 col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.password_field :current_password, required: 'required', class: "form-control" %>
+        <br />
+        <span style="padding-left:200px"><i>(we need your current password to confirm your changes)</i></span>
+      </div>
+    </div>
+
+    <div class="form-group padding-top-10">
+      <%= f.label :password, "New Password <span class='red'>*</span>".html_safe, class: "right-margin-40 col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.password_field :password, required: 'required', class: "form-control" %>
+        <br />
+        <span style="padding-left:200px"><i>(leave blank if you don't want to change it)</i></span>
+      </div>
+    </div>
+
+    <div class="form-group padding-top-10">
+      <%= f.label :password_confirmation, "Confirm New Password <span class='red'>*</span>".html_safe, class: "right-margin-40 col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.password_field :password_confirmation, required: 'required', class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-top: 10px;">
+      <div class="col-sm-10" style="padding-left:200px">
+        <%= f.submit "Update", :class=>'btn btn-primary' %>
+        <%= link_to "Cancel", :back, class: "btn btn-primary" %>
+      </div>
+    </div>
   <% end %>
-  <div>
-    <%= f.label :current_password, "Current Password <span class='red'>*</span>".html_safe %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, required: 'required' %>
-  </div>
-  <div>
-    <%= f.label :password, "New Password <span class='red'>*</span>".html_safe %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, :autocomplete => "off", required: 'required' %>
-  </div>
-  <div>
-    <%= f.label :password_confirmation, "Confirm New Password <span class='red'>*</span>".html_safe %>
-    <%= f.password_field :password_confirmation, required: 'required' %>
-  </div>
-  <div>
-    <%= f.submit "Update", :class=>'btn btn-primary' %>
-  </div>
-<% end %>
-<%= link_to "Back", :back %>
+</div>
