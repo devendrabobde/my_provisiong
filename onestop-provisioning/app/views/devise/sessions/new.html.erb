@@ -3,7 +3,7 @@
     <!-- <h3>Sign in</h3> -->
     <%= image_tag "OneStopLogo-530x129.png", alt: "OneStop-Signin-Logo" %>
     <div><hr /></div>
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { id: "coa-login" }) do |f| %>
       <table id="sign-in-fields">
         <tbody>
           <tr>
