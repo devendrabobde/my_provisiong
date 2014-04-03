@@ -8,8 +8,14 @@
         init: function() {
             'use strict'
 
+            
+            $.validator.addMethod("alpha", function(value,element)
+                {
+                    return this.optional(element) || /^[a-z," "]+$/i.test(value);
+                }, "Letters and spaces only please");
 
-            // COA's edit page inline validation.
+
+            // COA's account setting page inline validation.
             $("#edit_cao").validate(
             {
                 rules: {
@@ -50,16 +56,9 @@
             });
 
 
-            if($("#edit_cao").length > 0) {
-                //$("#edit_cao").validate().form();
-                $('label[class^="error"]:not(.valid)').remove();
-            }
-
             // Super Admin COA's account creation inline validation.
-
-            $("#edit-organization").validate(
+            $("#new-organization, #edit-organization").validate(
             {
-                debug: true,
                 rules: {
                     "organization[name]": {
                         required: true
@@ -73,14 +72,22 @@
                         number: true
                     },
                     "organization[contact_first_name]": {
-                        required: true
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60,
+                        alpha: true
                     },
                     "organization[contact_last_name]": {
-                        required: true
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60,
+                        alpha: true
                     },
                     "organization[contact_email]": {
                         required: true,
-                        email: true
+                        email: true,
+                        minlength: 7,
+                        maxlength: 100
                     }
                 },
                 messages: {
@@ -113,101 +120,48 @@
                 },
                 errorElement: "span"
             });
-
-            if($("#edit-organization").length > 0) {
-              
-              //  $("#edit-organization").validate().form();
-                $('span[class^="error"]:not(.valid)').remove();
-            }
-
-            $("#new-organization").validate(
-            {
-                rules: {
-                    "organization[name]": {
-                        required: true
-                    },
-                    "organization[zip_code]": {
-                        required: true,
-                        number: true
-                    },
-                    "organization[postal_code]": {
-                        required: true,
-                        number: true
-                    },
-                    "organization[contact_first_name]": {
-                        required: true
-                    },
-                    "organization[contact_last_name]": {
-                        required: true
-                    },
-                    "organization[contact_email]": {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    "organization[contact_email]": {
-                        required: "Email can't be blank.",
-                        email: "Email format is invalid."
-                    },
-                    "organization[contact_last_name]": {
-                        required: "Last Name can't be blank."
-                    },
-                    "organization[contact_first_name]": {
-                        required: "First Name can't be blank."
-                    },
-                    "organization[name]": {
-                        required: "Organization Name can't be blank."
-                    },
-                    "organization[zip_code]": {
-                        required: "Zip Code can't be blank.",
-                        number: "Zip Code must contain digits only."
-                    },
-                    "organization[postal_code]": {
-                        required: "Postal Code can't be blank.",
-                        number: "Postal Code must contain digits only."
-                    }
-                },
-                highlight: function(label) {
-                    $(label).parent().find('.valid').each(function(){
-                        $('span[class^="valid"]').remove();
-                    });
-                },
-                errorElement: "span"
-            });
-
-            if($("#new-organization").length > 0) {
-              //  $("#new-organization").validate().form();
-                $('span[class^="error"]:not(.valid)').remove();
-            }
 
 
             // COA's account creation
             $("#new_cao, #edit-coa").validate({
                 rules: {
                     "cao[first_name]": {
-                        required: true
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60,
+                        alpha: true
                     },
                     "cao[last_name]": {
-                        required: true
+                        required: true,
+                        minlength: 1,
+                        maxlength: 60,
+                        alpha: true
                     },
                     "cao[username]": {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 60
                     },
                     "cao[email]": {
                         email: true,
-                        required: true
+                        required: true,
+                        minlength: 7,
+                        maxlength: 100
                     },
                     "cao[password]": {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 60
                     }
                 },
                 messages: {
                     "cao[first_name]": {
-                        required: "First name can't be blank."
+                        required: "First name can't be blank.",
+                        alpha: "Only Letters allowed."
                     },
                     "cao[last_name]": {
-                        required: "Last name can't be blank."
+                        required: "Last name can't be blank.",
+                        alpha: "Only Letters allowed."
                     },
                     "cao[username]": {
                         required: "Username can't be blank."
@@ -229,16 +183,6 @@
                 errorElement: "span"
             });
 
-            if($("#new_cao").length > 0) {
-              //  $("#new_cao").validate().form();
-                $('span[class^="error"]:not(.valid)').remove();
-            }
-
-            if($("#edit-coa").length > 0) {
-            //    $("#edit-coa").validate().form();
-                $('span[class^="error"]:not(.valid)').remove();
-            }
-
 
 
             // Forget password
@@ -256,9 +200,8 @@
                 }
             });
 
-            if($("#edit-coa").length > 0) {
-                $('span[class^="error"]:not(.valid)').remove();
-            }
+            
+            $('span[class^="error"]:not(.valid)').remove();
 
         }
     };
