@@ -74,3 +74,9 @@ table#sign-in-fields {
   margin-left: 15%;
   margin-right: 15%;
 }
+
+.alert-success {
+color: #4A5257;
+background-color: #F5F5F5;
+border-color: #949CA1;
+}
