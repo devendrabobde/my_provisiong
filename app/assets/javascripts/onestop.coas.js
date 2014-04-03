@@ -115,8 +115,8 @@
             });
 
             if($("#edit-organization").length > 0) {
-                console.log($("#edit-organization"));
-                $("#edit-organization").validate().form();
+              
+              //  $("#edit-organization").validate().form();
                 $('span[class^="error"]:not(.valid)').remove();
             }
 
@@ -177,7 +177,7 @@
             });
 
             if($("#new-organization").length > 0) {
-                $("#new-organization").validate().form();
+              //  $("#new-organization").validate().form();
                 $('span[class^="error"]:not(.valid)').remove();
             }
 
@@ -230,16 +230,35 @@
             });
 
             if($("#new_cao").length > 0) {
-                $("#new_cao").validate().form();
+              //  $("#new_cao").validate().form();
                 $('span[class^="error"]:not(.valid)').remove();
             }
 
             if($("#edit-coa").length > 0) {
-                $("#edit-coa").validate().form();
+            //    $("#edit-coa").validate().form();
                 $('span[class^="error"]:not(.valid)').remove();
             }
 
 
+
+            // Forget password
+            $("#forget-password").validate({
+                rules: {
+                    "cao[email]": {
+                        required: true,
+                        email: true
+                    }
+                },
+                message: {
+                    "cao[email]": {
+                        required: "Email can't be blank."
+                    }
+                }
+            });
+
+            if($("#edit-coa").length > 0) {
+                $('span[class^="error"]:not(.valid)').remove();
+            }
 
         }
     };
