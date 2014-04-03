@@ -16,27 +16,27 @@
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
-    <%#= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+<%#= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
 
     <!-- For iPhone with high-resolution Retina display: -->
     <!-- Size should be 114 x 114 pixels -->
-    <%#= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+<%#= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
 
     <!-- For first- and second-generation iPad: -->
     <!-- Size should be 72 x 72 pixels -->
-    <%#= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+<%#= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
 
     <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
     <!-- Size should be 57 x 57 pixels -->
-    <%#= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+<%#= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
 
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
-    <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+<%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
-    <!-- <div class="navbar navbar-fixed-top"> -->
+      <!-- <div class="navbar navbar-fixed-top"> -->
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -67,45 +67,54 @@
                 </li>
               </ul>
               <ul class="nav">
-                <% if current_cao.is_admin? %>
-                  <li>
-                    <%= link_to "Organizations",  admin_organizations_path %>
-                  </li>
-                <% else %>
-                  <li>
-                    <%= link_to "Applications", application_admin_providers_path %>
-                  </li>
-                <% end %>
+                  <% if current_cao.is_admin? %>
+                    <li>
+                      <%= link_to "Organizations",  admin_organizations_path %>
+                    </li>
+                  <% else %>
+                    <li>
+                      <%= link_to "Applications", static_page_path(id: 'application') %>
+                    </li>
+                  <% end %>
               <% end %>
               </ul>
               <ul class="nav">
                 <li>
-                  <%= link_to "About", "" %>
+                  <%= link_to 'About', static_page_path(id: 'about') %>
                 </li>
               </ul>
-          </div><!--/.nav-collapse -->
+            </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
-    </div>
-  <div class="container"><br />
-    <div class="row">
-      <div class="span12">
-        <%= bootstrap_flash %>
-        <%= yield %>
-      </div>
-    </div><!--/row-->
-  </div> <!-- /container -->
-
-  <!-- footer part-->
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2013 Company, Inc.</p>
-    </div>
-  </footer>
-    <!-- Javascripts
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "application" %>
-    <%= yield :javascript %>
-  </body>
-</html>
+      <div class="container"><br />
+        <div class="row">
+          <div class="span12">
+            <%= bootstrap_flash %>
+            <%= yield %>
+          </div>
+        </div><!--/row-->
+      </div> <!-- /container -->
+      <div style="padding-top:50px;"></div>
+      <!-- footer part-->
+      <!--footer class="footer">
+        <div class="container">
+          <p>&copy; 2013 Company, Inc.</p>
+        </div>
+      </footer-->
+      <!-- Javascripts
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <%= javascript_include_tag "application" %>
+      <%= yield :javascript %>
+      <script>
+        $(document).ready(function(){
+            $('a.back').click(function(){
+              alert("test");
+              parent.history.back();
+              return false;
+            });
+          });
+      </script>
+    </body>
+  </html>

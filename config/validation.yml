@@ -4,3 +4,25 @@ EPCS:
     PROVIDER_NAME_ERROR_MESSAGE: Provider Name is not matching with Super NPI record
   DEA_NUMBER:
     CHECKSUM_ERROR_MESSAGE: Invalid DEA Number checksum is not correct
+  NPI_NUMBER:
+    CHECKSUM_ERROR_MESSAGE: NPI Checksum Invalid
+COA:
+  CREATE: COA was created successfully.
+  UPDATE: COA was updated successfully.
+  DEACTIVATE: COA deactivated successfully.
+  ACTIVATE: COA activated successfully.
+
+Organization:
+  CREATE: Organization was created successfully.
+  UPDATE: Organization was updated successfully.
+  DEACTIVATE: Organization deactivated successfully.
+  ACTIVATE: Organization activated successfully.
+
+PROVIDER:
+  UPLOAD_PROCESS: Thanks for uploading providers. We are processing the uploaded file.
+  DUPLICATE_RECORD: NPI duplicated in the uploaded CSV file. In this case we are simply passing unique record for each.
+  BLANK: "Providers required fields can't be blank, please correct: <br />"
+  DUPLICATE_NPI: "The NPI must be unique for each record in the file. Before proceeding, please remove duplicate NPI "
+  WRONG_APPLICATION: Please check uploaded csv file. A csv file from another application should not be uploaded into any other application.
+  EMPTY_FILE: Uploaded providers csv file is empty.
+  REDIS_Q_FAIL: "Resque backgroud job fail: redis queue is not working"
