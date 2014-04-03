@@ -1,4 +1,7 @@
-
+/*
+ * onestop.validation.js file will contain all the inline javascript validation.
+ * 
+ */
 (function($) {
     if (!$.OneStop) {
         $.OneStop = {};
@@ -11,8 +14,8 @@
             
             $.validator.addMethod("alpha", function(value,element)
                 {
-                    return this.optional(element) || /^[a-z," "]+$/i.test(value);
-                }, "Letters and spaces only please");
+                    return this.optional(element) || /^[a-z]+$/i.test(value);
+                }, "Letters only");
 
 
             // COA's account setting page inline validation.
@@ -24,7 +27,7 @@
                         required: true
                     },
                     "cao[password]": {
-                        minlength: 8,
+                        minlength: 6,
                         required: true
                     },
                     "cao[password_confirmation]": {
@@ -96,10 +99,12 @@
                         email: "Email format is invalid."
                     },
                     "organization[contact_last_name]": {
-                        required: "Last Name can't be blank."
+                        required: "Last Name can't be blank.",
+                        alpha: "Please enter letters only."
                     },
                     "organization[contact_first_name]": {
-                        required: "First Name can't be blank."
+                        required: "First Name can't be blank.",
+                        alpha: "Please enter letters only."
                     },
                     "organization[name]": {
                         required: "Organization Name can't be blank."
@@ -157,11 +162,11 @@
                 messages: {
                     "cao[first_name]": {
                         required: "First name can't be blank.",
-                        alpha: "Only Letters allowed."
+                        alpha: "Please enter letters only."
                     },
                     "cao[last_name]": {
                         required: "Last name can't be blank.",
-                        alpha: "Only Letters allowed."
+                        alpha: "Please enter letters only."
                     },
                     "cao[username]": {
                         required: "Username can't be blank."
