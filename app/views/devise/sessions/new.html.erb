@@ -1,28 +1,36 @@
 <div class="sign_in_box">
   <% cache("login") do %>
-    <h3>Sign in</h3>
+    <!-- <h3>Sign in</h3> -->
+    <%= image_tag "OneStopLogo-530x129.png", alt: "OneStop-Signin-Logo" %>
+    <div><hr /></div>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-      <table>
+      <table id="sign-in-fields">
         <tbody>
           <tr>
             <td><%= f.label :username %></td>
-            <td style="padding-left:13px;"><%= f.text_field :username, :autofocus => true %></td>
+            <td style="padding-left:13px;"><%= f.text_field :username, :autofocus => true, :placeholder => "Username" %></td>
           </tr>
 
           <tr>
             <td> <%= f.label :password %> </td>
-            <td style="padding-left:13px;"> <%= f.password_field :password %></td>
+            <td style="padding-left:13px;"> <%= f.password_field :password, :placeholder => "Password" %></td>
           </tr>
-          <tr>
-            <% if devise_mapping.rememberable? -%>
-              <td> <%= f.check_box :remember_me %> </td>
-              <td style="padding-left:13px;"> <%= f.label :remember_me %> </td>
-            <% end -%>
-          </tr>
+          <!--tr>
+            <%# if devise_mapping.rememberable? -%>
+              <td> <%#= f.check_box :remember_me %> </td>
+              <td style="padding-left:13px;"> <%#= f.label :remember_me %> </td>
+            <%# end -%>
+          </tr-->
         </tbody>
-      </table> <br />
-      <div><%= f.submit "Sign in", :class=>'btn btn-primary' %></div>
+      </table>
+      <div style="margin-top: -15px;">
+        <%= render "devise/shared/links" %>
+      </div>
+      <div class="well">
+        <%#= f.submit "Sign in", :class=>'btn btn-primary' %>
+        <%= f.submit "LOG IN", class: "btn-login", style: "width: 125px;" %>
+      </div>
     <% end %>
-    <%= render "devise/shared/links" %>
+    
   </div>
 <%  end %>

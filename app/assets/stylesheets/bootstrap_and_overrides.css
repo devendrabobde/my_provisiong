@@ -8,6 +8,33 @@
 
 body { padding-top: 60px; }
 
+.navbar-inner {
+  background-color: #00447C !important;
+  background-image: none;
+}
+
+.navbar .nav > li > a {
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+.navbar .nav > li > a:hover {
+  color: #949CA1;
+}
+
+.navbar .nav > li > a:visited {
+  color: #FFFFFF;
+}
+
+.navbar .brand {
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+.navbar .brand:hover {
+  color: #949CA1;
+}
+
 .footer {
   background-color: #F5F5F5;
   border-top: 1px solid #E5E5E5;
@@ -50,4 +77,18 @@ legend {
 }
 .nav {
   margin-top: 10px !important;
+}
+
+.well {
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+  margin: 12px -29px -49px;
+  min-height: 20px;
+  padding: 19px;
+}
+table#sign-in-fields {
+  margin-left: 15%;
+  margin-right: 15%;
 }

@@ -46,7 +46,7 @@
           </a>
           <%#= link_to "OneStop", "", :class=> "brand" %>
           <!-- <p class="brand" style="background-image: url(<#%= asset_path 'OneStopLogo.png' %>);">OneStop</p> -->
-          <%= image_tag "OneStopLogo.png", alt: "OneStop", class: "brand" %>
+          <%= image_tag "OneStopLogo-white.png", alt: "OneStop", class: "brand" %>
           <div class="container nav-collapse">
             <ul class="nav pull-right">
               <% unless cao_signed_in? %>
@@ -61,11 +61,9 @@
                 <%= drop_down "#{current_cao.username.to_s.capitalize}" do %>
                   <%= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
                 <% end %>
-                <li>
-                  <%#= link_to "Welcome: "+ current_cao.username.to_s.capitalize + " | Organization: " + current_cao.organization.name , "" rescue nil %>                  
-                  <span class="brand" style="font-size: 14px; margin-left: -10px;">
-                    <%= "Organization : " + current_cao.organization.name rescue nil %>
-                  </span>
+                <li class="brand" style="font-size: 14px; margin-left: -10px;">
+                  <%#= link_to "Welcome: "+ current_cao.username.to_s.capitalize + " | Organization: " + current_cao.organization.name , "" rescue nil %>
+                    <%= "Organization : " + current_cao.organization.name rescue nil %>                 
                 </li>
               </ul>
               <ul class="nav">
