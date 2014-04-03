@@ -1,8 +1,9 @@
 OneStop::Application.routes.draw do
   match "monitor" => "monitor#monitor", as: :monitor
-
-
-  devise_for :caos
+  
+  devise_for :caos do
+    match  "back_button_destroy" => "devise/sessions#back_button_destroy"
+  end
   resources :providers
   resources :home
   namespace :admin do
