@@ -8,12 +8,12 @@
         <tbody>
           <tr>
             <td><%= f.label :username %></td>
-            <td style="padding-left:13px;"><%= f.text_field :username, :autofocus => true, :placeholder => "Username" %></td>
+            <td style="padding-left:13px;"><%= f.text_field :username, required: true, :placeholder => "Username" %></td>
           </tr>
 
           <tr>
             <td> <%= f.label :password %> </td>
-            <td style="padding-left:13px;"> <%= f.password_field :password, :placeholder => "Password" %></td>
+            <td style="padding-left:13px;"> <%= f.password_field :password, required: true, :placeholder => "Password" %></td>
           </tr>
           <!--tr>
             <%# if devise_mapping.rememberable? -%>
@@ -23,7 +23,7 @@
           </tr-->
         </tbody>
       </table>
-      <div style="margin-top: -15px;">
+      <div style="margin-top: -15px; margin-left: -15px;">
         <%= render "devise/shared/links" %>
       </div>
       <div class="well">
