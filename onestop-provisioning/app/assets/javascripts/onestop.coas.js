@@ -30,8 +30,12 @@
                     "cao[email]": {
                         required: "Email can't be blank."
                     },
+                    "cao[password]": {
+                        minlength: "Password should be 8 characters.",
+                        required: "Password can't be blank."
+                    },
                     "cao[password_confirmation]": {
-                        required: "Required",
+                        required: "Password Confirmation can't be blank.",
                         equalTo: "New Password Doesn't Match"
                     }
                 },
@@ -41,12 +45,13 @@
                     });
                 },
                 success: function(label) {
-                }
+                },
+                errorElement: "span"
             });
 
 
             if($("#edit_cao").length > 0) {
-                $("#edit_cao").validate().form();
+                //$("#edit_cao").validate().form();
                 $('label[class^="error"]:not(.valid)').remove();
             }
 
