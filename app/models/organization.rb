@@ -21,7 +21,7 @@ class Organization < ActiveRecord::Base
   validates :contact_last_name, :format => { :with => PERSON_NAME }
   validates :contact_email, :format => { :with => EMAIL }
   validates :zip_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
-  validates :postal_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
+  # validates :postal_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
 
   #
   # Scopes
