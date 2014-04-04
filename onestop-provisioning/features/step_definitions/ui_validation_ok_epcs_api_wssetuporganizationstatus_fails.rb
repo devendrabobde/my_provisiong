@@ -6,7 +6,7 @@ Given /^valid COA credentials$/ do
   @organization_coa_valid = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", 
-    postal_code: "54321", state_code: "AL123")
+    state_code: "AL123")
   coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa_valid.id)
   @current_valid_cao = coa
 end

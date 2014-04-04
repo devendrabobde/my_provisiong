@@ -93,8 +93,10 @@ $(document).ready(function () {
         $("#audit_data").html(data.html);
         $(".application_waiting_image").hide();
         $('#table1').dataTable({
+          aaSorting: [[0, 'desc']],
           sPaginationType: "bootstrap",
-          iDisplayLength: 10
+          iDisplayLength: 10,
+          aoColumns: [{ "sType": 'num-html' },{ "sType": 'date' },null,null,null,null]
         });
       });
     return false;
@@ -116,8 +118,10 @@ $(document).ready(function () {
       $(".waiting_uploaded_file_image").hide();
       $("#uploaded_file").html(data.html);
       $('#table1').dataTable({
+        aaSorting: [[0, 'desc']],
         sPaginationType: "bootstrap",
-        iDisplayLength: 10
+        iDisplayLength: 10,
+         aoColumns: [{ "sType": 'num-html' },{ "sType": 'date' },null,null,null,null]
       });
     });
     return false;
@@ -125,6 +129,8 @@ $(document).ready(function () {
 
 });
 
+
+//sets up numeric sorting of links
 jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     "num-html-pre": function ( a ) {
         var x = String(a).replace( /<[\s\S]*?>/g, "" );
@@ -138,4 +144,4 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     "num-html-desc": function ( a, b ) {
         return ((a < b) ? 1 : ((a > b) ? -1 : 0));
     }
-} );
+} ); 
