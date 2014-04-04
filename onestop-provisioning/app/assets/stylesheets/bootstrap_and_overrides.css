@@ -94,3 +94,6 @@ color: #4A5257;
 background-color: #F5F5F5;
 border-color: #949CA1;
 }
+.break-large-text {
+  word-break: break-all;
+} 
