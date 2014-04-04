@@ -70,10 +70,6 @@
                         required: true,
                         number: true
                     },
-                    "organization[postal_code]": {
-                        required: true,
-                        number: true
-                    },
                     "organization[contact_first_name]": {
                         required: true,
                         minlength: 1,
@@ -112,10 +108,6 @@
                     "organization[zip_code]": {
                         required: "Zip Code can't be blank.",
                         number: "Zip Code must contain digits only."
-                    },
-                    "organization[postal_code]": {
-                        required: "Postal Code can't be blank.",
-                        number: "Postal Code must contain digits only."
                     }
                 },
                 highlight: function(label) {

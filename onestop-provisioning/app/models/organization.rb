@@ -2,7 +2,7 @@ class Organization < ActiveRecord::Base
 
   include Extensions::UUID
 
-  attr_accessible :name, :address1, :address2, :city, :state_code, :postal_code, :country_code,
+  attr_accessible :name, :address1, :address2, :city, :state_code, :country_code,
     :contact_first_name, :contact_last_name, :contact_phone, :contact_fax, :contact_email,
     :deleted_at, :deleted_reason, :idp_vendor_id, :zip_code, :vendor_label, :vendor_node_label
 
@@ -21,7 +21,7 @@ class Organization < ActiveRecord::Base
   validates :contact_last_name, :format => { :with => PERSON_NAME }
   validates :contact_email, :format => { :with => EMAIL }
   validates :zip_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
-  validates :postal_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
+  #validates :postal_code, :format => { :with => ZIP_FORMAT, :message => "should be 12345 or 123451234" }
 
   #
   # Scopes
