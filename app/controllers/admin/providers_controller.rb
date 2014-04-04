@@ -79,25 +79,29 @@ class Admin::ProvidersController < ApplicationController
       file_path, file_name = store_csv
       # Start Benchmark Code
       t1 = Time.now
-      providers, upload_file_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+      providers, upload_file_status, upload_status = ProvisioingCsvValidation::process_csv(file_path, @application)
       Rails.logger.info "Benchmarking - Process CSV  - elapsed time:#{Time.now - t1} sec"
       # End Benchmark Code
       if upload_file_status
-        providers = providers.collect { |x| x if x.present? }.compact
-        if providers.present?
-          duplicate_record_status, duplicate_npis, providers = check_provider_duplicate_records(providers)
-          if duplicate_record_status
-            required_field_status, req_field_err_hash = ProvisioingCsvValidation::validate_required_field(providers, @application)
-            if required_field_status
-              @audit_trail = save_audit_trails(file_name)
-              save_providers(providers)
-              success_message = VALIDATION_MESSAGE["PROVIDER"]["UPLOAD_PROCESS"]
-              success_message = duplicate_npis.count > 0 ? success_message + "#{duplicate_npis.join(",")}" + VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] : success_message
+        if upload_status
+          providers = providers.collect { |x| x if x.present? }.compact
+          if providers.present?
+            duplicate_record_status, duplicate_npis, providers = check_provider_duplicate_records(providers)
+            if duplicate_record_status
+              required_field_status, req_field_err_hash = ProvisioingCsvValidation::validate_required_field(providers, @application)
+              if required_field_status
+                @audit_trail = save_audit_trails(file_name)
+                save_providers(providers)
+                success_message = VALIDATION_MESSAGE["PROVIDER"]["UPLOAD_PROCESS"]
+                success_message = duplicate_npis.count > 0 ? success_message + "#{duplicate_npis.join(",")}" + VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] : success_message
+              else
+                error_message = VALIDATION_MESSAGE["PROVIDER"]["BLANK"] + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
+              end
             else
-              error_message = VALIDATION_MESSAGE["PROVIDER"]["BLANK"] + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
+              error_message =  VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] + duplicate_npis.join(",")
             end
-          else
-            error_message =  VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] + duplicate_npis.join(",")
+          # else
+          #   error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
           end
         else
           error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
