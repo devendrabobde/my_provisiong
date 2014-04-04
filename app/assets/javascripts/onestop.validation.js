@@ -115,7 +115,7 @@
                         $('span[class^="valid"]').remove();
                     });
                 },
-                errorElement: "span"
+                errorElement: "p"
             });
 
 
