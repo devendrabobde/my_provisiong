@@ -8,3 +8,8 @@ jQuery ->
    iDisplayLength: 10
    aaSorting: [[ 0, "asc" ]]
    aoColumns: [{ "sType": 'num-html' },{ "sType": 'date' },null,null,null,null]
+
+ $('#table2').dataTable
+   sPaginationType: "bootstrap"
+   sDom: "Rlfrtip"
+   iDisplayLength: 25

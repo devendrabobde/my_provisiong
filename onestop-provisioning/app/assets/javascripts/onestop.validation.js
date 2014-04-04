@@ -14,7 +14,7 @@
             
             $.validator.addMethod("alpha", function(value,element)
                 {
-                    return this.optional(element) || /^[a-z]+$/i.test(value);
+                    return this.optional(element) || /^[A-Za-z\u00C0-\u017F]+$/i.test(value);
                 }, "Letters only");
 
 
