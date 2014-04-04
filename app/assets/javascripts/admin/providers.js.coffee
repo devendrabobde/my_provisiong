@@ -6,5 +6,5 @@ jQuery ->
    sPaginationType: "bootstrap"
    sDom: "Rlfrtip"
    iDisplayLength: 10
-   aaSorting: [[ 0, "asc" ]]
+   aaSorting: [[ 0, "desc" ]]
    aoColumns: [{ "sType": 'num-html' },{ "sType": 'date' },null,null,null,null]
