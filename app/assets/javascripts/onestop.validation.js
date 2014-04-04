@@ -157,6 +157,12 @@
                         required: true,
                         minlength: 3,
                         maxlength: 60
+                    },
+                    "cao[password_confirmation]": {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 60,
+                        equalTo: "#cao_password"
                     }
                 },
                 messages: {
@@ -177,6 +183,9 @@
                     },
                     "cao[password]": {
                         required: "Password can't be blank."
+                    },
+                    "cao[password_confirmation]": {
+                        required: "Password Confirmation can't be blank."
                     }
 
                 },
