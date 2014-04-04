@@ -28,15 +28,21 @@ module ProvisioingCsvValidation
   # Processing providers CSV file
   #
   def self.process_csv(path, application)
-    providers = []
+    providers,csv_headers  = [], []
     app_upload_fields = application_upload_field_validations(application)
     CSV.foreach(path, :col_sep=>',', :headers => true) do |row|
       provider_record = row.to_hash
       providers << process_record(provider_record, application, app_upload_fields) if provider_record.present?
+      csv_headers = row.headers unless csv_headers.present?
     end
+    # Code for checking cross-application CSV upload to differentiate application upload based on CSV headers and app_upload_fields
+    upload_headers = app_upload_fields.collect(&:display_name)
+    upload_headers = upload_headers[0..9].sort
+    csv_headers = csv_headers[0..9].sort
+    status = (csv_headers == upload_headers)
     # File.delete(path) if File.exist?(path)
     file_status = providers.present? ? true : false
-    [providers, file_status]
+    [providers, file_status, status]
   end
 
   #
