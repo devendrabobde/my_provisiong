@@ -33,7 +33,7 @@ class Admin::OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        flash[:notice] = VALIDATION_MESSAGE["ORGANIZATION"]["UPDATE"]
+        flash[:notice] = VALIDATION_MESSAGE["ORGANIZATION"]["UPDATE"] rescue nil
         format.html { redirect_to admin_organization_path(@organization.id) }
       else
         flash[:error] = @organization.errors.full_messages.join(",  ")

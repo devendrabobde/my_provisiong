@@ -12,7 +12,7 @@ COA:
   DEACTIVATE: COA deactivated successfully.
   ACTIVATE: COA activated successfully.
 
-Organization:
+ORGANIZATION:
   CREATE: Organization was created successfully.
   UPDATE: Organization was updated successfully.
   DEACTIVATE: Organization deactivated successfully.

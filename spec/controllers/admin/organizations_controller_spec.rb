@@ -39,7 +39,7 @@ describe Admin::OrganizationsController do
       before(:each) do
         @org_data = { name: Faker::Name.name, address1: Faker::Address.street_address,
                       address2: Faker::Address.secondary_address, city: Faker::Address.city,
-                      state_code: Faker::Address.state, postal_code: "54321", zip_code: "12345",
+                      state_code: Faker::Address.state, zip_code: "12345",
                       country_code: 91, contact_first_name: Faker::Name.first_name, contact_last_name: Faker::Name.last_name,
                       contact_phone: "890-908-3067", contact_fax: 59874521, contact_email: Faker::Internet.email,
                       idp_vendor_id: "idptestid"

@@ -10,7 +10,6 @@ describe Organization do
     it { should have_db_column(:address2).of_type(:string) }
     it { should have_db_column(:city).of_type(:string) }
     it { should have_db_column(:state_code).of_type(:string) }
-    it { should have_db_column(:postal_code).of_type(:string) }
     it { should have_db_column(:country_code).of_type(:string) }
     it { should have_db_column(:contact_fax).of_type(:string) }
     it { should have_db_column(:contact_email).of_type(:string) }
@@ -34,7 +33,6 @@ describe Organization do
     it { should allow_mass_assignment_of :address2 }
     it { should allow_mass_assignment_of :city }
     it { should allow_mass_assignment_of :state_code }
-    it { should allow_mass_assignment_of :postal_code }
     it { should allow_mass_assignment_of :country_code }
     it { should allow_mass_assignment_of :contact_first_name }
     it { should allow_mass_assignment_of :contact_last_name }
