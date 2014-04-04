@@ -114,6 +114,7 @@
 
 .error {
     color: red;
+    width: 200%
 }
 
 .new-organization-errors {
