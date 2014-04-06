@@ -20,15 +20,15 @@ And /^I fill in the username and password$/ do
 end
 
 And /^I press "Sign in"$/ do
-  click_button "Sign in"
+  click_button "LOG IN"
 end
 
 Then /^I should see success message$/ do
-  page.should have_content("Signed in successfully")
+  page.should have_link("Setting")
 end
 
 And /^I should see correct screen title$/ do
-  page.should have_content("OneStop")
+  page.should have_content("Organization")
 end
 
 And /^I should see application selection list$/ do
