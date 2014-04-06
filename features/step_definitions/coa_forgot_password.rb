@@ -3,11 +3,11 @@ Given /^I go to application home page$/ do
 end
 
 Then /^I should be able to see forgot password link$/ do
-  page.should have_content("Forgot your password?")
+  page.should have_content("Forgot username or password?")
 end
 
 And /^I should be able to click on forgot password link$/ do
-  click_link "Forgot your password?"
+  click_link "Forgot username or password?"
 end
 
 When /^I enter email on the reset password form$/ do

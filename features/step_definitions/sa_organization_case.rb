@@ -8,7 +8,7 @@ Given(/^a valid SA$/) do
   Organization.unscoped.delete_all
   @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
   address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
-  contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", postal_code: "54321")
+  contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
   @e_org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
   password: "password", password_confirmation: "password", fk_role_id: role_cao.id, fk_organization_id: @organization.id)
