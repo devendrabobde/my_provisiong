@@ -24,7 +24,7 @@ When /^When I select csv file having single provider failing WsBatchIdp and with
 end
 
 When(/^I redirect back to home page$/) do
-	click_link "Back"
+	click_link ("Back", match: :first)
 end
 
 When(/^I select csv file having single provider failing WsBatchIdp and with already registered Organization$/) do

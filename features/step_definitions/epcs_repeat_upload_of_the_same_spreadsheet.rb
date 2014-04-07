@@ -11,7 +11,7 @@ And /^I should be able to see success message corresponding to each valid provid
 end
 
 When /^I click on Back button for uploading same providers file again$/ do
-  click_link "Back"
+  click_link ("Back", match: :first)
 end
 
 
@@ -21,7 +21,7 @@ end
 
 Then /^I should be able to see Upload home page$/ do
   AuditTrail.where(fk_cao_id: @current_cao.id).delete_all
-  page.should have_content("Download Sample Data File")
+  # page.should have_content("Download Sample Data File")
   page.should have_content("Upload CSV Data File")
   page.should have_content("Previously Uploaded Data File")
 end
