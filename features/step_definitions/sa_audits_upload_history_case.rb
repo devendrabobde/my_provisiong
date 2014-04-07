@@ -1,9 +1,9 @@
 And (/^I should be successfully logged out of the application$/) do
   sleep 5
   visit current_path
-	click_on('Setting')
+	click_on(@current_cao.user_name)
 	click_on('Logout')
-	page.should have_link("Login")
+	page.should have_content("LOG IN")
 end
 
 Given(/^I click on the organization of COA$/) do

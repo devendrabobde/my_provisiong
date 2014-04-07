@@ -24,11 +24,11 @@ And /^I press "Sign in"$/ do
 end
 
 Then /^I should see success message$/ do
-  page.should have_link("Setting")
+  page.should have_content("Upload CSV Data File")
 end
 
 And /^I should see correct screen title$/ do
-  page.should have_content("Organization")
+  page.should have_content("Select Application")
 end
 
 And /^I should see application selection list$/ do
