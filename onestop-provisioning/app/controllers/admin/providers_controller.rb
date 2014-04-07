@@ -72,6 +72,22 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
+  def download_sample_file
+    reg_app = RegisteredApp.find(params[:id])
+    path, file_name = "", ""
+    if reg_app.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_epcs_providers.csv"
+      file_name = "sample_epcs_providers.csv"      
+    elsif reg_app.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_moxy_providers.csv"
+      file_name = "sample_moxy_providers.csv"
+    elsif reg_app.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_rcopia_providers.csv"
+      file_name = "sample_rcopia_providers.csv"
+    end
+    send_file(path, type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=#{file_name}", url_based_filename: true)
+  end
+
   # Upload and process providers csv file
   def upload
     begin
