@@ -17,7 +17,7 @@ class Cao < ActiveRecord::Base
   EMAIL = /^.+@.+\..+$/.freeze
   PERSON_NAME  = /^[a-zA-Z'-]+$/.freeze
   validates :username, presence: true
-  validates :username, :uniqueness =>  {:scope => [:email]}
+  validates :username, uniqueness: true
   validates :email, :format => { :with => EMAIL }
   validates :first_name, :last_name, presence: true
 
