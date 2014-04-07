@@ -75,7 +75,7 @@ And /^I should be able to see correct file upload message$/ do
 end
 
 And /^I should be able to see progress bar$/ do
-  page.should have_content("In Progress ..")
+  page.should have_content("In Progress..")
 end
 
 And /^I should be able to see application info, upload time, file name, download button$/ do
@@ -89,7 +89,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB, invoke
   count = 0
   loop do
     sleep 1
-    if !page.find("#table1").has_content?("In Progress ..")
+    if !page.find("#table1").has_content?("In Progress..")
       sleep 1
       break
     else
