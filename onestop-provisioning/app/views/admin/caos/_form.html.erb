@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <%= form_for([:admin, organization, coa], html: { class: 'form-horizontal organization-form', id: id }) do |f| %>
+  <%= form_for([:admin, organization, coa], html: { class: 'form-horizontal organization-form', id: id, autocomplete: 'off'}) do |f| %>
     <legend><h3><%= text %></h3></legend>
     <div class="row-fluid" style="padding:20px 0px 0px 90px;">
       <div class="span9">
@@ -107,19 +107,10 @@
               <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
               <%= link_to 'Back', admin_organization_caos_path(@organization.id), class: "btn btn-primary" %>
             </div>
-
           </div>
-
-
         </div><!--/row-->
-
-
-
-
       </div><!--/span-->
-
       <div class="span4">
-
       </div><!--/span-->
     </div><!--/row-->
   <%- end -%>
