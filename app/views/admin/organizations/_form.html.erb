@@ -29,7 +29,7 @@
 
                 <div class="span4 bgcolor">
                   <div class="control-group">
-                    <%= f.label :address1, 'Address1', class: "control-label" %>
+                    <%= f.label :address1, "Address1 <span class='red'>*</span>".html_safe, class: "control-label" %>
                       <div class="controls">
                         <%= f.text_field :address1, class: "form-control", placeholder: "Address1" %>
                         </div>
@@ -51,7 +51,7 @@
 
                         <div class="span4 bgcolor">
                           <div class="control-group">
-                            <%= f.label :city, 'City', class: "control-label" %>
+                            <%= f.label :city, "City <span class='red'>*</span>".html_safe, class: "control-label" %>
                               <div class="controls">
                                 <%= f.text_field :city, class: "form-control", placeholder: "City" %>
                                 </div>
@@ -60,9 +60,10 @@
 
                             <div class="span4 bgcolor">
                               <div class="control-group">
-                                <%= f.label :state_code, 'State', class: "control-label" %>
+                                <%= f.label :state_code, "State <span class='red'>*</span>".html_safe, class: "control-label" %>
                                   <div class="controls">
-                                    <%= f.text_field :state_code, class: "form-control", placeholder: "State" %>
+                                    <%#= f.text_field :state_code, class: "form-control", placeholder: "State" %>
+                                    <%= f.select(:state_code, options_for_select(US_STATE_LIST), :prompt => "Select State") %>
                                     </div>
                                   </div>
                                 </div><!--/span-->
