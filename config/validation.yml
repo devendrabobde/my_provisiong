@@ -23,6 +23,6 @@ PROVIDER:
   DUPLICATE_RECORD: NPI duplicated in the uploaded CSV file. In this case we are simply passing unique record for each.
   BLANK: "Providers required fields can't be blank, please correct: <br />"
   DUPLICATE_NPI: "The NPI must be unique for each record in the file. Before proceeding, please remove duplicate NPI "
-  WRONG_APPLICATION: Please check uploaded csv file. A csv file from another application should not be uploaded into any other application.
+  WRONG_APPLICATION: Please upload a valid data file for this application. A sample file can be downloaded from the screen once you select the application.
   EMPTY_FILE: Uploaded providers csv file is empty.
   REDIS_Q_FAIL: "Resque backgroud job fail: redis queue is not working"
