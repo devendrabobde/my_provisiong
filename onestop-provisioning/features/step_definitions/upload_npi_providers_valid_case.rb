@@ -119,7 +119,7 @@ And /^I should be able to associate provider with COA$/ do
 end
 
 And /^I should be able to add audit data in Provisioning DB$/ do
-  page.all(:css, "#table1 tbody tr").size.should > 0
+  page.all(:css, "#table2 tbody tr").size.should > 0
 end
 
 And /^I should be able to see simple acknowledgement messages$/ do
