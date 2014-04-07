@@ -1,6 +1,6 @@
 /*
  * onestop.validation.js file will contain all the inline javascript validation.
- * 
+ *
  */
 (function($) {
     if (!$.OneStop) {
@@ -11,11 +11,11 @@
         init: function() {
             'use strict'
 
-            
+
             $.validator.addMethod("alpha", function(value,element)
-                {
-                    return this.optional(element) || /^[A-Za-z\u00C0-\u017F]+$/i.test(value);
-                }, "Letters only");
+            {
+                return this.optional(element) || /^[A-Za-z\u00C0-\u017F]+$/i.test(value);
+            }, "Letters only");
 
 
             // COA's account setting page inline validation.
@@ -64,6 +64,18 @@
             {
                 rules: {
                     "organization[name]": {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 60
+                    },
+                    "organization[address1]": {
+                        required: true
+                    },
+                    "organization[city]": {
+                        required: true,
+                        alpha: true
+                    },
+                    "organization[state_code]": {
                         required: true
                     },
                     "organization[zip_code]": {
@@ -87,9 +99,29 @@
                         email: true,
                         minlength: 7,
                         maxlength: 100
+                    },
+                    "organization[contact_phone]": {
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    "organization[contact_fax]": {
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10
                     }
                 },
                 messages: {
+                    "organization[address1]": {
+                        required: "Address1 can't be blank."
+                    },
+                    "organization[city]": {
+                        required: "City can't be blank.",
+                        alpha: "Please enter letters only."
+                    },
+                    "organization[state_code]": {
+                        required: "You have to select a state."
+                    },
                     "organization[contact_email]": {
                         required: "Email can't be blank.",
                         email: "Email format is invalid."
@@ -206,7 +238,7 @@
                 }
             });
 
-            
+
             $('span[class^="error"]:not(.valid)').remove();
 
         }
