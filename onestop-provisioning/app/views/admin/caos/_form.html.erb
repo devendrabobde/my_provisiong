@@ -69,9 +69,9 @@
 
           <div class="span6 bgcolor">
             <div class="control-group">
-              <%= label_tag "Password Confirmation", "Password <span class='red'>*</span>".html_safe, class: "control-label" %>
+              <%= label_tag "Password Confirmation", "Confirm Password <span class='red'>*</span>".html_safe, class: "control-label" %>
               <div class="controls">
-                <%= f.password_field :password_confirmation, required: true, class: "form-control", placeholder: "Password Confirmation" %>
+                <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation" %>
               </div>
             </div>
           </div><!--/span-->
