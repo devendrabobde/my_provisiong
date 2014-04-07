@@ -71,7 +71,7 @@ And /^I clicks upload button$/ do
 end
 
 And /^I should be able to see correct file upload message$/ do
-  page.should have_content("Thanks for uploading providers, we are processing uploaded file.")
+  page.should have_content("Thanks for uploading providers. We are processing the uploaded file.")
 end
 
 And /^I should be able to see progress bar$/ do
@@ -123,7 +123,7 @@ And /^I should be able to add audit data in Provisioning DB$/ do
 end
 
 And /^I should be able to see simple acknowledgement messages$/ do
-  page.all(:css, "#table1 tbody tr").each do |td|
+  page.all(:css, "#table2 tbody tr").each do |td|
     td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end
