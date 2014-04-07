@@ -71,7 +71,7 @@ And /^I clicks upload button$/ do
 end
 
 And /^I should be able to see correct file upload message$/ do
-  page.should have_content("Thanks for uploading providers. we are processing uploaded file.")
+  page.should have_content("Thanks for uploading providers. We are processing the uploaded file.")
 end
 
 And /^I should be able to see progress bar$/ do
