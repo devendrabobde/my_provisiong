@@ -31,10 +31,10 @@ class Admin::ProvidersController < ApplicationController
 
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
-    else
-      if @registered_applications.first.present?
-        @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
-      end
+    # else
+    #   if @registered_applications.first.present?
+    #     @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
+    #   end
     end
 
     respond_to do |format|
