@@ -28,6 +28,7 @@ OneStop::Application.routes.draw do
       end
     end
     get '/download/:id', to: 'providers#download', as: 'download'
+    get '/download_sample_file/:id', to: 'providers#download_sample_file', as: :download_sample_file
   end
 
   devise_scope :cao do

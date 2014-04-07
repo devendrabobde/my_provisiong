@@ -69,24 +69,24 @@
                   <%= menu_item "Edit Account", edit_cao_registration_path %>
                   <%#= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
                 <% end %>
-                <%= drop_down "#{current_cao.username.to_s.capitalize}" do %>
+                <%= drop_down "#{current_cao.username}" do %>
                   <%= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
                 <% end %>
                 <li class="brand" style="font-size: 14px; margin-left: -10px;">
-                  <%#= link_to "Welcome: "+ current_cao.username.to_s.capitalize + " | Organization: " + current_cao.organization.name , "" rescue nil %>
+                  <%#= link_to "Welcome: "+ current_cao.username + " | Organization: " + current_cao.organization.name , "" rescue nil %>
                     <%= "Organization : " + current_cao.organization.name rescue nil %>                 
                 </li>
               </ul>
               <ul class="nav">
-                  <% if current_cao.is_admin? %>
+                  <% #if current_cao.is_admin? %>
                     <li>
-                      <%= link_to "Organizations",  admin_organizations_path %>
+                      <%#= link_to "Organizations",  admin_organizations_path %>
                     </li>
-                  <% else %>
+                  <% #else %>
                     <li>
-                      <%= link_to "Applications", application_admin_providers_path %>
+                      <%#= link_to "Applications", application_admin_providers_path %>
                     </li>
-                  <% end %>
+                  <% #end %>
               <% end %>
               </ul>
               <ul class="nav">

@@ -31,10 +31,10 @@ class Admin::ProvidersController < ApplicationController
 
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
-    else
-      if @registered_applications.first.present?
-        @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
-      end
+    # else
+    #   if @registered_applications.first.present?
+    #     @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
+    #   end
     end
 
     respond_to do |format|
@@ -70,6 +70,22 @@ class Admin::ProvidersController < ApplicationController
       format.csv { send_data @providers.to_csv(reg_app, {}), :type => 'text/csv; charset=utf-8; header=present',
         :disposition => "attachment; filename= #{reg_app.app_name}_Providers_#{DateTime.now.to_s}.csv" }
     end
+  end
+
+  def download_sample_file
+    reg_app = RegisteredApp.find(params[:id])
+    path, file_name = "", ""
+    if reg_app.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_epcs_providers.csv"
+      file_name = "sample_epcs_providers.csv"      
+    elsif reg_app.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_moxy_providers.csv"
+      file_name = "sample_moxy_providers.csv"
+    elsif reg_app.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
+      path = "#{Rails.root}/public/sample_csv_files/sample_rcopia_providers.csv"
+      file_name = "sample_rcopia_providers.csv"
+    end
+    send_file(path, type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=#{file_name}", url_based_filename: true)
   end
 
   # Upload and process providers csv file

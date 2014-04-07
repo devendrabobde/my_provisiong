@@ -41,7 +41,7 @@ When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_contact_last_name", with: Faker::Name.last_name
   fill_in "organization_contact_email", with: Faker::Internet.email
   fill_in "organization_zip_code", with: "12345"
-  fill_in "organization_postal_code", with: "54321"
+  # fill_in "organization_postal_code", with: "54321"
   select "DC", from: 'organization_state_code'
   click_button "Create Organization"
 end
