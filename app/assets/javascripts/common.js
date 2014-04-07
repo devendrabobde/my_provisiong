@@ -81,7 +81,7 @@ $(document).ready(function () {
   $("#provider_registered_app_id").change(function() {
       var e = $(this);
       if (e.val() !== ""){
-        $('#download_sample_data').find('a').attr('href', "/admin/download/"+e.val()+".csv");
+        $('#download_sample_data').find('a').attr('href', "/admin/download_sample_file/"+e.val());
         $('#download_sample_data').show();
       } else{
         $('#download_sample_data').hide();
@@ -127,6 +127,15 @@ $(document).ready(function () {
     return false;
   });
 
+  // $(".fake-uploader").click(function(){
+  //   var e = $(this);
+  //   e.parent().find('.actual-uploader').trigger('click');
+  // });
+
+  // $("#upload").change(function(){
+  //   $("#selected-filename").html($(this).val());
+  // });
+  
 });
 
 
