@@ -28,7 +28,7 @@ module ProvisioingCsvValidation
   # Processing providers CSV file
   #
   def self.process_csv(path, application)
-    providers,csv_headers  = [], []
+    providers,csv_headers,upload_headers  = [], [], []
     app_upload_fields = application_upload_field_validations(application)
     CSV.foreach(path, :col_sep=>',', :headers => true) do |row|
       provider_record = row.to_hash
@@ -36,9 +36,14 @@ module ProvisioingCsvValidation
       csv_headers = row.headers unless csv_headers.present?
     end
     # Code for checking cross-application CSV upload to differentiate application upload based on CSV headers and app_upload_fields
-    upload_headers = app_upload_fields.collect(&:display_name)
-    upload_headers = upload_headers[0..9].sort
-    csv_headers = csv_headers[0..9].sort
+    upload_headers = app_upload_fields.collect(&:display_name).sort
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+      upload_headers = upload_headers[1..10]
+      csv_headers = csv_headers.include?("FQDN") ? csv_headers.sort[1..10] : csv_headers.sort[0..9]
+    else
+      upload_headers = upload_headers[0..9]
+      csv_headers = csv_headers.sort[0..9]
+    end
     status = (csv_headers == upload_headers)
     # File.delete(path) if File.exist?(path)
     file_status = providers.present? ? true : false
