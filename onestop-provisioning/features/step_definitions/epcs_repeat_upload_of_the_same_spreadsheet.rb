@@ -11,7 +11,8 @@ And /^I should be able to see success message corresponding to each valid provid
 end
 
 When /^I click on Back button for uploading same providers file again$/ do
-  click_link ("Back", match: :first)
+  first(:link, "Back").click
+  # click_link ("Back", match: :first)
 end
 
 
