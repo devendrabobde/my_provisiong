@@ -12,6 +12,7 @@ Given /^valid COA credentials$/ do
 end
 
 When /^I select a csv file which contains single batch of multiple providers$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'one_single_batch_of_multiple_providers.csv') # id
 end
 
