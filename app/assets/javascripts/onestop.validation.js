@@ -17,6 +17,11 @@
                 return this.optional(element) || /^[A-Za-z\u00C0-\u017F]+$/i.test(value);
             }, "Letters only");
 
+            $.validator.addMethod("passwordValidation", function(value,element)
+            {
+                return this.optional(element) || /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/i.test(value);
+            }, "Password must contain at least 1 special character.");
+
 
             // COA's account setting page inline validation.
             $("#edit_cao").validate(
@@ -156,19 +161,19 @@
                 rules: {
                     "cao[first_name]": {
                         required: true,
-                        minlength: 1,
+                        minlength: 3,
                         maxlength: 60,
                         alpha: true
                     },
                     "cao[last_name]": {
                         required: true,
-                        minlength: 1,
+                        minlength: 3,
                         maxlength: 60,
                         alpha: true
                     },
                     "cao[username]": {
                         required: true,
-                        minlength: 3,
+                        minlength: 6,
                         maxlength: 60
                     },
                     "cao[email]": {
@@ -178,12 +183,11 @@
                         maxlength: 100
                     },
                     "cao[password]": {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 60
+                        passwordValidation: true,
+                        //required: true,
+                        rangelength: [8, 16]
                     },
                     "cao[password_confirmation]": {
-                        required: true,
                         minlength: 3,
                         maxlength: 60,
                         equalTo: "#cao_password"
@@ -206,12 +210,9 @@
                         required: "Email can't be blank."
                     },
                     "cao[password]": {
+                        passwordValidation: "Minimum 8 and Maximum 16 characters at least 1 Alphabet, 1 Number and 1 Special Character",
                         required: "Password can't be blank."
-                    },
-                    "cao[password_confirmation]": {
-                        required: "Password Confirmation can't be blank."
                     }
-
                 },
                 highlight: function(label) {
                     $(label).parent().find('.valid').each(function(){
