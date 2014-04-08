@@ -32,11 +32,9 @@
                         required: true
                     },
                     "cao[password]": {
-                        minlength: 6,
-                        required: true
+                        passwordValidation: true
                     },
                     "cao[password_confirmation]": {
-                        required: true,
                         equalTo: "#cao_password"
                     }
                 },
@@ -45,12 +43,7 @@
                         required: "Email can't be blank."
                     },
                     "cao[password]": {
-                        minlength: "Password should be 8 characters.",
-                        required: "Password can't be blank."
-                    },
-                    "cao[password_confirmation]": {
-                        required: "Password Confirmation can't be blank.",
-                        equalTo: "New Password Doesn't Match"
+                        passwordValidation: "Minimum 8 and Maximum 16 characters at least 1 Alphabet, 1 Number and 1 Special Character"
                     }
                 },
                 highlight: function(label) {
@@ -188,8 +181,6 @@
                         rangelength: [8, 16]
                     },
                     "cao[password_confirmation]": {
-                        minlength: 3,
-                        maxlength: 60,
                         equalTo: "#cao_password"
                     }
                 },
