@@ -73,6 +73,6 @@ class Admin::CaosController < ApplicationController
   # Value pre-population
   def find_value
     @profile_list = Profile.all
-    @role_list = Role.where(name: "COA")
+    #@role_list = Role.where(name: "COA").first
   end
 end

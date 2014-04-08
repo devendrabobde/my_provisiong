@@ -56,7 +56,30 @@
 
         </div><!--/row-->
 
-        
+        <%- if coa.new_record? -%>
+          <div class="row-fluid">
+
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Password", "Password <span class='red'>*</span>".html_safe, class: "control-label" %>
+                <div class="controls">
+                  <%= f.password_field :password, required: true, class: "form-control", placeholder: "Password" %>
+                </div>
+              </div>
+            </div><!--/span-->
+
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Password Confirmation", "Confirm Password <span class='red'>*</span>".html_safe, class: "control-label" %>
+                <div class="controls">
+                  <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation" %>
+                </div>
+              </div>
+            </div><!--/span-->
+
+          </div><!--/row-->
+        <%- end -%>
+
 
         <div class="row-fluid">
 
@@ -69,29 +92,31 @@
             </div>
           </div><!--/span-->
 
-          <div class="span6 bgcolor">
-            <div class="control-group">
-              <%= f.label :role_id, class: "control-label" %>
-              <div class="controls">
-                <%= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name"), { class: "form-control" } %>
-              </div>
-            </div>
-          </div><!--/span-->
+          <!--div class="span6 bgcolor">
+          <div class="control-group">
+            <%= f.label :role_id, class: "control-label" %>
+            <div class="controls">
+              <%#= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name"), { class: "form-control" } %>
 
-        </div><!--/row-->
-
-        <div class="row-fluid">
-
-          <div class="form-group" style="text-align: right;margin-right:10px">
-            <div class="col-sm-10">
-              <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
-              <%= link_to 'Back', admin_organization_caos_path(@organization.id), class: "btn btn-primary" %>
+              <%#= hidden_field :fk_role_id, value:  %>
             </div>
           </div>
-        </div><!--/row-->
-      </div><!--/span-->
-      <div class="span4">
-      </div><!--/span-->
-    </div><!--/row-->
-  <%- end -%>
-</div>
+        </div><!--/span-->
+
+      </div><!--/row-->
+
+      <div class="row-fluid">
+
+        <div class="form-group" style="text-align: right;margin-right:10px">
+          <div class="col-sm-10">
+            <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>
+            <%= link_to 'Back', admin_organization_caos_path(@organization.id), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div><!--/row-->
+    </div><!--/span-->
+    <div class="span4">
+    </div><!--/span-->
+  </div><!--/row-->
+<%- end -%>
+                                </div>

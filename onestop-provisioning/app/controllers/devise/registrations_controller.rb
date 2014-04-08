@@ -10,9 +10,10 @@ class Devise::RegistrationsController < DeviseController
 
   # POST /resource
   def create
-    account_create_parameters = params[:cao]
+    account_create_parameters = params[:cao].merge!(fk_role_id: Role.where(name: "COA").first.id)
     # build_resource(sign_up_params)
     build_resource(account_create_parameters)
+    generate_password_and_assign_role!(account_create_parameters)
     if resource.save
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
@@ -129,5 +130,11 @@ class Devise::RegistrationsController < DeviseController
 
   def account_update_params
     devise_parameter_sanitizer.for(:account_update)
+  end
+
+  def generate_password_and_assign_role!(account_create_parameters)
+    p "11122222dddd"
+    p account_create_parameters
+    p "11122222dddd"
   end
 end
