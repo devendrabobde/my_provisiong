@@ -65,6 +65,12 @@ describe Devise::RegistrationsController do
       put :update, format: :html, cao: { email: @cao.email, password: 12345678, password_confirmation: 12345678, current_password: 12345678 }
       response.status.should == 302
     end
+
+    it "I should not be able to use the same password again while updating the password." do
+      put :update, format: :html, cao: { email: @cao.email, password: 12345678, password_confirmation: 12345678, current_password: 12345678 }
+      response.status.should == 302
+    end
+
     
   end
 

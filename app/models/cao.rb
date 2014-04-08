@@ -31,6 +31,18 @@ class Cao < ActiveRecord::Base
   has_many :provider_error_logs, foreign_key: :fk_cao_id
   has_many :provider_app_details, foreign_key: :fk_cao_id
 
+  #before_create :add_role
+  #before_create :generate_password
+
+  def generate_password
+    password = "test"
+    password_confirmation = "test"
+  end
+
+  def add_role
+    fk_role_id = Role.where(name: "COA").first.id
+  end
+
   def is_admin?
     if role.name == "Admin"
       return true
