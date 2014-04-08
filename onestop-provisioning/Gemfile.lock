@@ -96,6 +96,9 @@ GEM
       orm_adapter (~> 0.0.7)
       railties (~> 3.1)
       warden (~> 1.1.1)
+    devise_security_extension (0.8.0)
+      devise (>= 2.0.0)
+      rails (>= 3.1.1)
     diff-lcs (1.2.5)
     docile (1.1.2)
     email_spec (1.5.0)
@@ -353,6 +356,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner (>= 1.0.0.RC1)
   devise (= 2.1.0)
+  devise_security_extension
   email_spec (>= 1.4.0)
   encryptor
   factory_girl_rails (>= 4.2.0)
