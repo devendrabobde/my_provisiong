@@ -20,7 +20,10 @@ gem 'jquery-ui-rails'
 
 gem "twitter-bootstrap-rails"
 gem "therubyracer", :platform => :ruby
+
 gem 'devise', "=2.1.0"
+gem 'devise_security_extension'
+
 gem 'rest-client'
 gem 'smarter_csv'
 gem 'resque', :require => 'resque/server'
