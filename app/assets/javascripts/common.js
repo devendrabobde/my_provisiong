@@ -127,14 +127,14 @@ $(document).ready(function () {
     return false;
   });
 
-  // $(".fake-uploader").click(function(){
-  //   var e = $(this);
-  //   e.parent().find('.actual-uploader').trigger('click');
-  // });
+  $(".fake-uploader").click(function(){
+    var e = $(this);
+    e.parent().find('.actual-uploader').trigger('click');
+  });
 
-  // $("#upload").change(function(){
-  //   $("#selected-filename").html($(this).val());
-  // });
+  $("#upload").change(function(){
+    $("#selected-filename").html($(this).val());
+  });
   
 });
 
