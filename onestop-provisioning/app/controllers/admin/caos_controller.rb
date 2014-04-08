@@ -16,7 +16,7 @@ class Admin::CaosController < ApplicationController
   # Create a CAO. Next step after new.
   def create
     @organization = Organization.find(params[:organization_id])
-    @cao = @organization.caos.create(params[:cao])
+    @cao = @organization.caos.create(params[:cao].merge!(fk_role_id: Role.where(name: "COA").first.id))
     if @cao.save
       flash[:notice] = VALIDATION_MESSAGE["COA"]["CREATE"]
       redirect_to admin_organization_cao_path(@organization.id, @cao.id)
