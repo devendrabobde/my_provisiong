@@ -10,7 +10,7 @@
     <%= form_tag upload_admin_providers_path, id: "upload_csv_file", multipart: true do%>
       <p>
         <div style='display:inline;'>
-          <%= link_to 'Choose file', 'javascript:void(0)', class: 'fake-uploader btn', id: 'choose-file'%>
+          <%= link_to 'Choose file', 'javascript:void(0)', class: 'fake-uploader btn'%>
           <%= file_field_tag :upload, class: 'actual-uploader', style: 'display: none; margin-left: 5px;' %>
           <span id ='selected-filename' style='margin-left: 5px;'></span>
         </div>

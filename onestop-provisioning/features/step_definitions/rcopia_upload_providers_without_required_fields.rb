@@ -1,4 +1,5 @@
 When /^I select a csv file of providers without required fields for (.+?)$/ do |app_name|
+    page.execute_script("$('#upload').show();")
     attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', app_name, "#{app_name}_providers_without_required_fields.csv") # id
 end
 
