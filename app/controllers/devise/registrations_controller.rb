@@ -10,7 +10,7 @@ class Devise::RegistrationsController < DeviseController
 
   # POST /resource
   def create
-    account_create_parameters = params[:cao].merge!(fk_role_id: Role.where(name: "COA").first.id)
+    account_create_parameters = params[:cao]
     # build_resource(sign_up_params)
     build_resource(account_create_parameters)
     generate_password_and_assign_role!(account_create_parameters)
@@ -42,7 +42,14 @@ class Devise::RegistrationsController < DeviseController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
     account_update_parameters = params[:cao]
-    if resource.update_with_password(account_update_parameters)
+    if params[:cao][:password].present?
+      @password = true
+      update = resource.update_with_password(account_update_parameters)
+    else
+      @password = false
+      update = resource.update_without_password(account_update_parameters)
+    end
+    if update
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
           :update_needs_confirmation : :updated
