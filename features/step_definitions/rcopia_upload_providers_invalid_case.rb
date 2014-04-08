@@ -1,4 +1,5 @@
 When /^I select a csv file of invalid providers for rcopia$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'rcopia', 'invalid_rcopia_providers.csv') # id
 end
 

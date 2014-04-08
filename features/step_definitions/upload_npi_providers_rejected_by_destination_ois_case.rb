@@ -6,5 +6,6 @@ end
 
 
 When /^I select a csv file which has providers that would be rejected by destination OIS$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_invalid_providers.csv')
 end

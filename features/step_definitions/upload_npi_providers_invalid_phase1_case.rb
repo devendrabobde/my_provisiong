@@ -1,4 +1,5 @@
 When /^I select CSV File of Invalid providers$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'epcs_invalid.csv') # id
 end
 
