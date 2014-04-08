@@ -2,12 +2,12 @@ class Cao < ActiveRecord::Base
 
   include Extensions::UUID
 
-  devise :database_authenticatable, :recoverable, :validatable,:timeoutable,:registerable,
+  devise :database_authenticatable, :recoverable, :validatable, :timeoutable, :registerable, :password_archivable,
          :rememberable, :trackable, :authentication_keys => [:username]
 
   attr_accessible :username, :first_name, :last_name, :user_id, :is_active,
                   :email, :password, :password_confirmation, :remember_me, :fk_organization_id,
-                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at
+                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at#, :encrypted_password, :password_salt
 
   alias_attribute :sys_cao_id, :id
 
