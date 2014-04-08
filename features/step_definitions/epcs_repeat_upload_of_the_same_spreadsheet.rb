@@ -1,5 +1,9 @@
 
 When /^I select a csv file which is containing all valid providers$/ do
+  page.execute_script("$('.fake-uploader').remove();")
+  page.execute_script("$('#selected-filename').remove();")
+  # page.execute_script("$('.actual-uploader').remove();")
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv')
 end
 
@@ -16,6 +20,7 @@ end
 
 
 When /^I select a csv file which contains all valid providers and then repeat upload a second time$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv')
 end
 
@@ -28,10 +33,12 @@ end
 
 
 When /^I select a csv file which is containing all invalid providers$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'invalid_epcs_providers.csv')
 end
 
 When /^I select a csv file which contains all valid providers after fixing invalid providers and upload a second time$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'invalid_epcs_providers_with_fixes.csv')
 end
 
@@ -42,14 +49,17 @@ And /^I should be able to see error message corresponding to each invalid provid
 end
 
 When /^I select a csv file which is containing mixture of valid and invalid providers$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_and_invalid_providers.csv')
 end
 
 When /^I select a csv file which contains all valid providers after fixing invalid providers records$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_and_invalid_providers_with_fixes.csv')
 end
 
 When /^I select a csv file after partial fixes and upload again$/ do
+  page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_and_invalid_providers_with_partial_fixes.csv')
 end
 

@@ -1,13 +1,16 @@
 When /^I select a csv file with single provider passing WsBatchIdp$/ do
-	attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_with_all_required_fields.csv')
+	page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_with_all_required_fields.csv')
 end
 
 When /^I select a csv file with single provider failing WsBatchIdp$/ do
-	attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
+	page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
 end
 
 When /^I select a csv file with single provider passing WsBatchIdp and with already registered Organization$/ do
-	attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_passing_batchidp.csv')
+	page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_passing_batchidp.csv')
 end
 
 And /^I should be able to see the error message from WsBatchIdp$/ do
@@ -20,7 +23,8 @@ end
 
 
 When /^When I select csv file having single provider failing WsBatchIdp and with registered Organization$/ do
-	attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
+	page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
 end
 
 When(/^I redirect back to home page$/) do
@@ -30,7 +34,8 @@ end
 When(/^I select csv file having single provider failing WsBatchIdp and with already registered Organization$/) do
 	@app_validation = RegisteredApp.where(app_name: "EPCS-IDP").first.app_upload_fields.where(name: 'state').first
 	@app_validation.update_attribute(:required, false)
-	attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
+	page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'single_provider_failing_batchidp.csv')
 end
 
 And(/^I should be able to verify clean provider data in Provisioning DB, and click on the second csv file$/) do
