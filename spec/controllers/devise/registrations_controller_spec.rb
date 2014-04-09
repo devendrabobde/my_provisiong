@@ -25,7 +25,7 @@ describe Devise::RegistrationsController do
 
     before(:each) do
       @valid_data = { user_id: "#jkl", first_name: "testfname", last_name: "testlname", username: "testusername",
-                      email: "fnamelname@test.com", password: "12345678", fk_profile_id: @profile.id, fk_role_id: @role.id }
+                      email: "fnamelname@test.com", password: "password@123", fk_profile_id: @profile.id, fk_role_id: @role.id }
     end
 
     it "I should be able to register as a coa" do
@@ -54,20 +54,20 @@ describe Devise::RegistrationsController do
   describe "PUT 'update'" do
 
     before(:each) do
-      @cao  = FactoryGirl.create(:cao, username: "testupdateuser", email: "testupdateuser@test.com", password: 12345678, password_confirmation: 12345678)
+      @cao  = FactoryGirl.create(:cao, username: "testupdateuser", email: "testupdateuser@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
       sign_in @cao
-      @valid_data = { email: "testusername@example.com", password: 12345678, password_confirmation: 12345678, current_password: 12345678 }  
+      @valid_data = { email: "testusername@example.com", password: "password@1234", password_confirmation: "password@1234", current_password: "password@123" }  
     end
 
     it "I should be able to update the details" do
-      put :update, format: :html, cao: { email: @cao.email, password: 12345678, password_confirmation: 12345678, current_password: 12345678 }
+      put :update, format: :html, cao: { email: @cao.email, password: "password@1235", password_confirmation: "password@1235", current_password: "password@1234" }
       response.status.should == 302
     end
 
     it "I should not be able to use the same password again while updating the password." do
-      put :update, format: :html, cao: { email: @cao.email, password: 12345678, password_confirmation: 12345678, current_password: 12345678 }
+      put :update, format: :html, cao: { email: @cao.email, password: "password@1235", password_confirmation: "password@1235", current_password: "password@1235" }
       response.status.should == 302
     end
 
