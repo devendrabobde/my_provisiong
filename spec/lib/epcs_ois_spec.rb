@@ -8,7 +8,7 @@ describe "EPCS-OIS" do
 	    	  application = RegisteredApp.where(app_name: "EPCS-IDP").first
 	    	  coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
 				    first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-				    password: "password", password_confirmation: "password")
+				    password: "password@123", password_confirmation: "password@123")
 			    role = Role.create(name: "COA")
 			    organization_coa = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
 				    address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
@@ -49,7 +49,7 @@ describe "EPCS-OIS" do
 			    role = Role.create(name: "COA")
 			    organization_coa = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
 				                    address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
-				                    contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", postal_code: "54321")
+				                    contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
 			    coa.update_attributes(fk_role_id: role.id, fk_organization_id: organization_coa.id)
 	    	  application = RegisteredApp.where(app_name: "EPCS-IDP").first
 		 	    providers = [{ :npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA",
