@@ -13,7 +13,7 @@ end
 When /^I enter email on the reset password form$/ do
   @coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-    password: "password", password_confirmation: "password")
+    password: "password@123", password_confirmation: "password@123")
   role = Role.create(name: "COA")
   organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
@@ -44,8 +44,8 @@ And /^I follow Change my password link in the email$/ do
 end
 
 Then /^I should be able to enter new password and confirmation password$/ do
-  # fill_in "cao_password", with: "password"
-  # fill_in "cao_password_confirmation", with: "password"
+  # fill_in "cao_password", with: "password@1234"
+  # fill_in "cao_password_confirmation", with: "password@1234"
 end
 
 When /^I click on Change my password$/ do

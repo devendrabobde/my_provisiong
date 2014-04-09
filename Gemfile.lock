@@ -226,6 +226,8 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque-status (0.4.2)
+      resque (~> 1.19)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-core (2.14.7)
@@ -372,6 +374,7 @@ DEPENDENCIES
   redis-rack-cache
   redis-rails
   resque
+  resque-status
   rest-client
   rspec-core
   rspec-rails (>= 2.12.2)

@@ -143,6 +143,8 @@ class Admin::ProvidersController < ApplicationController
   # Pull audit trail record to verify file upload status
   def pull_redis_job_status
     audit_trail = AuditTrail.where(sys_audit_trail_id: params[:audit_id]).first
+    status = Resque::Plugins::Status::Hash.get($job_id)
+    puts "#{status.inspect}--- #{status.pct_complete}, #{status.working?}, #{status.total} *****************************************************"
     resque_info = Resque.info
     if resque_info[:workers] == 0
       admin = Role.where(:name => "Admin").first
@@ -172,7 +174,8 @@ class Admin::ProvidersController < ApplicationController
 
   # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
-    Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
+    $job_id = BatchUpload.create(providers: providers, cao_id: @cao.id, application_id: @application.id, audit_trail_id: @audit_trail.id)
+    # Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
     resque_info = Resque.info
     if resque_info[:workers] == 0
       admin = Role.where(:name => "Admin").first

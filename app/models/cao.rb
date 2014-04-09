@@ -2,6 +2,8 @@ class Cao < ActiveRecord::Base
 
   include Extensions::UUID
 
+  #attr_accessor :current_password
+
   devise :database_authenticatable, :recoverable, :validatable, :timeoutable, :registerable, :password_archivable,
          :rememberable, :trackable, :authentication_keys => [:username]
 
@@ -20,6 +22,8 @@ class Cao < ActiveRecord::Base
   validates :username, uniqueness: true
   validates :email, :format => { :with => EMAIL }
   validates :first_name, :last_name, presence: true
+  validate :password_complexity
+
 
   #
   # Association
@@ -31,17 +35,7 @@ class Cao < ActiveRecord::Base
   has_many :provider_error_logs, foreign_key: :fk_cao_id
   has_many :provider_app_details, foreign_key: :fk_cao_id
 
-  #before_create :add_role
-  #before_create :generate_password
-
-  def generate_password
-    password = "test"
-    password_confirmation = "test"
-  end
-
-  def add_role
-    fk_role_id = Role.where(name: "COA").first.id
-  end
+  after_create :send_welcome_email
 
   def is_admin?
     if role.name == "Admin"
@@ -56,5 +50,16 @@ class Cao < ActiveRecord::Base
 
   def active_for_authentication?
     super && !deleted_at
+  end
+
+  private
+  def password_complexity
+    if password.present? and not password.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@$#%^&*])[a-zA-Z0-9!@$#%^&*]{8,16}$/)
+      errors.add :password, "must include at least one special character and one digit"
+    end
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_message(self).deliver
   end
 end

@@ -76,7 +76,7 @@ end
 # gem 'xmpp4r', group: :development
 # gem 'airbrake', group: :development
 
-
+gem 'resque-status'
 # settingslogic - To maintain all settings
 gem 'settingslogic'
 
