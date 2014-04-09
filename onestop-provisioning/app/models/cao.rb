@@ -35,6 +35,8 @@ class Cao < ActiveRecord::Base
   has_many :provider_error_logs, foreign_key: :fk_cao_id
   has_many :provider_app_details, foreign_key: :fk_cao_id
 
+  after_create :send_welcome_email
+
   def is_admin?
     if role.name == "Admin"
       return true
@@ -55,5 +57,9 @@ class Cao < ActiveRecord::Base
     if password.present? and not password.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@$#%^&*])[a-zA-Z0-9!@$#%^&*]{8,16}$/)
       errors.add :password, "must include at least one special character and one digit"
     end
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_message(self).deliver
   end
 end

@@ -50,6 +50,7 @@ class Devise::RegistrationsController < DeviseController
       update = resource.update_without_password(account_update_parameters)
     end
     if update
+      @password.eql?(true) ? UserMailer.update_password(resource).deliver : UserMailer.update_account(resource).deliver
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
           :update_needs_confirmation : :updated
