@@ -24,7 +24,7 @@ end
 
 And /^I fill in the username and password with valid credentials$/ do
   fill_in "cao_username", with: @current_valid_cao.username
-  fill_in "cao_password", with: "password"
+  fill_in "cao_password", with: "password@123"
 end
 
 
