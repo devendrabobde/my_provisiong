@@ -174,8 +174,7 @@ class Admin::ProvidersController < ApplicationController
 
   # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
-    $job_id = BatchUpload.create(providers: providers, cao_id: @cao.id, application_id: @application.id, audit_trail_id: @audit_trail.id)
-    # Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
+    Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
     resque_info = Resque.info
     if resque_info[:workers] == 0
       admin = Role.where(:name => "Admin").first
