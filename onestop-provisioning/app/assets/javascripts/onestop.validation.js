@@ -20,17 +20,57 @@
             $.validator.addMethod("passwordValidation", function(value,element)
             {
                 return this.optional(element) || /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/i.test(value);
-            }, "Password must contain at least 1 special character.");
+            }, "Password must include at least 1 special character and one digit.");
 
 
             // COA's account setting page inline validation.
-            $("#edit_cao").validate(
+            $("#edit-personal-info").validate(
             {
                 rules: {
+                    "cao[first_name]": {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 60,
+                        alpha: true
+                    },
+                    "cao[last_name]": {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 60,
+                        alpha: true
+                    },
                     "cao[email]": {
                         email: true,
                         required: true
+                    }
+                },
+                messages: {
+                    "cao[first_name]": {
+                        required: "First name can't be blank.",
+                        alpha: "Please enter letters only."
                     },
+                    "cao[last_name]": {
+                        required: "Last name can't be blank.",
+                        alpha: "Please enter letters only."
+                    },
+                    "cao[email]": {
+                        required: "Email can't be blank."
+                    }
+                },
+                highlight: function(label) {
+                    $(label).parent().find('.valid').each(function(){
+                        $('label[class^="valid"]').remove();
+                    });
+                },
+                success: function(label) {
+                },
+                errorElement: "span"
+            });
+
+
+            $("#edit-change-password").validate(
+            {
+                rules: {
                     "cao[password]": {
                         passwordValidation: true
                     },
@@ -39,9 +79,6 @@
                     }
                 },
                 messages: {
-                    "cao[email]": {
-                        required: "Email can't be blank."
-                    },
                     "cao[password]": {
                         passwordValidation: "Minimum 8 and Maximum 16 characters at least 1 Alphabet, 1 Number and 1 Special Character"
                     }
