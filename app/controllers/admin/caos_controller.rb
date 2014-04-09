@@ -56,16 +56,19 @@ class Admin::CaosController < ApplicationController
   # Delete a CAO (Basically, Deactivate the CAO)
   def destroy
     @organization = Organization.find(params[:organization_id])
-    @cao = Cao.find(params[:id])
+    @cao          = Cao.find(params[:id])
+    
     @cao.update_attributes(deleted_at: Time.now, deleted_reason: params["cao"]["deleted_reason"])
+    UserMailer.account_deactivate(@cao).deliver
     redirect_to admin_organization_caos_path(@organization.id), :notice => VALIDATION_MESSAGE["COA"]["DEACTIVATE"]
   end
 
   # Revert an inactive CAO to active state. Thus, the CAO would be functional
   def activate
     @organization = Organization.find(params[:organization_id])
-    @cao = Cao.find(params[:id])
+    @cao          = Cao.find(params[:id])
     @cao.update_attributes(deleted_at: nil, deleted_reason: nil)
+    UserMailer.account_activate(@cao).deliver
     redirect_to admin_organization_caos_path(@organization.id), :notice => VALIDATION_MESSAGE["COA"]["ACTIVATE"]
   end
 
