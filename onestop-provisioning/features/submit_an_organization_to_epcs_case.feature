@@ -24,7 +24,6 @@ Background:
     And I should be able to see correct file upload message
     And I should be able to see progress bar
     And I should be able to verify clean provider data in Provisioning DB, and click on the second csv file
-    And I should be able to see simple acknowledgement messages
 
   @selenium
   @no-database-cleaner
@@ -43,4 +42,3 @@ Background:
     And I should be able to see correct file upload message
     And I should be able to see progress bar
     And I should be able to verify clean provider data in Provisioning DB, and click on the second csv file
-    And I should be able to see the error message from WsBatchIdp
