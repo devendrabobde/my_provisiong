@@ -1,7 +1,7 @@
 And (/^I should be successfully logged out of the application$/) do
   sleep 5
   visit current_path
-	click_on(@current_cao.user_name)
+	click_on(@current_cao.username)
 	click_on('Logout')
 	page.should have_content("LOG IN")
 end
