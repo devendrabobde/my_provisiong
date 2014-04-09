@@ -62,12 +62,12 @@ describe Devise::RegistrationsController do
     end
 
     it "I should be able to update the details" do
-      put :update, format: :html, cao: { email: @cao.email, password: "password@1235", password_confirmation: "password@1235", current_password: "password@1234" }
+      put :update, format: :html, cao: { email: @cao.email, password: "password@123", password_confirmation: "password@123", current_password: "password@1234" }
       response.status.should == 302
     end
 
     it "I should not be able to use the same password again while updating the password." do
-      put :update, format: :html, cao: { email: @cao.email, password: "password@1235", password_confirmation: "password@1235", current_password: "password@1235" }
+      put :update, format: :html, cao: { email: @cao.email, password: "password@123", password_confirmation: "password@123", current_password: "password@1235" }
       response.status.should == 302
     end
 
