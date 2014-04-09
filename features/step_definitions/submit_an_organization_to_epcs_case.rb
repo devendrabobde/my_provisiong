@@ -58,14 +58,14 @@ And(/^I should be able to verify clean provider data in Provisioning DB, and cli
     break if count > 600
   end
   #page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
-  page.should have_link("2")
-  # page.find("#table1 td:last-child").find(:xpath, '../td/a').click
-  click_link("2")
-  page.should have_content("Last Name")
-  page.should have_content("First Name")
-  page.should have_content("Email")
-  page.should have_content("DEA Numbers")
-  page.all(:css, "#table1 tr").each do |td|
-    td.all(:xpath, '//td[1]').should_not == ""
-  end
+  # page.should have_link("2")
+  # # page.find("#table1 td:last-child").find(:xpath, '../td/a').click
+  # click_link("2")
+  # page.should have_content("Last Name")
+  # page.should have_content("First Name")
+  # page.should have_content("Email")
+  # page.should have_content("DEA Numbers")
+  # page.all(:css, "#table1 tr").each do |td|
+  #   td.all(:xpath, '//td[1]').should_not == ""
+  # end
 end
