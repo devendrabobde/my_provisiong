@@ -7,8 +7,8 @@ FactoryGirl.define do
     fk_organization_id 1
     fk_profile_id 1
     email Faker::Internet.email
-    password "password"
-    password_confirmation "password"
+    password "password@123"
+    password_confirmation "password@123"
     username Faker::Internet.user_name
     fk_role_id 1
   end

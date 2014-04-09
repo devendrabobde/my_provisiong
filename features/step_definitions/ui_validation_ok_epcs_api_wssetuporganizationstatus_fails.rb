@@ -1,7 +1,7 @@
 Given /^valid COA credentials$/ do
   coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-    password: "password", password_confirmation: "password")
+    password: "password@123", password_confirmation: "password@123")
   role = Role.create(name: "COA")
   @organization_coa_valid = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
@@ -24,7 +24,7 @@ end
 
 And /^I fill in the username and password with valid credentials$/ do
   fill_in "cao_username", with: @current_valid_cao.username
-  fill_in "cao_password", with: "password"
+  fill_in "cao_password", with: "password@123"
 end
 
 
