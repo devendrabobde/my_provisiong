@@ -41,7 +41,7 @@ ONESTOP_ROUTER:
 
 EPCS_OIS:
   SERVER_URL: http://10.100.10.45
-  TEST_SERVER_URL: http://localhost:3001
+  TEST_SERVER_URL: http://10.10.100.47:3010
   BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
   VERIFY_CONNECTIVITY: connectivity/verify.json
 
