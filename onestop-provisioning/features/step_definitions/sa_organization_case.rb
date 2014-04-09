@@ -3,7 +3,7 @@ Given(/^a valid SA$/) do
   role_cao = Role.create(name: "COA")
   admin = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-  password: "password", password_confirmation: "password", fk_role_id: role.id)
+  password: "password@123", password_confirmation: "password@123", fk_role_id: role.id)
   @current_admin = admin
   Organization.unscoped.delete_all
   @organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
@@ -11,7 +11,7 @@ Given(/^a valid SA$/) do
   contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
   @e_org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-  password: "password", password_confirmation: "password", fk_role_id: role_cao.id, fk_organization_id: @organization.id)
+  password: "password@123", password_confirmation: "password@123", fk_role_id: role_cao.id, fk_organization_id: @organization.id)
 end
 
 Given(/^I go to admin home page$/) do
@@ -20,7 +20,7 @@ end
 
 And(/^I fill in the username and password for SA$/) do
   fill_in "cao_username", with: @current_admin.username
-  fill_in "cao_password", with: "password"
+  fill_in "cao_password", with: "password@123"
 end
 
 And(/^I click on create organization$/) do

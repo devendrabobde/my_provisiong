@@ -9,9 +9,9 @@ Then(/^I should be able to see edit account form$/) do
 end
 
 And(/^I click on update with the information that needs to be changed including correct old password$/) do
-  fill_in('cao_password', :with => 'password')
-  fill_in('cao_password_confirmation', :with => 'password')
-  fill_in('cao_current_password', :with => 'password')
+  fill_in('cao_password', :with => 'password@12345')
+  fill_in('cao_password_confirmation', :with => 'password@12345')
+  fill_in('cao_current_password', :with => 'password@123')
   click_on('Update')
 end
 

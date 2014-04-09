@@ -2,7 +2,7 @@ Given(/^I select an organization to see the COAs$/) do
 	role_cao1 = Role.create(name: "COA")
 	@org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   	first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-  	password: "password", password_confirmation: "password")
+  	password: "password@123", password_confirmation: "password@123")
   	@org_cao.update_attributes(fk_role_id: role_cao1.id, fk_organization_id: @organization.id)
 	page.find('table#cao_table tbody tr', text: @organization.name).click_link('Manage')
 end
@@ -38,7 +38,7 @@ When(/^I submit the form with proper values$/) do
 	fill_in "cao_last_name", with: @n_lname
 	fill_in "cao_username", with: @n_username
 	fill_in "cao_email", with: @n_email
-	fill_in "cao_password", with: "password"
+	fill_in "cao_password", with: "password@123"
 	click_button("Create")
 end
 
@@ -85,7 +85,7 @@ When(/^I update the edit COA form with proper fields$/) do
 	fill_in "cao_last_name", with: @e_lname
 	fill_in "cao_username", with: @e_username
 	fill_in "cao_email", with: @e_email
-	fill_in "cao_password", with: "password"
+	fill_in "cao_password", with: "password@123"
 	click_button("Update")
 end
 
