@@ -59,7 +59,7 @@ describe Cao do
   end
 
   describe "Cao should not be able to register with multiple username" do
-    it { should validate_uniqueness_of(:username).scoped_to(:email).with_message('has already been taken') }
+    it { should validate_uniqueness_of(:username).with_message('has already been taken') }
   end
 
   describe "Cao should allow email with validated format" do
