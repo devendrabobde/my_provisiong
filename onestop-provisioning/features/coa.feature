@@ -6,7 +6,7 @@ Feature: COA account
 @selenium
 @no-database-cleaner
 Scenario: As a COA user, when I press back button after logout then I should not be redirect back to Login page. 
-  Given I go to the application hpme page
+  Given I go to the application home page
   And I click on the logout
   And I should see "Sign in"
   And I click browser back button

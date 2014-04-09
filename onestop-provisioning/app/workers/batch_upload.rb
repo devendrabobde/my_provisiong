@@ -1,9 +1,16 @@
 class BatchUpload
+
+  # include Resque::Plugins::Status
   include ProvisioningOis
   @queue = :providers_queue
    # Ask resque to perform processing of CSV record
   def self.perform(providers,cao_id, application_id, audit_trail_id)
+  # def self.perform
     begin
+      # providers = options['providers']
+      # cao_id = options['cao_id']
+      # application_id = options['application_id']
+      # audit_trail_id = options['audit_trail_id']
       cao = Cao.find(cao_id)
       application = RegisteredApp.find(application_id)
       audit_trail = AuditTrail.find(audit_trail_id)
