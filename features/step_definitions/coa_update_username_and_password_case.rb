@@ -1,7 +1,5 @@
 Given(/^I click on edit account link in setting section$/) do
-  # visit current_path
-  click_on('Setting')
-  click_on('Edit Account')
+  edit_cao_registration_path
 end
 
 Then(/^I should be able to see edit account form$/) do
