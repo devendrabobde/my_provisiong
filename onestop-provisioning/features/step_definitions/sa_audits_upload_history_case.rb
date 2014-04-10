@@ -1,9 +1,9 @@
 And (/^I should be successfully logged out of the application$/) do
   sleep 5
   visit current_path
-	click_on(@current_cao.username)
-	click_on('Logout')
-	page.should have_content("LOG IN")
+  page.execute_script("$('.dropdown-menu').show()")
+  click_on('Logout')
+	page.should have_selector(".sign_in_box")
 end
 
 Given(/^I click on the organization of COA$/) do
