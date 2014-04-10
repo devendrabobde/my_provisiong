@@ -1,9 +1,10 @@
 Given(/^I click on edit account link in setting section$/) do
-  edit_cao_registration_path
+  visit edit_cao_registration_path
 end
 
 Then(/^I should be able to see edit account form$/) do
   # page.should have_button('Update')
+  page.should have_content("Personal Information")
 end
 
 And(/^I click on update with the information that needs to be changed including correct old password$/) do

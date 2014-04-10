@@ -92,15 +92,15 @@ When(/^I make changes and update the organization$/) do
 end
 
 Then(/^I should see success message for organization update and organization details$/) do
-  # page.should have_content("Organization was updated successfully.")
-  # page.should have_content("Organization Details")
-  # page.should have_content(@o_name)
-  # page.should have_content(@o_addr)
-  # page.should have_content(@o_addr2)
-  # page.should have_content(@o_city)
-  # page.should have_content(@o_fname)
-  # page.should have_content(@o_lname)
-  # page.should have_content(@o_email)
+  page.should have_content("Organization was updated successfully.")
+  page.should have_content("Organization Details")
+  page.should have_content(@o_name)
+  page.should have_content(@o_addr)
+  page.should have_content(@o_addr2)
+  page.should have_content(@o_city)
+  page.should have_content(@o_fname)
+  page.should have_content(@o_lname)
+  page.should have_content(@o_email)
 end
 
 And(/^I should be able to view COAs of any organization$/) do
