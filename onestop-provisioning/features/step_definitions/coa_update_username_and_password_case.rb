@@ -27,7 +27,3 @@ And(/^I click on update with the information that needs to be changed including 
     click_on("Update")
   end
 end
-
-Then(/^I should see success message You updated your account successfully$/) do
-  page.should have_content("You updated your account successfully.")
-end
