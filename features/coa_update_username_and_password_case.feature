@@ -13,5 +13,6 @@ Scenario: COA Updates Username and Password
   And I click on edit account link in setting section
   Then I should be able to see edit account form
   And I click on update with the information that needs to be changed including correct old password
-  Then I should see success message You updated your account successfully 
-
+  Then I should see success message You updated your account successfully
+  And I click on update with the information that needs to be changed including correct personal information
+  Then I should see success message You updated your account successfully
