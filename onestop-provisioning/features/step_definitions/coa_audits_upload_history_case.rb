@@ -9,6 +9,7 @@ end
 
 And(/^I should be able to download any previously uploaded csv and its providers$/) do
   step "I select an application"
+  sleep 2
   page.should have_link("Download Sample Data File")
 end
 
