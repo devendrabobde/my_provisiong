@@ -85,6 +85,7 @@ When(/^I make changes and update the organization$/) do
   fill_in "organization_address1", with: @o_addr
   fill_in "organization_address2", with: @o_addr2
   fill_in "organization_city", with: @o_city
+  select "Alabama", from: 'organization_state_code'
   fill_in "organization_contact_first_name", with: @o_fname
   fill_in "organization_contact_last_name", with: @o_lname
   fill_in "organization_contact_email", with: @o_email

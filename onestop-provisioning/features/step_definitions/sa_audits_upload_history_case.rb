@@ -7,10 +7,10 @@ And (/^I should be successfully logged out of the application$/) do
 end
 
 Given(/^I click on the organization of COA$/) do
-  @current_cao.update_attributes(fk_organization_id: @organization.id)
-  @current_cao.audit_trails.first.update_attribute(:fk_organization_id, @organization.id)
+  @current_cao.update_attributes(fk_organization_id: @organization_coa.id)
+  @current_cao.audit_trails.first.update_attribute(:fk_organization_id, @organization_coa.id)
   visit application_admin_providers_path
-  page.find('table#cao_table tbody tr', text: @organization.name).click_link(@organization.name)
+  page.find('table#cao_table tbody tr', text: @organization_coa.name).click_link(@organization_coa.name)
 end
 
 Then(/^I should be able to see a list of all csv files uploaded by provider$/) do
