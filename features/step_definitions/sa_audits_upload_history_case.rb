@@ -25,8 +25,8 @@ end
 
 Then(/^I should be able to see the provider details$/) do
   page.should have_content("Total NPI Processed")
-  page.should have_selector("table#table1")
-  page.all(:css, "#table1 tbody tr").size.should > 0
+  page.should have_selector("table#table2")
+  page.all(:css, "#table2 tbody tr").size.should > 0
 end
 
 And(/^I should be able to download any previously updated csv file with its providers$/) do
