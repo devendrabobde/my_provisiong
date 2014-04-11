@@ -14,7 +14,7 @@ Given(/^I click on the organization of COA$/) do
 end
 
 Then(/^I should be able to see a list of all csv files uploaded by provider$/) do
-	select "DrFirst - epcsidp", from: 'provider_registered_app_id'
+	select "EPCS-IDP", from: 'application_registered_app_id'
   sleep 4
   page.all(:css, "#table2 tbody tr").size.should > 0
 end
