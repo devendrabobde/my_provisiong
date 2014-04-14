@@ -15,14 +15,14 @@ class Admin::ProvidersController < ApplicationController
 
     unless session[:router_reg_applications]
       $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
-      session[:router_reg_applications] = $regapps unless $regapps["errors"]
+      session[:router_reg_applications] = $regapps unless $regapps.first["errors"]
     else
       $regapps = session[:router_reg_applications]
     end
     
-    if $regapps["errors"]
+    if $regapps.first["errors"]
       @registered_applications = []
-      flash[:error] = "Onestop Router Error: " +  $regapps["errors"].first["message"]
+      flash[:error] = "Onestop Router Error: " +  $regapps.first["errors"].first["message"]
     else
       display_name = $regapps.collect{|x| x.values.flatten.collect{|x| x["ois_name"]}}.flatten
       @registered_applications = RegisteredApp.where(display_name: display_name)
