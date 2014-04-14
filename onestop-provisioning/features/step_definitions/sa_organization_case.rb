@@ -36,13 +36,12 @@ When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_name", with: Faker::Company.name
   fill_in "organization_address1", with: Faker::Address.street_address
   fill_in "organization_address2", with: Faker::Address.street_address
-  fill_in "organization_city", with: Faker::Address.city
+  fill_in "organization_city", with: 'winder'
+  select "Alabama", from: 'organization_state_code'
   fill_in "organization_contact_first_name", with: Faker::Name.first_name
   fill_in "organization_contact_last_name", with: Faker::Name.last_name
   fill_in "organization_contact_email", with: Faker::Internet.email
   fill_in "organization_zip_code", with: "12345"
-  # fill_in "organization_postal_code", with: "54321"
-  select "Alabama", from: 'organization_state_code'
   click_button "Create Organization"
 end
 
@@ -84,7 +83,8 @@ When(/^I make changes and update the organization$/) do
   fill_in "organization_name", with: @o_name
   fill_in "organization_address1", with: @o_addr
   fill_in "organization_address2", with: @o_addr2
-  fill_in "organization_city", with: @o_city
+  fill_in "organization_city", with: "winder"
+  select "Alabama", from: 'organization_state_code'
   fill_in "organization_contact_first_name", with: @o_fname
   fill_in "organization_contact_last_name", with: @o_lname
   fill_in "organization_contact_email", with: @o_email
@@ -92,15 +92,15 @@ When(/^I make changes and update the organization$/) do
 end
 
 Then(/^I should see success message for organization update and organization details$/) do
-  # page.should have_content("Organization was updated successfully.")
-  # page.should have_content("Organization Details")
-  # page.should have_content(@o_name)
-  # page.should have_content(@o_addr)
-  # page.should have_content(@o_addr2)
+  page.should have_content("Organization was updated successfully.")
+  page.should have_content("Organization Details")
+  page.should have_content(@o_name)
+  page.should have_content(@o_addr)
+  page.should have_content(@o_addr2)
   # page.should have_content(@o_city)
-  # page.should have_content(@o_fname)
-  # page.should have_content(@o_lname)
-  # page.should have_content(@o_email)
+  page.should have_content(@o_fname)
+  page.should have_content(@o_lname)
+  page.should have_content(@o_email)
 end
 
 And(/^I should be able to view COAs of any organization$/) do

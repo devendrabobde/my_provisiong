@@ -24,7 +24,7 @@ And /^I press "Sign in"$/ do
 end
 
 Then /^I should see success message$/ do
-  # page.should have_content("Upload CSV Data File")
+  page.should have_content(/Upload CSV Data File | Listing Organizations/)
 end
 
 And /^I should see correct screen title$/ do
@@ -120,7 +120,7 @@ And /^I should be able to associate provider with COA$/ do
 end
 
 And /^I should be able to add audit data in Provisioning DB$/ do
-  # page.all(:css, "#table2 tbody tr").size.should > 0
+  page.all(:css, "#table2 tbody tr").size.should > 0
 end
 
 And /^I should be able to see simple acknowledgement messages$/ do

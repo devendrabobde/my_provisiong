@@ -8,8 +8,9 @@ end
 
 
 And(/^I should be able to download any previously uploaded csv and its providers$/) do
-  # step "I select an application"
-  # page.should have_link("Download Sample Data File")
+  step "I select an application"
+  sleep 2
+  page.should have_link("Download Sample Data File")
 end
 
 And(/^I should be able to download csv file of the registered application providers$/) do

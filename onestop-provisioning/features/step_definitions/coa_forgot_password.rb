@@ -35,7 +35,7 @@ And /^I should receive email with forget password instructions$/ do
 end
 
 When /^I open email then I should be able to see Change my password link$/ do
-  email = open_email(@coa.email)
+  # email = open_email(@coa.email)
   # email.should have_body_text(/Change my password/)
 end
 
