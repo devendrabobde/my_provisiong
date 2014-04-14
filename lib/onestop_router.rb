@@ -18,7 +18,7 @@ module OnestopRouter
     end
     begin
       response = RestClient.post url, body, header
-      return JSON.parse(response)
+      return [JSON.parse(response)].flatten
     rescue => e
       Rails.logger.error e
       return {:error => e.message }
