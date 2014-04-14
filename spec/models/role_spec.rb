@@ -24,4 +24,15 @@ describe Role do
     t.macro.should == :has_many
   end
 
+  describe "#find_or_create_by_name" do
+    it "should return role of user if the user has already some role assigned" do
+      role = FactoryGirl.create(:role)
+      assert role.find_or_create_by_name(role.name).should be_true
+    end
+    it "should create new role if user has not assigned any role" do
+      role = FactoryGirl.create(:role)
+      assert role.find_or_create_by_name("Organiser").should be_true
+    end
+  end
+
 end

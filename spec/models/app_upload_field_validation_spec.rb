@@ -29,4 +29,31 @@ describe AppUploadFieldValidation do
     it { should belong_to(:app_upload_field) }
   end
 
+  describe "#register_app" do
+    it "should return registered application of validation" do
+      registered_app = FactoryGirl.create(:registered_app)
+      app_upload_field = FactoryGirl.create(:app_upload_field, fk_registered_app_id: registered_app.id)
+      app_upload_field_validation = FactoryGirl.create(:app_upload_field_validation, fk_app_upload_field_id: app_upload_field.id)
+      assert app_upload_field_validation.register_app.should be_true
+    end
+  end
+
+  describe "#remove_from_cached" do
+    it "should remove validations from cached" do
+      registered_app = FactoryGirl.create(:registered_app)
+      app_upload_field = FactoryGirl.create(:app_upload_field, fk_registered_app_id: registered_app.id)
+      app_upload_field_validation = FactoryGirl.create(:app_upload_field_validation, fk_app_upload_field_id: app_upload_field.id)
+      app_upload_field_validation.remove_from_cached.should be_true
+    end
+  end
+
+  describe "#add_or_update_cached" do
+    it "should add or update validations in cached" do
+      registered_app = FactoryGirl.create(:registered_app)
+      app_upload_field = FactoryGirl.create(:app_upload_field, fk_registered_app_id: registered_app.id)
+      app_upload_field_validation = FactoryGirl.create(:app_upload_field_validation, fk_app_upload_field_id: app_upload_field.id)
+      app_upload_field_validation.add_or_update_cached.should be_true
+    end
+  end
+
 end

@@ -87,4 +87,11 @@ describe Cao do
     it { should belong_to(:profile) }
     it { should belong_to(:organization) }
   end
+
+  describe "#full_name" do
+    it "Should return full name of cao" do
+      cao = FactoryGirl.create(:cao, email: Faker::Internet.email, username: Faker::Internet.user_name, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+      assert cao.full_name.should be_true
+    end
+  end
 end
