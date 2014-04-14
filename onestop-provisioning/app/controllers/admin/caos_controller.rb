@@ -15,9 +15,13 @@ class Admin::CaosController < ApplicationController
 
   # Create a CAO. Next step after new.
   def create
+    first_name = "#{params[:cao][:first_name].capitalize}"
+    time = Time.now.to_i.to_s
+    password = (first_name[0..5] + "@" + time[0..4])
     @organization = Organization.find(params[:organization_id])
-    @cao = @organization.caos.create(params[:cao].merge!(fk_role_id: Role.where(name: "COA").first.id))
+    @cao = @organization.caos.create(params[:cao].merge!(password: password, password_confirmation: password, fk_role_id: Role.where(name: "COA").first.id))
     if @cao.save
+      UserMailer.send_password(params[:cao], password).deliver
       flash[:notice] = VALIDATION_MESSAGE["COA"]["CREATE"]
       redirect_to admin_organization_cao_path(@organization.id, @cao.id)
     else
