@@ -120,7 +120,7 @@ describe Admin::OrganizationsController do
       it "As a logged in Super Admin, I should be able to get a list of all providers for a particular organization and COA" do
         audit_trail = FactoryGirl.create(:audit_trail)
         get :show_provider, format: :html, id: audit_trail.id
-        asset response.should be_true
+        assert response.should be_true
       end
     end
 
