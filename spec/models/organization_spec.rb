@@ -77,4 +77,9 @@ describe Organization do
     t = Organization.reflect_on_association(:provider_app_details)
     t.macro.should == :has_many
   end
+
+  it "Should return the status" do
+    t = FactoryGirl.create(:organization)
+    t.is_active?.should == true
+  end
 end
