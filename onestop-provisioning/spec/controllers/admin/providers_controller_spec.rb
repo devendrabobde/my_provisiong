@@ -59,11 +59,28 @@ describe Admin::ProvidersController do
     
   end
 
+  describe "GET #download_sample_file" do
+    it "As a logged in coa, I should be able to download a sample csv file for EPCS-IDP application" do
+      get :download_sample_file, format: :csv, id: @registered_app.id
+      response.should be_success
+    end
+    it "As a logged in coa, I should be able to download a sample csv file for EPCS-IDP application" do
+      reg_app_moxy = RegisteredApp.where(app_name: "Moxy").first
+      get :download_sample_file, format: :csv, id: reg_app_moxy.id
+      response.should be_success
+    end
+    it "As a logged in coa, I should be able to download a sample csv file for EPCS-IDP application" do
+      reg_app_rcopia = RegisteredApp.where(app_name: "Rcopia").first
+      get :download_sample_file, format: :csv, id: reg_app_rcopia.id
+      response.should be_success
+    end
+  end
+
   describe "POST #upload" do
 
     describe "EPCS UI validation fails test cases" do
 
-      it "As a logged in COA, I should be able to upload a csv file. Once I upload a EPCS csv file which is containing list of providers with required fields are missing (e.g. first name) then I should be able to see a error message" do
+      it "As a logged in COA, I should be able to upload a csv file. Once I upload a EPCS csv file which is containing list of providers with required fields are missing (e.g. first name) then I should be able to see a error message", js: true do
         post :upload, format: :html, provider: { registered_app_id: @registered_app.id }, upload: Rack::Test::UploadedFile.new("#{Rails.root}/public/rspec_test_files/epcs/epcs_missing_required_field.csv")
         response.should redirect_to application_admin_providers_path(registered_app_id: @registered_app.id)
         response.status.should == 302

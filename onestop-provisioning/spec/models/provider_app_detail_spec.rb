@@ -38,4 +38,11 @@ describe ProviderAppDetail do
     t = ProviderAppDetail.reflect_on_association(:provider_dea_numbers)
     t.macro.should == :has_many
   end
+
+  describe "#find_provider_app_details" do
+    it "should return provider application details" do
+      provider_app_detail = FactoryGirl.create(:provider_app_detail, sys_provider_app_detail_id: 2)
+      assert ProviderAppDetail.find_provider_app_details([2]).should be_true
+    end
+  end
 end
