@@ -23,6 +23,13 @@ class UserMailer < ActionMailer::Base
     mail(to: @recipient, subject: "Account updated successfully.")
   end
 
+  def send_password(user, password)
+    @password   = password
+    @recipient  = user[:email]
+    @user       = "#{user[:first_name]} #{user[:last_name]}"
+    @url        = "http://10.100.10.203"
+    mail(to: @recipient, subject: "Your account is successfully created.")    
+  end
 
   def update_password(user)
     @recipient  = user.email
