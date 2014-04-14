@@ -11,7 +11,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB for app
   count = 0
   loop do
     sleep 1
-    if !page.find("#table1").has_content?("In Progress ..")
+    if !page.find("#table1").has_content?("In Progress..")
       sleep 1
       break
     else
@@ -25,6 +25,7 @@ When(/^I should be able to verify clean provider data in Provisioning DB for app
     # end
     break if count > 600
   end
+  page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
   page.find("#table1 td:last-child").find(:xpath, '..').should have_selector('a')
   page.find("#table1 td:last-child").find(:xpath, '../td/a').click
   page.all(:css, "#table1 tr").each do |td|
