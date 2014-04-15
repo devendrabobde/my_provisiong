@@ -53,7 +53,7 @@ describe "BatchUpload" do
                            
 		cao = FactoryGirl.create(:cao)
 		organization = FactoryGirl.create(:organization)
-    	cao.update_attributes(fk_organization_id: organization.id)
+    cao.update_attributes(fk_organization_id: organization.id)
 		application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
 		audit_trail = FactoryGirl.create(:audit_trail)
 		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
@@ -150,17 +150,6 @@ describe "BatchUpload" do
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
-        audit_trail = FactoryGirl.create(:audit_trail)
-        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
-        assert data.should be_true
-    end
-
-    it "should perform batch upload for providers for Backline application" do
-        providers = []
-        cao = FactoryGirl.create(:cao)
-        organization = FactoryGirl.create(:organization)
-        cao.update_attributes(fk_organization_id: organization.id)
-        application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["BACKLINE"]).first
         audit_trail = FactoryGirl.create(:audit_trail)
         data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
         assert data.should be_true
