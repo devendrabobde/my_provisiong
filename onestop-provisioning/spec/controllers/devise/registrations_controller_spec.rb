@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe Devise::RegistrationsController do
   include Devise::TestHelpers
@@ -24,13 +23,18 @@ describe Devise::RegistrationsController do
   describe "POST 'create'" do
 
     before(:each) do
-      @valid_data = { user_id: "#jkl", first_name: "testfname", last_name: "testlname", username: "testusername",
-                      email: "fnamelname@test.com", password: "password@123", fk_profile_id: @profile.id, fk_role_id: @role.id }
+      @valid_data   = { user_id: "#jkl", first_name: "john", last_name: "shepherd", username: "johnsheferd", email: "johnsheferd@test.com", password: "password@123", fk_profile_id: @profile.id, fk_role_id: @role.id }
+      @invalid_data = { user_id: "#jkl", first_name: "david", last_name: "miller", username: "davidmiller", email: "davidmiller", password: "password@123", fk_profile_id: @profile.id, fk_role_id: @role.id }
     end
 
     it "I should be able to register as a coa" do
       post :create, format: :html, cao: @valid_data
       response.status.should == 302
+    end
+
+    it "I should be able see error message while register as a coa if provided invalid information" do
+      post :create, format: :html, cao: @invalid_data
+      response.status.should == 200
     end
 
   end
@@ -54,7 +58,7 @@ describe Devise::RegistrationsController do
   describe "PUT 'update'" do
 
     before(:each) do
-      @cao  = FactoryGirl.create(:cao, username: "testupdateuser", email: "testupdateuser@test.com", password: "password@123", password_confirmation: "password@123")
+      @cao  = FactoryGirl.create(:cao, username: "jill", email: "jill@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
       sign_in @cao
@@ -71,7 +75,34 @@ describe Devise::RegistrationsController do
       response.status.should == 200
     end
 
+    it "I should not be able to update information if password is not provided." do
+      put :update, format: :html, cao: { email: @cao.email}
+      response.status.should == 302
+    end
     
+  end
+
+  describe "DELETE 'destroy'" do
+
+    before(:each) do
+      @cao  = FactoryGirl.create(:cao, username: "jack", email: "jack@test.com", password: "password@123", password_confirmation: "password@123")
+      @role = FactoryGirl.create(:role, name: "COA")
+      @cao.update_attribute(:fk_role_id, @role.id)
+      sign_in @cao
+    end
+
+    it "I should be able to delete my account" do
+      delete :destroy, format: :html
+    end
+
+  end
+
+  describe "GET 'cancel'" do
+
+    it "I should be able to logout automatically if my session is expired" do
+      get :cancel, format: :html
+    end
+
   end
 
 end
