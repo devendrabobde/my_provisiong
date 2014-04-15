@@ -12,9 +12,9 @@ describe PerformanceLogMiddleware do
   end
 
 	it "should call performance log middileware while calling sample API" do
-	  # code, env, response = middleware.call env_for(SERVER_CONFIGURATION['onestop_server_ip'])
-	  code, env, response = middleware.call env_for('http://example.com')
-	  code.should == 200
+	  # status, env, response = middleware.call env_for(SERVER_CONFIGURATION['onestop_server_ip'])
+	  status, env, response = middleware.call env_for('http://example.com')
+	  status.should == 200
 	end
 
 	def env_for url, opts = {}
