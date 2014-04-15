@@ -114,6 +114,11 @@ describe Admin::OrganizationsController do
         get :show_uploaded_file, format: :html, id: @organization.id
         response.status.should == 200
       end
+      it "As a logged in Super Admin, I should be able to view any previously uploaded csv and its providers for a application" do
+        registered_app = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
+        get :show_uploaded_file, format: :js, id: @organization.id, registered_app_id: registered_app.id
+        response.status.should == 200
+      end
     end
 
     describe "#show_provider" do

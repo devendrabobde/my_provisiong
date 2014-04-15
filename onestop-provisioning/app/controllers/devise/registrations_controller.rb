@@ -109,14 +109,13 @@ class Devise::RegistrationsController < DeviseController
 
   # The path used after sign up for inactive accounts. You need to overwrite
   # this method in your own RegistrationsController.
-  def after_inactive_sign_up_path_for(resource)
-    respond_to?(:root_path) ? root_path : "/"
-  end
+  # def after_inactive_sign_up_path_for(resource)
+  #   respond_to?(:root_path) ? root_path : "/"
+  # end
 
   # The default url to be used after updating a resource. You need to overwrite
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
-
     if resource.is_admin?
       admin_organizations_path
     else
@@ -131,11 +130,11 @@ class Devise::RegistrationsController < DeviseController
     self.resource = send(:"current_#{resource_name}")
   end
 
-  def sign_up_params
-    devise_parameter_sanitizer.for(:sign_up)
-  end
+  # def sign_up_params
+  #   devise_parameter_sanitizer.for(:sign_up)
+  # end
 
-  def account_update_params
-    devise_parameter_sanitizer.for(:account_update)
-  end
+  # def account_update_params
+  #   devise_parameter_sanitizer.for(:account_update)
+  # end
 end
