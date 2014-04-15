@@ -52,8 +52,26 @@ describe Admin::ProvidersController do
       response.should be_success
     end
 
-    it "As a logged in coa, I should be able to download csv file of all providers when registered app id is provided" do
+    it "As a logged in coa, I should be able to download csv file of all providers when registered app id is provided for EPCS-IDP application" do
       get :download, format: :csv, id: @registered_app.id
+      response.should be_success
+    end
+
+    it "As a logged in coa, I should be able to download csv file of all providers when registered app id is provided for Rcopia application" do
+      registered_app = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
+      get :download, format: :csv, id: registered_app.id
+      response.should be_success
+    end
+
+    it "As a logged in coa, I should be able to download csv file of all providers when registered app id is provided for Moxy application" do
+      registered_app = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
+      get :download, format: :csv, id: registered_app.id
+      response.should be_success
+    end
+
+    it "As a logged in coa, I should be able to download csv file of all providers when registered app id is provided for Backline application" do
+      registered_app = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["BACKLINE"]).first
+      get :download, format: :csv, id: registered_app.id
       response.should be_success
     end
     
