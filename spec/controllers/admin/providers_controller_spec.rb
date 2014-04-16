@@ -8,11 +8,11 @@ describe Admin::ProvidersController do
     @role                           = FactoryGirl.create(:role, name: "COA")
     @organization                   = FactoryGirl.create(:organization)
     @cao.update_attributes(fk_role_id: @role.id, fk_organization_id: @organization.id)
-    @provider                       = FactoryGirl.create(:provider)
-    @provider_app_detail            = FactoryGirl.create(:provider_app_detail)
+    # @provider                       = FactoryGirl.create(:provider)
+    # @provider_app_detail            = FactoryGirl.create(:provider_app_detail)
     @audit_trail                    = FactoryGirl.create(:audit_trail)
-    @provider_app_detail.update_attributes(fk_organization_id: @organization.id, fk_audit_trail_id: @audit_trail.id)
-    @provider.update_attribute(:fk_provider_app_detail_id, @provider_app_detail.id)
+    # @provider_app_detail.update_attributes(fk_organization_id: @organization.id, fk_audit_trail_id: @audit_trail.id)
+    # @provider.update_attribute(:fk_provider_app_detail_id, @provider_app_detail.id)
     @registered_app                 = RegisteredApp.where(app_name: "EPCS-IDP").first
     @audit_trail.update_attributes(fk_organization_id: @organization.id, fk_registered_app_id: @registered_app.id)
     sign_in @cao
