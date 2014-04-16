@@ -77,34 +77,12 @@ describe "BatchUpload" do
                       "medical_license_number" => "12ER5",
                       "medical_license_state" => "PA",
                       "specialty" => "Physio",
-                      "secondary_licence" => "Test Licence",
+                      "secondary_license" => "Test Licence",
                       "external_id_1" => "ID1",
                       "external_id_2" => "ID2",
                       "provider_dea_record"=>
                         [{:provider_dea=>"BV8234661"}],
                       "email" => "test@example.com"
-                    },
-                    {
-                      "npi"=>"1114919728",
-                      "username" => "user2",
-                      "role" => "doc",
-                      "prefix" => "Mr.",
-                      "suffix" => "T",
-                      "last_name"=>"TAYLOR", 
-                      "first_name"=>"ROSS", 
-                      "middle_name" => "GRANT",
-                      "use_existing_account" => "Y",
-                      "member_type" => "D",
-                      "practice_group" => "id_1",
-                      "medical_license_number" => "12ER8",
-                      "medical_license_state" => "PA",
-                      "specialty" => "Physio",
-                      "secondary_licence" => "Test Licence",
-                      "external_id_1" => "ID3",
-                      "external_id_2" => "ID4",
-                      "provider_dea_record"=>
-                        [{:provider_dea=>"BV8234661"}],
-                      "email" => "test1@example.com"
                     }
                 ]
                            
