@@ -87,7 +87,11 @@
             <div class="control-group">
               <%= f.label :profile_id, class: "control-label" %>
               <div class="controls">
-                <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name"), { class: "form-control" } %>
+                <%- if coa.new_record? -%>
+                  <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name"), { class: "form-control" } %>
+                <%- else -%>
+                  <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name", coa.profile.id), { class: "form-control" } %>
+                <%- end -%>
               </div>
             </div>
           </div><!--/span-->
