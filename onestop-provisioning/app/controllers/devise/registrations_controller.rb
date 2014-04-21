@@ -1,6 +1,7 @@
 class Devise::RegistrationsController < DeviseController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
+  before_filter :generate_required_object, only: [:edit, :update]
 
   # GET /resource/sign_up
   def new
@@ -15,9 +16,9 @@ class Devise::RegistrationsController < DeviseController
     build_resource(account_create_parameters)
     if resource.save
       # if resource.active_for_authentication?
-        set_flash_message :notice, :signed_up if is_navigational_format?
-        sign_up(resource_name, resource)
-        respond_with resource, :location => after_sign_up_path_for(resource)
+      set_flash_message :notice, :signed_up if is_navigational_format?
+      sign_up(resource_name, resource)
+      respond_with resource, :location => after_sign_up_path_for(resource)
       # else
       #   set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
       #   expire_session_data_after_sign_in!
@@ -137,4 +138,8 @@ class Devise::RegistrationsController < DeviseController
   # def account_update_params
   #   devise_parameter_sanitizer.for(:account_update)
   # end
+
+  def generate_required_object
+    @profile_list = Profile.all
+  end
 end
