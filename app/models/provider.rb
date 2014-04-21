@@ -87,16 +87,16 @@ class Provider < ActiveRecord::Base
         "Provider Last Name", "Provider First Name", "Provider Home Address1", "Provider Home Address2",
         "Provider Home City","Provider Home State", "Provider Home Zip", "Provider Work phone",
         "Provider Primary Contact Email", "Provider OTP token serial #", "Resend Flag", "Hospital Admin First Name",
-        "Hospital Admin Last Name", "IDP performed date", "IDP performed time", "Hospital IDP transactionID"]
+        "Hospital Admin Last Name", "IDP performed date", "IDP performed time", "Hospital IDP transactionID", "Provider Middle Name", "Provider Prefix", "Provider Gender", "Provider Dateofbirth", "Provider SocialSecurityNumber"]
       CSV.generate(options) do |csv|
         csv << csv_cols
         all.each do |provider|
           provider_dea_nums = provider.provider_app_detail.provider_dea_numbers
-          csv << [ provider.npi, provider_dea_nums.pluck(:provider_dea).join("~"), provider_dea_nums.pluck(:provider_dea_state).join("~"), provider_dea_nums.pluck(:provider_dea_expiration_date).join("~"),
+          csv << [ provider.npi, provider_dea_nums.pluck(:provider_dea).join("~"), provider_dea_nums.pluck(:provider_dea_state).join("~"), provider_dea_nums.collect{|x| x.provider_dea_expiration_date.try(:strftime, '%d/%m/%Y')}.delete_if{|x| x.nil? }.join("~"),
             provider.last_name, provider.first_name, provider.address_1, provider.address_2, provider.city, provider.state,
             provider.zip, provider.phone, provider.email, provider.provider_otp_token_serial, provider.resend_flag,
             provider.hospital_admin_first_name, provider.hospital_admin_last_name, provider.idp_performed_date,
-            provider.idp_performed_time, provider.hospital_idp_transaction_id ]
+            provider.idp_performed_time.try(:strftime, "%H:%M:%S"), provider.hospital_idp_transaction_id, provider.middle_name, provider.prefix, provider.gender, provider.birth_date.try(:strftime, '%d/%m/%Y'), provider.social_security_number ]
         end
       end
     elsif application.app_name.eql?(CONSTANT["APP_NAME"]["BACKLINE"])
