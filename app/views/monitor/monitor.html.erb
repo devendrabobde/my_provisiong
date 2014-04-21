@@ -7,37 +7,38 @@
 	</div>
 	<div class="monitor-application">
 		<h5><%= SERVER_CONFIGURATION["onestop_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION["onestop_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION["onestop_server_instance_name"] %></p>
-
-		<%# NOTE: This is hard coded because if the application database is not running then in that case we
-		won't be able to view this page. %>
-		<p>Database Server: <%= "Running" %></p>
-		<p>Application Status: <%= "Running" %></p>
+		<p>Application Version Message: <%= display_server_status(@connectivity[:provisioning], @connectivity[:provisioning][:version_message]) %></p>
+		<p>Application Version: <%= display_server_status(@connectivity[:provisioning], @connectivity[:provisioning][:api_version]) %></p>
+		<p>Instance Name: <%= display_server_status(@connectivity[:provisioning], @connectivity[:provisioning][:server_instance_name]) %></p>
+		<!--p>Database Server: <%= display_server_status(@connectivity[:provisioning], @connectivity[:provisioning][:result]) %></p-->
+		<p>Application Status: <%= display_server_status(@connectivity[:provisioning], @connectivity[:provisioning][:status]) %></p>
 	</div>
 
 	<div class="monitor-application">
 		<h5><%= SERVER_CONFIGURATION["epcs_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION["epcs_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION["epcs_server_instance_name"] %></p>
-		<p>Database Server: No Database</p>
-		<p>Application Status: <%= display_server_status(@connectivity[:epcs]) %></p>
+		<p>Application Version Message: <%= display_server_status(@connectivity[:epcs], @connectivity[:epcs]['version_message']) %></p>
+		<p>Application Version: <%= display_server_status(@connectivity[:epcs], @connectivity[:epcs]['api_version']) %></p>
+		<p>Instance Name: <%= display_server_status(@connectivity[:epcs], @connectivity[:epcs]['server_instance_name']) %></p>
+		<!--p>Database Server: <%= display_server_status(@connectivity[:epcs], @connectivity[:epcs]['result']) %></p-->
+		<p>Application Status: <%= display_server_status(@connectivity[:epcs], @connectivity[:epcs]['status']) %></p>
 	</div>
 
 	<div class="monitor-application">
 		<h5><%= SERVER_CONFIGURATION["supernpi_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION["supernpi_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION["supernpi_server_instance_name"] %></p>
-		<p>Database Server: <%= display_server_status(@connectivity[:super_npi]) %></p>
-		<p>Application Status: <%= display_server_status(@connectivity[:super_npi]) %></p>
+		<p>Application Version Message: <%= display_server_status(@connectivity[:super_npi], @connectivity[:super_npi]['version_message']) %></p>
+		<p>Application Version: <%= display_server_status(@connectivity[:super_npi], @connectivity[:super_npi]['api_version']) %></p>
+		<p>Instance Name: <%= display_server_status(@connectivity[:super_npi], @connectivity[:super_npi]['server_instance_name']) %></p>
+		<!--p>Database Server: <%= display_server_status(@connectivity[:super_npi], @connectivity[:super_npi]['result']) %></p-->
+		<p>Application Status: <%= display_server_status(@connectivity[:super_npi], @connectivity[:super_npi]['status']) %></p>
 	</div>
 
 	<div class="monitor-application">
 		<h5><%= SERVER_CONFIGURATION["router_service_name"] %></h5>
-		<p>Application Version: <%= SERVER_CONFIGURATION["router_code_version"] %></p>
-		<p>Instance Name: <%= SERVER_CONFIGURATION["router_server_instance_name"] %></p>
-		<p>Database Server: <%= display_server_status(@connectivity[:router]) %></p>
-		<p>Application Status: <%= display_server_status(@connectivity[:router]) %></p>
+		<p>Application Version Message: <%= display_server_status(@connectivity[:router], @connectivity[:router]['version_message']) %></p>
+		<p>Application Version: <%= display_server_status(@connectivity[:router], @connectivity[:router]['api_version']) %></p>
+		<p>Instance Name: <%= display_server_status(@connectivity[:router], @connectivity[:router]['server_instance_name']) %></p>
+		<!--p>Database Server: <%= display_server_status(@connectivity[:router], @connectivity[:router]['result']) %></p-->
+		<p>Application Status: <%= display_server_status(@connectivity[:router], @connectivity[:router]['status']) %></p>
 	</div>
 
 </div>

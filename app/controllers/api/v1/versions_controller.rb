@@ -20,6 +20,6 @@ class Api::V1::VersionsController < ApplicationController
     else
       db_status = "Onestop Provisioining is currently experiencing problems with connecting to database. Error: #{var_error}"
     end
-    render json: { version_message: version_message + db_status, status: status, api_version: SERVER_CONFIGURATION["onestop_code_version"] }
+    render json: { version_message: version_message + db_status, status: status, api_version: SERVER_CONFIGURATION["onestop_code_version"], server_instance_name: ServerConfiguration::CONFIG['onestop_server_instance_name'] }
   end
 end
