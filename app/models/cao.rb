@@ -23,6 +23,7 @@ class Cao < ActiveRecord::Base
   validates :email, :format => { :with => EMAIL }
   validates :first_name, :last_name, presence: true
   validate :password_complexity
+  validate :restricted_username
 
 
   #
@@ -53,6 +54,13 @@ class Cao < ActiveRecord::Base
   end
 
   private
+
+  def restricted_username
+    if username.present? && AppConfig['username'].include?(username)
+      errors.add :username, "is not valid. Please select another username."
+    end
+  end
+
   def password_complexity
     if password.present? and not password.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@$#%^&*])[a-zA-Z0-9!@$#%^&*]{8,16}$/)
       errors.add :password, "must include at least one special character and one digit"

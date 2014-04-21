@@ -1,6 +1,7 @@
 #Configuration for the different environments
 
 defaults: &defaults
+username: ['drfirst', 'dr.first']
 
 development:
     cache_server: 'localhost:6379'
