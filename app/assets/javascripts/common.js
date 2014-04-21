@@ -133,7 +133,7 @@ $(document).ready(function () {
   });
 
   $("#upload").change(function(){
-    $("#selected-filename").html($(this).val());
+    $("#selected-filename").html($(this).val().replace("C:\\fakepath\\", ""));
   });
   
 });
