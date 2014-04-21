@@ -18,8 +18,10 @@ class Cao < ActiveRecord::Base
   #
   EMAIL = /^.+@.+\..+$/.freeze
   PERSON_NAME  = /^[a-zA-Z'-]+$/.freeze
+  USERNAME = /^onestop$/i.freeze
   validates :username, presence: true
   validates :username, uniqueness: true
+  validates :username, :format => { :without => USERNAME, :message => "Username should not be equal to Onestop" }
   validates :email, :format => { :with => EMAIL }
   validates :first_name, :last_name, presence: true
   validate :password_complexity
