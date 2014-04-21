@@ -47,6 +47,14 @@
             </div>
           </div><!--/span-->
 
+          <div class="span6 bgcolor">
+            <div class="control-group">
+              <%= f.label :profile_id, class: "control-label" %>
+              <div class="controls">
+                <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name", resource.profile.id), { class: "form-control" } %>
+              </div>
+            </div>
+          </div><!--/span-->
         </div><!--/row-->
 
         <div class="row-fluid">
