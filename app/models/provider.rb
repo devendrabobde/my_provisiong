@@ -67,8 +67,9 @@ class Provider < ActiveRecord::Base
               valid_providers << provider
             else
               # update status code and message
+              error_code = provider[:status].present? ? provider[:status] : "422"
               provider_invalid_ids << provider_app_detail.id
-              provider_app_detail.update_attributes(status_code: "422", status_text: provider[:validation_error_message].gsub(/^\,/, ""))
+              provider_app_detail.update_attributes(status_code: error_code, status_text: provider[:validation_error_message].gsub(/^\,/, ""))
             end
           end
         end

@@ -43,6 +43,7 @@ module NpiValidation
       Rails.logger.error e
       providers_records.each do |provider|
         provider[:validation_error_message] = "SuperNPI OIS " + e.message
+        provider[:status] = "500"
         updated_providers <<  provider
       end
       providers = updated_providers
