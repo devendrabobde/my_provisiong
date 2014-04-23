@@ -1232,3 +1232,12 @@ CREATE SEQUENCE  "OLD_PASSWORDS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999
 --------------------------------------------------------
 
 CREATE INDEX INDEX_PASSWORD_ARCHIVABLE ON OLD_PASSWORDS(PASSWORD_ARCHIVABLE_TYPE, PASSWORD_ARCHIVABLE_ID);
+
+-----------------------------------------------------------
+--   Rcopia: Added fields as per the new [ MOXY-13333 ] Rcopia csv template in PROVIDER table
+-----------------------------------------------------------
+
+ALTER TABLE SPARKWAY.PROVIDERS ADD (
+PRACTICE_EXTERNAL_ID VARCHAR2(255),
+DEFAULT_LOCATION_EXTERNAL_ID VARCHAR2(255));
+/
