@@ -131,7 +131,7 @@ rcopia_app_upload_fields = [
   { name: "first_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "FIRST NAME" },
   { name: "middle_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "MIDDLE NAME" },
   { name: "suffix", field_type: "string", required: false, field_format: nil, display_name: "SUFFIX" },
-  ### The field "use_existing_account" is not present in updated CSV for Rcopia
+  ### The field "use_existing_account" is not present in latest CSV (MOXY-13333) for Rcopia
   # { name: "use_existing_account", field_type: "string", required: false, field_format: "^[y||n]$", display_name: "Use Existing Account" },
   { name: "member_type", field_type: "string", required: true, field_format: nil, display_name: "Member Type" },
   { name: "email", field_type: "string", required: false, field_format: "^.+@.+\\..+$", display_name: "E-MAIL ADDRESS" },
