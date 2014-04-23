@@ -44,7 +44,8 @@ describe Devise::RegistrationsController do
     before(:each) do
       @cao  = FactoryGirl.create(:cao)
       @role = FactoryGirl.create(:role, name: "Admin")
-      @cao.update_attribute(:fk_role_id, @role.id)
+      @profile = FactoryGirl.create(:profile)
+      @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
       sign_in @cao
     end
 
@@ -60,7 +61,8 @@ describe Devise::RegistrationsController do
     before(:each) do
       @cao  = FactoryGirl.create(:cao, username: "jill", email: "jill@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
-      @cao.update_attribute(:fk_role_id, @role.id)
+      @profile = FactoryGirl.create(:profile)
+      @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
       sign_in @cao
       @valid_data = { email: "testusername@example.com", password: "password@1234", password_confirmation: "password@1234", current_password: "password@123" }  
     end

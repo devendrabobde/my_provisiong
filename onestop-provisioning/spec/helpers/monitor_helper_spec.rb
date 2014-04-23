@@ -1,20 +1,14 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the MonitorHelper. For example:
-#
 describe MonitorHelper do
   describe "display_server_status" do
     it "should display server status" do
-      status = helper.display_server_status("test")
+      status = helper.display_server_status("test", "Onestop Provisioining App version 1.0.7 is up and running.")
       assert status.should be_true
     end
     it "should display server is not running" do
-      status = helper.display_server_status(false)
+      status = helper.display_server_status(false, "Onestop Provisioining App is down.")
       assert status.should be_true
     end
   end
 end
-# describe MonitorHelper do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
