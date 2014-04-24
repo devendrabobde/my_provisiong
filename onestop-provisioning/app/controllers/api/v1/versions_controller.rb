@@ -1,7 +1,7 @@
 class Api::V1::VersionsController < ApplicationController
 
   skip_before_filter :authenticate_cao!
-
+  skip_before_filter :check_update_password!
   # This method is responsible for verifying application up and runining status, DB status
   # and returns Hash of version_message, status, api_version
   def check_version

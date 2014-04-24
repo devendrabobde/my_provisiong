@@ -1,6 +1,6 @@
 class MonitorController < ApplicationController
 	skip_before_filter :authenticate_cao!
-
+  skip_before_filter :check_update_password!
 	def monitor
 		provisioning_connectivity = get_provisiong_details
 		super_npi_connectivity    = verify_connectivity("#{CONSTANT["SUPERNPI_OIS"]["SERVER_URL"]}/#{CONSTANT["SUPERNPI_OIS"]["VERIFY_CONNECTIVITY"]}")

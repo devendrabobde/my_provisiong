@@ -2,7 +2,7 @@ class Devise::SessionsController < DeviseController
   #caches_page :new
   prepend_before_filter :require_no_authentication, :only => [ :new, :create ]
   prepend_before_filter :allow_params_authentication!, :only => :create
-
+  skip_before_filter :check_update_password!
   # GET /resource/sign_in
   def new
     resource = build_resource(nil, :unsafe => true)

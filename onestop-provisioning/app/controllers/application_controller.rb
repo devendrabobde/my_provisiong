@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_cao!
   before_filter :set_cache_buster
+  before_filter :check_update_password!
 
 
   # Redirect User According to Role.
@@ -24,6 +25,16 @@ class ApplicationController < ActionController::Base
     # Set to expire far in the past.
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
     #response.headers["Expires"] = Time.now.httpdate
+  end
+
+  def check_update_password!
+    if cao_signed_in?
+      if current_cao.is_admin?
+        redirect_to admin_organizations_path
+      else
+        redirect_to application_admin_providers_path if current_cao.old_passwords.count == 0
+      end
+    end    
   end
   
 end

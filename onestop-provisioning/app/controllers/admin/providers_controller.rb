@@ -7,6 +7,7 @@ class Admin::ProvidersController < ApplicationController
   before_filter :find_cao
   before_filter :require_coa_login
   before_filter :find_application, :only => [:upload]
+  skip_before_filter :check_update_password!, only: :application
 
   # Return list of uploaded files.
   def application
