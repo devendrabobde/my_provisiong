@@ -135,6 +135,11 @@ $(document).ready(function () {
   $("#upload").change(function(){
     $("#selected-filename").html($(this).val().replace("C:\\fakepath\\", ""));
   });
+
+  $('#update-password-modal').modal({
+    backdrop: 'static',
+    keyboard: true
+  });
   
 });
 

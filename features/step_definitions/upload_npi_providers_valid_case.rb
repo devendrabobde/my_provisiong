@@ -3,10 +3,11 @@ Given /^a valid COA$/ do
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "password@123", password_confirmation: "password@123")
   role = Role.create(name: "COA")
+  profile = Profile.create(profile_name: Faker::Name.first_name)
   @organization_coa = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
-  coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa.id)
+  coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa.id, fk_profile_id: profile.id)
   @current_cao = coa
 end
 
@@ -28,11 +29,11 @@ Then /^I should see success message$/ do
 end
 
 And /^I should see correct screen title$/ do
+  page.execute_script("$('#update-password-modal').modal('hide');")
   page.should have_content("Select Application")
 end
 
 And /^I should see application selection list$/ do
-
   page.find_by_id("provider_registered_app_id").text.should =~ /Select Application/
 end
 
@@ -50,6 +51,7 @@ And /^I should see correct section names$/ do
 end
 Given /^I go to application page$/ do
   visit application_admin_providers_path
+  page.execute_script("$('#update-password-modal').modal('hide');")
 end
 And /^I click on file upload button$/ do
   click_button "Upload"
@@ -59,6 +61,7 @@ Then /^I should see message Please select application and a CSV file to initiate
 end
 
 Given /^I select an application$/ do
+  page.execute_script("$('#update-password-modal').modal('hide');")
   select "DrFirst - epcsidp", from: 'provider_registered_app_id'
 end
 
@@ -72,6 +75,7 @@ And /^I clicks upload button$/ do
 end
 
 And /^I should be able to see correct file upload message$/ do
+  page.execute_script("$('#update-password-modal').modal('hide');")
   page.should have_content("Thanks for uploading providers. We are processing the uploaded file.")
 end
 

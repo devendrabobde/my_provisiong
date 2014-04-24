@@ -1,6 +1,6 @@
 class Admin::OrganizationsController < ApplicationController
   before_filter :find_organization, only: [:show, :edit, :update, :destroy, :activate]
-
+  skip_before_filter :check_update_password!
   # Get all organizations
   def index
     @organizations = Organization.unscoped.all

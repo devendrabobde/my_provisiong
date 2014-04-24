@@ -2,7 +2,7 @@ class Devise::RegistrationsController < DeviseController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
   before_filter :generate_required_object, only: [:edit, :update]
-
+  skip_before_filter :check_update_password!, only: :update
   # GET /resource/sign_up
   def new
     build_resource({})
@@ -58,6 +58,9 @@ class Devise::RegistrationsController < DeviseController
       end
       sign_in resource_name, resource, :bypass => true
       respond_with resource, :location => after_update_path_for(resource)
+    elsif params[:redirect_from] == "popup"
+      $password_error_messages = resource.errors.full_messages.map { |msg| msg }.join
+      redirect_to application_admin_providers_path
     else
       clean_up_passwords resource
       respond_with resource

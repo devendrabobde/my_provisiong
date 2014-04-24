@@ -1,7 +1,7 @@
 class Admin::CaosController < ApplicationController
 
   before_filter :find_value, only: [:new, :create, :edit, :update]
-
+  skip_before_filter :check_update_password!
   # Eager load organizations with CAOs
   def index
     @organization = Organization.where("SYS_ORGANIZATION_ID = ?", params[:organization_id]).includes(:caos => [:role, :profile]).first
