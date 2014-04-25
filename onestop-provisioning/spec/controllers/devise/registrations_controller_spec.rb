@@ -52,7 +52,7 @@ describe Devise::RegistrationsController do
 
     it "I should be able to edit the details" do
       get :edit, format: :html
-      response.status.should == 200
+      response.status.should == 302
     end
     
   end
@@ -64,7 +64,6 @@ describe Devise::RegistrationsController do
       @role = FactoryGirl.create(:role, name: "COA")
       @profile = FactoryGirl.create(:profile)
       @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
-      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
       @valid_data = { email: "testusername@example.com", password: "password@1234", password_confirmation: "password@1234", current_password: "password@123" }  
     end
