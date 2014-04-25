@@ -46,8 +46,7 @@ describe Devise::RegistrationsController do
       @role = FactoryGirl.create(:role, name: "Admin")
       @profile = FactoryGirl.create(:profile)
       @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
     end
 
@@ -65,8 +64,7 @@ describe Devise::RegistrationsController do
       @role = FactoryGirl.create(:role, name: "COA")
       @profile = FactoryGirl.create(:profile)
       @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
       @valid_data = { email: "testusername@example.com", password: "password@1234", password_confirmation: "password@1234", current_password: "password@123" }  
     end
@@ -94,8 +92,7 @@ describe Devise::RegistrationsController do
       @cao  = FactoryGirl.create(:cao, username: "jack", email: "jack@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
     end
 

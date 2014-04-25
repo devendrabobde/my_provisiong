@@ -9,8 +9,7 @@ describe Admin::CaosController do
     @role                           = FactoryGirl.create(:role, name: "Admin")
     @organization                   = FactoryGirl.create(:organization)
     @cao.update_attributes(fk_role_id: @role.id, fk_organization_id: @organization.id)
-    @old_password                   = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-    @cao.old_passwords              << @old_password
+    @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
     @provider                       = FactoryGirl.create(:provider)
     @profile                        = FactoryGirl.create(:profile)
     @role1                          = FactoryGirl.create(:role, name: "COA")

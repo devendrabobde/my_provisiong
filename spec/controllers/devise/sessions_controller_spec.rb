@@ -26,8 +26,7 @@ describe Devise::SessionsController do
       @cao  = FactoryGirl.create(:cao, username: "jill", email: "jill@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
     end
 
     it "I should be able to sign in as a coa" do
@@ -43,8 +42,7 @@ describe Devise::SessionsController do
       @cao  = FactoryGirl.create(:cao, username: "jack", email: "jack@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
     end
 
@@ -60,8 +58,7 @@ describe Devise::SessionsController do
       @cao  = FactoryGirl.create(:cao, username: "jack", email: "jack@test.com", password: "password@123", password_confirmation: "password@123")
       @role = FactoryGirl.create(:role, name: "COA")
       @cao.update_attribute(:fk_role_id, @role.id)
-      @old_password = OldPassword.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
-      @cao.old_passwords << @old_password
+      @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
       sign_in @cao
     end
 
