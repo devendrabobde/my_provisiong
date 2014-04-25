@@ -8,6 +8,7 @@ Given /^valid COA credentials$/ do
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", 
     state_code: "AL123")
   coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa_valid.id)
+  coa.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: coa.id)
   @current_valid_cao = coa
 end
 

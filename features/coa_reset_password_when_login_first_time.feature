@@ -1,14 +1,12 @@
 Feature: COA reset their password when they log in the first time
-
-Background:
-  Given a valid COA
-  When I go to login page
-  And I fill in the username and password
-  And I press "Sign in"
     
 @selenium
 @no-database-cleaner
 Scenario: COA Reset Password When Log In First Time
+  Given a valid COA details
+  When I go to signin page
+  And I fill in username and password
+  And I click "Sign in"
   Given I visit application page
   Then I should be able to see Change Password form
   And I click on update with the new password and correct old password

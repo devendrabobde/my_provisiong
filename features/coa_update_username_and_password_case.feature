@@ -1,14 +1,12 @@
 Feature: COA update username and password
-
-Background:
-  Given a valid COA
-  When I go to login page
-  And I fill in the username and password
-  And I press "Sign in"
     
 @selenium
 @no-database-cleaner
 Scenario: COA Updates Username and Password
+  Given a valid COA details
+  When I go to signin page
+  And I fill in username and password
+  And I click "Sign in"
   Given I go to application page
   And I click on edit account link in setting section
   Then I should be able to see edit account form

@@ -1,5 +1,7 @@
 Given(/^I click on edit account link in setting section$/) do
+  @current_cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @current_cao.id)
   visit edit_cao_registration_path
+  @current_cao.old_passwords.delete_all
 end
 
 Then(/^I should be able to see edit account form$/) do
