@@ -59,7 +59,7 @@ class Devise::RegistrationsController < DeviseController
       sign_in resource_name, resource, :bypass => true
       respond_with resource, :location => after_update_path_for(resource)
     elsif params[:redirect_from] == "popup"
-      $password_error_messages = resource.errors.full_messages.map { |msg| msg }.join
+      flash[:notice] = resource.errors.full_messages.map { |msg| msg }.join
       redirect_to application_admin_providers_path
     else
       clean_up_passwords resource
