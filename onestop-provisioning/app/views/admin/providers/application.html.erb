@@ -12,11 +12,11 @@
                 <%= hidden_field_tag :redirect_from, "popup" %>          
                 <div class="row-fluid change-password-form" style="padding:20px 0px 0px 0px;">
                   <div class="span9">
-                    <% if $password_error_messages.present? %>
+                    <%- if flash[:notice] -%>
                       <div class="row-fluid">
                         <div class="span12 bgcolor">
-                          <div class="alert alert-error" id="devise-error-message-pwd">
-                            <%= $password_error_messages %>
+                          <div class="alert alert-error" id="devise-error-message-pwd", style="width: 440px;">
+                            <%= flash[:notice] %>
                           </div>
                         </div>
                       </div>
