@@ -3,7 +3,8 @@ Given(/^I select an organization to see the COAs$/) do
 	@org_cao = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
   	first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
   	password: "password@123", password_confirmation: "password@123")
-  	@org_cao.update_attributes(fk_role_id: role_cao1.id, fk_organization_id: @organization.id)
+  	@profile = Profile.create(profile_name: "Test")
+  	@org_cao.update_attributes(fk_role_id: role_cao1.id, fk_organization_id: @organization.id, fk_profile_id: @profile.id)
 	page.find('table#cao_table tbody tr', text: @organization.name).click_link('Manage')
 end
 
