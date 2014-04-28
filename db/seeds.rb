@@ -20,9 +20,11 @@ profile_list.each {|profile| Profile.where(profile_name: profile).first_or_creat
 
 RegisteredApp.delete_all
 
-applications = [{ app_name: "EPCS-IDP", display_name: "epcsidp"},
-                { app_name: "Rcopia", display_name: "rcopia"},
-                { app_name: "Moxy", display_name: "moxy"},
+
+## The display_name column should have the name of Organization and name of OIS from Router concatenated by a '-'
+applications = [{ app_name: "EPCS-IDP", display_name: "DrFirst-epcsidp"},
+                { app_name: "Rcopia", display_name: "DrFirst-rcopia"},
+                { app_name: "Moxy", display_name: "DrFirst-moxy"},
                 { app_name: "Backline", display_name: nil }]
 
 
