@@ -10,7 +10,7 @@ set :user, 'sparkway'
 set :use_sudo, false
 
 set :scm, :git
-set :repository,  "git@github01.drfirst.com:drfirst/onestop.git"
+set :repository,  "git@github01.drfirst.com:onestop/provisioning.git"
 set :bundle_flags, "--quiet"
 set :git_shallow_clone, 1
 
