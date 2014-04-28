@@ -7,10 +7,6 @@ class MonitorController < ApplicationController
 		epcs_connectivity         = verify_connectivity("#{CONSTANT["EPCS_OIS"]["SERVER_URL"]}/#{CONSTANT["EPCS_OIS"]["VERIFY_CONNECTIVITY"]}")
 		router_connectivity       = verify_connectivity("#{CONSTANT["ONESTOP_ROUTER"]["SERVER_URL"]}/#{CONSTANT["ONESTOP_ROUTER"]["VERIFY_CONNECTIVITY"]}")
     @connectivity             = { provisioning: provisioning_connectivity, epcs: epcs_connectivity, super_npi: super_npi_connectivity, router: router_connectivity }
-
-    p "======="
-    p @connectivity
-    p "======="
 	end
 
 	private
@@ -41,9 +37,6 @@ class MonitorController < ApplicationController
     end
     
     json_response = { version_message: version_message + db_status, status: status, api_version: SERVER_CONFIGURATION["onestop_code_version"], server_instance_name: ServerConfiguration::CONFIG['onestop_server_instance_name'] }
-    p "-----------"
-    p json_response
-    p "-----------"
     return json_response
   end
 
