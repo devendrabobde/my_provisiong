@@ -70,7 +70,7 @@ namespace :deploy do
   desc "Copy if the constants.yml and production.rb file is not present from constants.yml.sample and production.rb.sample"
   task :copy_constants_and_production do
     #copy constants.yml file form constants.yml.sample if the constants.yml file does not exists.
-    run "if [[ ! -f #{shared_path}/config/constants.yml ]]; then cp #{release_path}config/constants.yml.sample #{shared_path}/config/constants.yml; fi"
+    run "if [[ ! -f #{shared_path}/config/constants.yml ]]; then cp #{release_path}/config/constants.yml.sample #{shared_path}/config/constants.yml; fi"
     run "ln -nfs #{shared_path}/config/constants.yml #{release_path}/config/constants.yml"
 
     #copy production.rb file form production.rb.sample if the production.rb file does not exists.
