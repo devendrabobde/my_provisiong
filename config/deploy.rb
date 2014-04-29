@@ -75,7 +75,7 @@ namespace :deploy do
 
     #copy production.rb file form production.rb.sample if the production.rb file does not exists.
     run "if [[ ! -f #{shared_path}/config/environments/production.rb ]]; then cp #{release_path}/config/environments/production.rb.sample #{shared_path}/config/environments/production.rb; fi"
-    run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}config/environments/production.rb"
+    run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}/config/environments/production.rb"
   end
 
 end
