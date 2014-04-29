@@ -7,15 +7,19 @@ module ProvisioningOis
   #
   # This method is responsible for uploading the providers information in specific OIS application
   #
-  def self.batch_upload_dest(providers, cao, application)
+  def self.batch_upload_dest(providers, cao, application,router_reg_applications)
     updated_providers = []
+    # router_apps = $regapps
+    hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+    app_url = hash['ip_address_concat'] rescue ""
     if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       providers = providers.collect do |provider|
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
       end
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
-      url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      url = app_url + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       if Rails.env == "test"
         url = CONSTANT["EPCS_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       end
@@ -44,7 +48,8 @@ module ProvisioningOis
         provider
       end
       payload = { :providers => { "" => providers }}
-      url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      url = app_url + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
         response = JSON.parse(response)
@@ -67,7 +72,8 @@ module ProvisioningOis
       #   provider
       # end
       payload = { :providers => { "" => providers }}
-      url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      url = app_url + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload)
         response = JSON.parse(response)
@@ -111,7 +117,7 @@ module ProvisioningOis
     end
     if providers_with_npi.present?
       request_time = Time.now
-      batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application)
+      batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application, router_reg_applications)
       response_time = Time.now
       Rails.logger.info "Benchmarking - Onestop Router - batch_upload() elapsed time:#{response_time - request_time} sec"
     end

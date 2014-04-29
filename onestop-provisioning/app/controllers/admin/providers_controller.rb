@@ -25,7 +25,7 @@ class Admin::ProvidersController < ApplicationController
       @registered_applications = []
       flash[:error] = "Onestop Router Error: " +  $regapps.first["errors"].first["message"]
     else
-      display_name = $regapps.collect{|x| x.values.flatten.collect{|x| "#{x.keys.first}-#{y['ois_name']}"}}.flatten
+      display_name = $regapps.collect{|x| x.values.flatten.collect{|y| "#{x.keys.first}::#{y['ois_name']}"}}.flatten
       @registered_applications = RegisteredApp.where(display_name: display_name)
     end
 
@@ -174,7 +174,7 @@ class Admin::ProvidersController < ApplicationController
 
   # Start providers_queue to process uploaded cvs file
   def save_providers(providers)
-    Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id)
+    Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id, session[:router_reg_applications])
     resque_info = Resque.info
     if resque_info[:workers] == 0
       admin = Role.where(:name => "Admin").first
