@@ -126,14 +126,15 @@ end
 
 rcopia_app_upload_fields = [
   { name: "npi", field_type: "string", required: false, field_format: "^\\d{10}$", display_name: "National Provider Identifier" },
-  { name: "username", field_type: "string", required: false, field_format: "^[a-zA-Z0-9_.-]+$", display_name: "Preferred Rcopia Username" },
+  { name: "username", field_type: "string", required: true, field_format: "^[a-zA-Z0-9_.-]+$", display_name: "Rcopia Practice Username" },
   { name: "role", field_type: "string", required: true, field_format: nil, display_name: "Rcopia Roles"},
   { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Prefix"},
   { name: "last_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "LAST NAME" },
   { name: "first_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "FIRST NAME" },
   { name: "middle_name", field_type: "string", required: false, field_format: "^[a-zA-Z'-]+$", display_name: "MIDDLE NAME" },
   { name: "suffix", field_type: "string", required: false, field_format: nil, display_name: "SUFFIX" },
-  { name: "use_existing_account", field_type: "string", required: false, field_format: "^[y||n]$", display_name: "Use Existing Account" },
+  ### The field "use_existing_account" is not present in latest CSV (MOXY-13333) for Rcopia
+  # { name: "use_existing_account", field_type: "string", required: false, field_format: "^[y||n]$", display_name: "Use Existing Account" },
   { name: "member_type", field_type: "string", required: true, field_format: nil, display_name: "Member Type" },
   { name: "email", field_type: "string", required: false, field_format: "^.+@.+\\..+$", display_name: "E-MAIL ADDRESS" },
   { name: "practice_group", field_type: "string", required: false, field_format: nil, display_name: "Practice Group / Location External IDs" },
@@ -143,7 +144,9 @@ rcopia_app_upload_fields = [
   { name: "secondary_license", field_type: "string", required: false, field_format: nil, display_name: "Secondary License" },
   { name: "external_id_1", field_type: "string", required: false, field_format: nil, display_name: "External ID 1" },
   { name: "external_id_2", field_type: "string", required: false, field_format: nil, display_name: "External ID 2" },
-  { name: "provider_dea", field_type: "string", required: false, field_format: "^[a-zA-Z]{2}+\\d{7}$", display_name: "DEA #" }
+  { name: "provider_dea", field_type: "string", required: false, field_format: "^[a-zA-Z]{2}+\\d{7}$", display_name: "DEA #" },
+  { name: "practice_external_id", field_type: "string", required: true, field_format: nil, display_name: "Practice External ID" },
+  { name: "default_location_external_id", field_type: "string", required: false, field_format: nil, display_name: "Default Location External ID" }
 ]
 
 rcopia_app_upload_fields.each do |f|
