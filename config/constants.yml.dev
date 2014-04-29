@@ -37,18 +37,18 @@ ONESTOP_ROUTER:
     SAVE_PROVIDER:
       URL: api/v1/ois/save-provider.json
 
-  VERIFY_CONNECTIVITY: connectivity/verify.json
+  VERIFY_CONNECTIVITY: api/v1/versions/check_version.json
 
 EPCS_OIS:
   SERVER_URL: http://10.100.10.45
   TEST_SERVER_URL: http://10.10.100.47:3010
   BATCH_UPLOAD_DEST_URL: api/v1/ois/epcs/batch_upload_dest.json
-  VERIFY_CONNECTIVITY: connectivity/verify.json
+  VERIFY_CONNECTIVITY: api/v1/versions/check_version.json
 
 SUPERNPI_OIS:
   SERVER_URL: http://10.100.10.46
   VIEW_USER_URL: api/v1/ois/supernpis/view-user.json
-  VERIFY_CONNECTIVITY: connectivity/verify.json
+  VERIFY_CONNECTIVITY: api/v1/versions/check_version.json
 
 RCOPIA_OIS:
   SERVER_URL: http://10.100.10.45:82
