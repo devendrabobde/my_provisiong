@@ -4,8 +4,8 @@ role_list.each { |name| Role.where(:name => name).first_or_create }
 
 # Setup Super Admin account
 cao = Cao.where(email: "superadmin@onestop.com").first_or_create
-cao.username = "superadmin"
 if cao.new_record?
+  cao.username = "superadmin"
   cao.password = "password@1234"
 end
 cao.first_name = "super"
@@ -22,9 +22,9 @@ RegisteredApp.delete_all
 
 
 ## The display_name column should have the name of Organization and name of OIS from Router concatenated by a '-'
-applications = [{ app_name: "EPCS-IDP", display_name: "DrFirst-epcsidp"},
-                { app_name: "Rcopia", display_name: "DrFirst-rcopia"},
-                { app_name: "Moxy", display_name: "DrFirst-moxy"},
+applications = [{ app_name: "EPCS-IDP", display_name: "DrFirst::epcsidp"},
+                { app_name: "Rcopia", display_name: "DrFirst::rcopia"},
+                { app_name: "Moxy", display_name: "DrFirst::moxy"},
                 { app_name: "Backline", display_name: nil }]
 
 
