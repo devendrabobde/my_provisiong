@@ -49,7 +49,7 @@ module NpiValidation
       providers = updated_providers
     ensure
       Rails.logger.info \
-        "Onestop-Provisioning: SuperNPI-OIS communication summary:\n\nURL:#{url}\n\nSent to SuperNPI-OIS:\
+        "Provisioning: SuperNPI-OIS communication summary:\n\nURL:#{url}\n\nSent to SuperNPI-OIS:\
           \n\n#{payload}\n\nReceived from SuperNPI-OIS:\n\n#{providers rescue nil}"
     end
     providers.present? ? providers : []

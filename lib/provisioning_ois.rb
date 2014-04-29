@@ -35,7 +35,7 @@ module ProvisioningOis
         provider_records = updated_providers
       ensure
         Rails.logger.info \
-          "Onestop-Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
+          "Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
             \n\n#{payload}\n\nReceived from EPCS-OIS:\n\n#{provider_records}"
       end
     elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
@@ -58,7 +58,7 @@ module ProvisioningOis
         provider_records = updated_providers
       ensure
         Rails.logger.info \
-          "Onestop-Provisioning- batch_upload_dest(): RCOPIA-OIS communication summary:\n\nURL:#{url}\n\nSent to RCOPIA-OIS:\
+          "Provisioning- batch_upload_dest(): RCOPIA-OIS communication summary:\n\nURL:#{url}\n\nSent to RCOPIA-OIS:\
             \n\n#{payload}\n\nReceived from RCOPIA-OIS:\n\n#{provider_records}"
       end
     elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])

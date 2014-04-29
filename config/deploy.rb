@@ -4,8 +4,8 @@ require 'capistrano/ext/multistage'
 set :stages, %w(qaonestop05 production sparkway)
 set :default_stage, "qaonestop05"
 
-set :application, "onestop-provisioning"
-set :bundle_gemfile, "onestop-provisioning/Gemfile"
+set :application, "provisioning"
+set :bundle_gemfile, "Gemfile"
 set :user, 'sparkway'
 set :use_sudo, false
 
@@ -44,12 +44,12 @@ namespace :deploy do
   end
 
   task :restart, roles: :app, except: { no_release: true } do
-    run "touch #{File.join(current_path,'onestop-provisioning','tmp','restart.txt')}"
+    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
   end
 
   desc 'run bundle install'
   task :bundle_install, roles: :app do
-    run "cd #{current_path}/onestop-provisioning && bundle exec bundle install --deployment --path #{shared_path}/bundle"
+    run "cd #{current_path} && bundle exec bundle install --deployment --path #{shared_path}/bundle"
   end
 
   desc "kill redis server"
@@ -64,18 +64,18 @@ namespace :deploy do
 
   desc "clean redis queue"
   task :clean_redis do
-    run "cd #{current_path}/onestop-provisioning && redis-cli FLUSHALL"
+    run "cd #{current_path} && redis-cli FLUSHALL"
   end
 
   desc "Copy if the constants.yml and production.rb file is not present from constants.yml.sample and production.rb.sample"
   task :copy_constants_and_production do
     #copy constants.yml file form constants.yml.sample if the constants.yml file does not exists.
-    run "if [[ ! -f #{shared_path}/config/constants.yml ]]; then cp #{release_path}/onestop-provisioning/config/constants.yml.sample #{shared_path}/config/constants.yml; fi"
-    run "ln -nfs #{shared_path}/config/constants.yml #{release_path}/onestop-provisioning/config/constants.yml"
+    run "if [[ ! -f #{shared_path}/config/constants.yml ]]; then cp #{release_path}config/constants.yml.sample #{shared_path}/config/constants.yml; fi"
+    run "ln -nfs #{shared_path}/config/constants.yml #{release_path}/config/constants.yml"
 
     #copy production.rb file form production.rb.sample if the production.rb file does not exists.
-    run "if [[ ! -f #{shared_path}/config/environments/production.rb ]]; then cp #{release_path}/onestop-provisioning/config/environments/production.rb.sample #{shared_path}/config/environments/production.rb; fi"
-    run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}/onestop-provisioning/config/environments/production.rb"
+    run "if [[ ! -f #{shared_path}/config/environments/production.rb ]]; then cp #{release_path}/config/environments/production.rb.sample #{shared_path}/config/environments/production.rb; fi"
+    run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}config/environments/production.rb"
   end
 
 end
@@ -109,8 +109,8 @@ namespace :db do
 
     # Setup links
     #run "touch database.yml"
-    run "ln -nfs #{shared_path}/db/database.yml #{release_path}/onestop-provisioning/config/database.yml"
-    run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/onestop-provisioning/config/.dbpass"
+    run "ln -nfs #{shared_path}/db/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{shared_path}/config/.dbpass #{release_path}/config/.dbpass"
   end
 
   after "deploy:finalize_update", "db:configfile"

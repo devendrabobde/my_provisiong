@@ -24,7 +24,7 @@ module OnestopRouter
       return {:error => e.message }
     ensure
       Rails.logger.info \
-        "Onestop-Provisioning: Onestop-Router OIS communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
+        "Provisioning: Onestop-Router OIS communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
           \n\n#{body}\n\nReceived from Onestop-Router:\n\n#{response rescue nil}"
     end
   end
@@ -42,7 +42,7 @@ module OnestopRouter
       return [{"errors" => [{"message" => e.message}] }]
     ensure
       Rails.logger.info \
-        "Onestop-Provisioning: Onestop-Router OIS request-batchupload-responders communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
+        "Provisioning: Onestop-Router OIS request-batchupload-responders communication summary:\n\nURL:#{url}\n\nHeader:#{header}\n\nSent to Onestop-Router:\
           \n\n#{body}\n\nReceived from Onestop-Router:\n\n#{response rescue nil}"
     end
   end
