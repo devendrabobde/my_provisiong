@@ -1,0 +1,41 @@
+development: &dev
+  onestop_service_name: "OneStop Provisioining"
+  onestop_server_instance_name: "Development"
+  onestop_code_version: 1.0.7
+  onestop_server_ip: 10.100.10.212
+  tokens_expire_in: 86400 # in seconds
+
+  #EPCS
+  epcs_service_name: "EPCS-OIS"
+  
+  #SuperNPI
+  supernpi_service_name: "SuperNPI"
+  
+  #Router
+  router_service_name: "Router"
+  
+production:
+  onestop_service_name: "OneStop Provisioining"
+  onestop_server_instance_name: "Production"
+  onestop_code_version: 1.0.7
+  onestop_server_ip: 10.100.10.203
+  tokens_expire_in: 86400 # in seconds
+
+  #EPCS
+  epcs_service_name: "EPCS-OIS"
+  
+  #SuperNPI
+  supernpi_service_name: "SuperNPI"
+  
+  #Router
+  router_service_name: "Router"
+  
+test:
+  <<: *dev
+  server_instance_name: "test"
+cucumber:
+  <<: *dev
+  server_instance_name: "test"
+performance:
+  <<: *dev
+  server_instance_name: "demo"

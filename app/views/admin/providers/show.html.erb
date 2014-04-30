@@ -1,0 +1,32 @@
+<% if @upload_error.present? %>
+  <div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Errors:</strong>
+      <%= "Unable to upload file in the #{@upload_error.application_name} due to #{@upload_error.error_message } error. " %>
+  </div>
+<% end %>
+<div>
+  <%= link_to "Back", application_admin_providers_path(registered_app_id: @audit_trail.fk_registered_app_id) %>
+</div>
+<br />
+<div>
+  <b> Download all provider details :</b>
+  <%= link_to "Download", admin_download_path(format: "csv", audit_id: @audit_trail.id),class: "btn btn-primary icon-download" %>
+</div><br/>
+<b> Total NPI Processed: </b><%= @audit_trail.total_npi_processed %> / <%= @audit_trail.total_providers %>
+<br/><br/>
+<% if @audit_trail.registered_app.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"]) %>
+  <%= render 'provider_list',  providers: @providers %>
+<% elsif @audit_trail.registered_app.app_name.eql?(CONSTANT["APP_NAME"]["BACKLINE"]) %>
+  <%= render 'backline_provider_list', providers: @providers %>
+<% elsif @audit_trail.registered_app.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"]) %>
+  <%= render 'rcopia_provider_list', providers: @providers %>
+<% elsif @audit_trail.registered_app.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"]) %>
+  <%= render 'moxy_provider_list', providers: @providers %>
+<% end %>
+
+<div id="dialog" title="Message">
+  <div class="error_message_content"></div>
+</div>
+<br/><br/>
+<%= link_to "Back", application_admin_providers_path(registered_app_id: @audit_trail.fk_registered_app_id) %>

@@ -1,0 +1,32 @@
+production:
+  adapter: oracle_enhanced
+  host: provisioning.ceiktopf7a2g.us-east-1.rds.amazonaws.com
+  port: 1521
+  database: provi
+  username: provisioning
+  password: 0n3St0p6216
+
+development:
+  adapter: oracle_enhanced
+  host: provisioning.ceiktopf7a2g.us-east-1.rds.amazonaws.com
+  port: 1521
+  database: provi
+  username: provisioning
+  password: 0n3St0p6216
+
+supernpi:
+  adapter: oracle_enhanced
+  host: supernpi.ceiktopf7a2g.us-east-1.rds.amazonaws.com
+  port: 1521
+  database: supernpi
+  username: supernpi
+  password: 0n3St0p6216
+
+test: &test
+  adapter: oracle_enhanced
+  host: provisioning-test.ceiktopf7a2g.us-east-1.rds.amazonaws.com
+  port: 1521
+  database: protest
+  username: provisioningtest
+  password: 0n3St0p6216
+  nls_numeric_characters: ".,"
