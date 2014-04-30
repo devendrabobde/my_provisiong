@@ -1,6 +1,46 @@
 require_relative '../spec_helper'
 
 describe "ProvisioningOis" do
+  before(:each) do
+    @router_reg_apps = [
+    {
+        "DrFirst" =>  [
+            {
+                "authentication_url" =>  "https://applicationtwo_sparkway.home => 3007/users/login",
+                "enrollment_url" =>  "http://10.100.10.211/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "epcsidp",
+                "ois_password" =>  "sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ"
+            },
+            {
+                "authentication_url" =>  "http://moxy/users/login",
+                "enrollment_url" =>  "http://moxy/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "moxy",
+                "ois_password" =>  "Nr7aICD51pBigc9pac3LBjYobvavptxfF0yNON6nktOwjP8ZmQT7UxxR8wxWUQQ6H5Il"
+            },
+            {
+                "authentication_url" =>  "http://rcapia/users/login",
+                "enrollment_url" =>  "http://rcopia/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "rcopia",
+                "ois_password" =>  "vCr8eTgeYE6grgjePkNA135iG6OU0W36z8py1jSM5bzco6dWfamaMlPjl2iiXogI7xc"
+            }
+        ]
+    },
+    {
+        "Org1" =>  [
+            {
+                "authentication_url" =>  "http://test.com/login",
+                "enrollment_url" =>  "http://test.com/sign_up",
+                "ip_address_concat" =>  "test.com",
+                "ois_name" =>  "OIS1",
+                "ois_password" =>  "FA7wjlaRVzPX3SvfiYjXd2UvMSa7tFpkRPQLdlTCJxNJwxctRO1XtryNrr"
+            }
+        ]
+    }
+]
+  end
   describe "#batch_upload_dest" do
   	it "should upload a batch of providers for Rcopia application" do
   	  providers = [
@@ -27,12 +67,11 @@ describe "ProvisioningOis" do
                       "email" => "test@example.com"
                     }
                 ]
-                           
         cao = FactoryGirl.create(:cao)
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application)
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application, @router_reg_apps)
         assert data.should be_true
   	end
 
@@ -52,12 +91,11 @@ describe "ProvisioningOis" do
                       "sys_provider_app_detail_id"=>"6a971b93-d937-4d8f-ac99-c2a4315e4101"
                     }
                 ]
-                           
         cao = FactoryGirl.create(:cao)
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application)
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application, @router_reg_apps)
         assert data.should be_true
   	end
   end

@@ -1,6 +1,46 @@
 require_relative '../spec_helper'
 
 describe "OneStopRouter" do
+  before(:each) do
+    @router_reg_apps = [
+    {
+        "DrFirst" =>  [
+            {
+                "authentication_url" =>  "https://applicationtwo_sparkway.home => 3007/users/login",
+                "enrollment_url" =>  "http://10.100.10.211/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "epcsidp",
+                "ois_password" =>  "sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ"
+            },
+            {
+                "authentication_url" =>  "http://moxy/users/login",
+                "enrollment_url" =>  "http://moxy/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "moxy",
+                "ois_password" =>  "Nr7aICD51pBigc9pac3LBjYobvavptxfF0yNON6nktOwjP8ZmQT7UxxR8wxWUQQ6H5Il"
+            },
+            {
+                "authentication_url" =>  "http://rcapia/users/login",
+                "enrollment_url" =>  "http://rcopia/users/sign_up",
+                "ip_address_concat" =>  "10.100.10.45",
+                "ois_name" =>  "rcopia",
+                "ois_password" =>  "vCr8eTgeYE6grgjePkNA135iG6OU0W36z8py1jSM5bzco6dWfamaMlPjl2iiXogI7xc"
+            }
+        ]
+    },
+    {
+        "Org1" =>  [
+            {
+                "authentication_url" =>  "http://test.com/login",
+                "enrollment_url" =>  "http://test.com/sign_up",
+                "ip_address_concat" =>  "test.com",
+                "ois_name" =>  "OIS1",
+                "ois_password" =>  "FA7wjlaRVzPX3SvfiYjXd2UvMSa7tFpkRPQLdlTCJxNJwxctRO1XtryNrr"
+            }
+        ]
+    }
+]
+  end
   context "class methods" do
 	  describe '#batch_upload' do
 	    describe "Router application is unavailable at the time when an upload begins" do
@@ -8,7 +48,7 @@ describe "OneStopRouter" do
 	    		application = RegisteredApp.where(app_name: "EPCS-IDP").first
 	    		providers =  [{ :npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA" }, 
 	    		              { :npi=>"1114000148", :last_name=>"MOULICK", :first_name=>"ACHINTYA"}] 
-	    		response = OnestopRouter::batch_upload(providers, application)
+	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
 	    		response[:error].should =~ /Connection refused/
 	    	end
 	    end
@@ -18,7 +58,7 @@ describe "OneStopRouter" do
 	    		application = RegisteredApp.where(app_name: "EPCS-IDP").first
 	    		providers =  [{ :npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA" }, 
 	    		              { :npi=>"1114000148", :last_name=>"MOULICK", :first_name=>"ACHINTYA"}] 
-	    		response = OnestopRouter::batch_upload(providers, application)
+	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
 	    		response[:error].should =~ /Connection refused/
 	    	end
 	    end
@@ -49,7 +89,7 @@ describe "OneStopRouter" do
                                   }
                               ]
                 application = RegisteredApp.where(app_name: "Rcopia").first
-	    		response = OnestopRouter::batch_upload(providers, application)
+	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
 	    		assert response.should be_true
 	    	end
 	    end
@@ -71,7 +111,7 @@ describe "OneStopRouter" do
 						        }
                               ]
                 application = RegisteredApp.where(app_name: "Moxy").first
-	    		response = OnestopRouter::batch_upload(providers, application)
+	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
 	    		assert response.should be_true
 	    	end
 	    end
