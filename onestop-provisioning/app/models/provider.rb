@@ -51,7 +51,7 @@ class Provider < ActiveRecord::Base
           provider_app_detail = application.provider_app_details.create(fk_cao_id: cao.id, fk_organization_id: cao.organization.id)
           if provider_app_detail.present?
             providers_ids << provider_app_detail.id
-            provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message))
+            provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message, :status))
             if [CONSTANT["APP_NAME"]["EPCS"], CONSTANT["APP_NAME"]["RCOPIA"]].include?(application.app_name)
               provider_deas = provider[:provider_dea_record]
               if provider_deas.present?
