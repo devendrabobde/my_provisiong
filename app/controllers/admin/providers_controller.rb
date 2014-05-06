@@ -25,7 +25,7 @@ class Admin::ProvidersController < ApplicationController
       @registered_applications = []
       flash[:error] = "Onestop Router Error: " +  $regapps.first["errors"].first["message"]
     else
-      display_name = $regapps.collect{|x| x.values.flatten.collect{|x| x["ois_name"]}}.flatten
+      display_name = $regapps.collect{|x| x.values.flatten.collect{|x| "#{x.keys.first}-#{y['ois_name']}"}}.flatten
       @registered_applications = RegisteredApp.where(display_name: display_name)
     end
 
