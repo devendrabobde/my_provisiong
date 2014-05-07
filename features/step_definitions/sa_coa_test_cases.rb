@@ -38,7 +38,8 @@ When(/^I submit the form with proper values$/) do
 	fill_in "cao_last_name", with: @n_lname
 	fill_in "cao_username", with: @n_username
 	fill_in "cao_email", with: @n_email
-	select "Doctor", from: "cao_fk_profile_id"
+	# select "Doctor", from: "cao_fk_profile_id"
+	find('#cao_fk_profile_id').find(:xpath, 'option[2]').select_option
 	click_button("Create")
 end
 

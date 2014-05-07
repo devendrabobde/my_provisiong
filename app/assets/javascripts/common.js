@@ -140,6 +140,10 @@ $(document).ready(function () {
     backdrop: 'static',
     keyboard: true
   });
+
+  if ($("#update-password-modal").length != 0){
+    $(".alert-success").hide();
+  }
   
 });
 
