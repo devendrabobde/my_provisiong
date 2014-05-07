@@ -1,0 +1,16 @@
+#Configuration for the different environments
+
+defaults: &defaults
+username: ['drfirst', 'dr.first']
+
+development:
+    cache_server: 'localhost:6379'
+
+test:
+    cache_server: 'localhost:6379'
+
+staging:
+    cache_server: '' # Need to enter
+
+production:
+    cache_server: '' # Need to enter

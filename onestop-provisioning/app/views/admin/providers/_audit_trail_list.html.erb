@@ -1,0 +1,49 @@
+<table class="table table-striped table-bordered table-condensed" id="table1">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Date Uploaded</th>
+      <th>File Name</th>
+      <th>Total NPI Processed</th>
+      <th>Uploaded By</th>
+      <th>Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if audit_trails.present? %>
+      <% virtual_id = 0 %>
+      <% audit_trails.each do |audit| %>
+        <tr>
+          <td id="audit_link_<%= audit.id %>">
+            <% virtual_id =  virtual_id + 1 %>
+            <% if audit.upload_status %>
+              <%= link_to virtual_id, admin_provider_path(audit.id) %>
+            <% else %>
+              <%= virtual_id %>
+            <% end %>
+          </td>
+   <td><%= audit.createddate.strftime("%m/%d/%Y") %></td>
+   <td class="break-large-text"><%= audit.file_name %></td>
+   <td class="break-large-text">
+      <% if audit.total_providers.to_i >= 1 %>
+        <%= audit.total_npi_processed %> / <%= audit.total_providers %>
+      <% else %>
+        <div class='auditProgressBar' id="progress_bar_<%= audit.id %>" data-audit-id="<%= audit.id %>">
+          <div class="audit_loading_image">
+            <%= image_tag("spinner.gif") %>
+          </div>
+          <div class="audit_progress_text">
+            In Progress..
+          </div>
+        </div>
+        <div id="npi_loaded_count_<%= audit.id %>">
+        </div>
+      <% end %>
+    </td>
+   <td><%= audit.cao.full_name rescue nil  %></td>
+   <td><%= audit.registered_app.app_name rescue nil %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

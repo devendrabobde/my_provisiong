@@ -1,0 +1,34 @@
+<table class="table table-striped table-bordered table-condensed" id="table2">
+  <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Middle Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Dept</th>
+      <th>NPI</th>
+      <th>Status Code</th>
+      <th>Status Text </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% providers.each do |provider| %>
+      <tr>
+        <td><%= provider.last_name %></td>
+ <td><%= provider.first_name %></td>
+ <td><%= provider.middle_name %></td>
+ <td><%= provider.email %></td>
+ <td><%= provider.phone %></td>
+ <td><%= provider.username %></td>
+ <td><%= provider.role %></td>
+ <td><%= provider.department %></td>
+ <td><%= provider.npi %></td>
+  <td><%= provider.provider_app_detail.status_code %> </td>
+  <td><%= provider.provider_app_detail.status_text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

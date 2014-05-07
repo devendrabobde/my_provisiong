@@ -1,0 +1,17 @@
+<div id="deactivate-<%= cao.id %>" class="modal" style="display: none;">
+  <%= form_for([:admin, organization, cao], :url => admin_organization_cao_path(organization.id, cao.id), :method => :delete ) do |f| %>
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">&#215;</a>
+      <h4>Deactivate COA</h4>
+    </div>
+    <div class="modal-body">
+      <%= f.label :deleted_reason, 'Reason for deactivation' %><br/>
+      <%= f.text_area :deleted_reason, :size => "100x5", :autofocus => true %>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Deactivate", :class => "btn" %>
+      <a class="btn" data-dismiss="modal" href="#">Cancel</a>
+       <%#= link_to 'Deactivate',admin_organization_cao_path(cao.organization.id,cao.id), :method=> :delete,data: { confirm: 'Are you sure?' } %>
+    </div>
+  <% end %>
+</div>

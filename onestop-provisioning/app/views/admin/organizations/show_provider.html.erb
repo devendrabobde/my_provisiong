@@ -1,0 +1,14 @@
+<div>
+  <b> Download all provider details :</b>
+  <%= link_to "Download", download_provider_admin_organization_path(format: "csv", audit_id: @audit_trail.id), class: "btn btn-primary icon-download" %>
+</div><br/>
+
+<h4> Listing Providers for <%= @audit_trail.file_name %> File</h4>
+<h5> Total NPI Processed: <%= @audit_trail.total_npi_processed %> / <%= @audit_trail.total_providers %> </h5>
+<% if @audit_trail.registered_app.app_name.eql?("EPCS-IDP") %>
+  <%= render '/admin/providers/provider_list', providers: @providers %>
+<% else %>
+  <%= render '/admin/providers/backline_provider_list', providers: @providers %>
+<% end %>
+<br/><br/>
+<%= link_to "Back", show_uploaded_file_admin_organization_path(@audit_trail.fk_organization_id) %>

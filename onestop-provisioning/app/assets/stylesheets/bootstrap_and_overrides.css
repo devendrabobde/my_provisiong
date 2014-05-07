@@ -1,0 +1,99 @@
+/*
+  =require twitter-bootstrap-static/bootstrap
+
+  Use Font Awesome icons (default)
+  To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
+  =require twitter-bootstrap-static/fontawesome
+  */
+
+body { padding-top: 60px; }
+
+.navbar-inner {
+  background-color: #00447C !important;
+  background-image: none;
+}
+
+.navbar .nav > li > a {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
+
+.navbar .brand {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
+
+.navbar .nav > li > a:hover {
+  color: #949CA1 !important;
+}
+
+.navbar .brand:hover {
+  color: #949CA1;
+}
+
+.footer {
+  background-color: #F5F5F5;
+  border-top: 1px solid #E5E5E5;
+  margin-top: 300px;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.fieldset {
+    border: 2px solid #000000;
+    padding: 10px;
+}
+
+legend.scheduler-border {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
+
+legend {
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+#download_sample_data {
+  padding-left: 400px;
+  margin-top: -20px;
+}
+
+#upload_csv_file{
+  margin: 8px 20px 29px;
+}
+
+#audit_data_table{
+  height: auto;
+}
+
+#error_explanation h2 {
+  font-size: 15.5px;
+}
+.nav {
+  margin-top: 10px !important;
+}
+
+.well {
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+  margin: 12px -29px -49px;
+  min-height: 20px;
+  padding: 19px;
+}
+table#sign-in-fields {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.alert-success {
+color: #4A5257;
+background-color: #F5F5F5;
+border-color: #949CA1;
+}
+.break-large-text {
+  word-break: break-all;
+} 
