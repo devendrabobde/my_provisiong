@@ -6,14 +6,14 @@ module NpiValidation
   #
   # Find the application and verify application specific conditions, for EPCS we are verifying providers against SuperNPI DB
   #
-  def self.validate(providers, application)
+  def self.validate(providers)
     # response = providers
     #
     # validate providers npi checksum
     #
     response, invalid_npi_providers = validate_provider_npi(providers)
 
-    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+    if providers.first.keys.include?(:npi)
       request_time = Time.now
       response = check_supernpi_acceptance(response)
       response_time = Time.now

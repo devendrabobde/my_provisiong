@@ -88,49 +88,70 @@ class Admin::ProvidersController < ApplicationController
     send_file(path, type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=#{file_name}", url_based_filename: true)
   end
 
-  # Upload and process providers csv file
+  # # Upload and process providers csv file
+  # def upload
+  #   begin
+  #     error_message, success_message, invalid_providers = "", "", []
+  #     file_path, file_name = store_csv
+  #     # Start Benchmark Code
+  #     t1 = Time.now
+  #     providers, upload_file_status, upload_status = ProvisioingCsvValidation::process_csv(file_path, @application)
+  #     Rails.logger.info "Benchmarking - Process CSV  - elapsed time:#{Time.now - t1} sec"
+  #     # End Benchmark Code
+  #     if upload_file_status
+  #       if upload_status
+  #         providers = providers.collect { |x| x if x.present? }.compact
+  #         if providers.present?
+  #           duplicate_record_status, duplicate_npis, providers = check_provider_duplicate_records(providers)
+  #           if duplicate_record_status
+  #             required_field_status, req_field_err_hash = ProvisioingCsvValidation::validate_required_field(providers, @application)
+  #             if required_field_status
+  #               @audit_trail = save_audit_trails(file_name)
+  #               save_providers(providers)
+  #               success_message = VALIDATION_MESSAGE["PROVIDER"]["UPLOAD_PROCESS"]
+  #               success_message = duplicate_npis.count > 0 ? success_message + "#{duplicate_npis.join(",")}" + VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] : success_message
+  #             else
+  #               error_message = VALIDATION_MESSAGE["PROVIDER"]["BLANK"] + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
+  #             end
+  #           else
+  #             error_message =  VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] + duplicate_npis.join(",")
+  #           end
+  #         # else
+  #         #   error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
+  #         end
+  #       else
+  #         error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
+  #       end
+  #     else
+  #       error_message = VALIDATION_MESSAGE["PROVIDER"]["EMPTY_FILE"]
+  #     end
+  #     if error_message.present?
+  #       flash[:error] = error_message
+  #       AuditTrailsLog.error error_message
+  #     else
+  #       flash[:notice] = success_message
+  #       AuditTrailsLog.warn success_message
+  #     end
+  #   rescue => e
+  #     puts e.inspect
+  #     err = (e.class.to_s == "CSV::MalformedCSVError") ? "Error IN CSV File: " : "Error: "
+  #     flash[:error] = err + e.message
+  #   end
+  #   redirect_to application_admin_providers_path(registered_app_id: @application.id)
+  # end
+
   def upload
     begin
-      error_message, success_message, invalid_providers = "", "", []
       file_path, file_name = store_csv
-      # Start Benchmark Code
-      t1 = Time.now
-      providers, upload_file_status, upload_status = ProvisioingCsvValidation::process_csv(file_path, @application)
-      Rails.logger.info "Benchmarking - Process CSV  - elapsed time:#{Time.now - t1} sec"
-      # End Benchmark Code
-      if upload_file_status
-        if upload_status
-          providers = providers.collect { |x| x if x.present? }.compact
-          if providers.present?
-            duplicate_record_status, duplicate_npis, providers = check_provider_duplicate_records(providers)
-            if duplicate_record_status
-              required_field_status, req_field_err_hash = ProvisioingCsvValidation::validate_required_field(providers, @application)
-              if required_field_status
-                @audit_trail = save_audit_trails(file_name)
-                save_providers(providers)
-                success_message = VALIDATION_MESSAGE["PROVIDER"]["UPLOAD_PROCESS"]
-                success_message = duplicate_npis.count > 0 ? success_message + "#{duplicate_npis.join(",")}" + VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] : success_message
-              else
-                error_message = VALIDATION_MESSAGE["PROVIDER"]["BLANK"] + req_field_err_hash.delete_if{|key,val| val.blank? }.collect{|key, val| "<b>#{val.to_sentence}</b> from <b>#{(key + 1).ordinalize}</b> Provider"}.to_sentence
-              end
-            else
-              error_message =  VALIDATION_MESSAGE["PROVIDER"]["DUPLICATE_NPI"] + duplicate_npis.join(",")
-            end
-          # else
-          #   error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
-          end
-        else
-          error_message = VALIDATION_MESSAGE["PROVIDER"]["WRONG_APPLICATION"]
-        end
+      status, message, providers = ProvisioingCsvValidation::process_csv_api(file_path, session[:router_reg_applications])
+      if status
+        @audit_trail = save_audit_trails(file_name)
+        save_providers(providers)
+        flash[:notice] = message
+        AuditTrailsLog.warn message
       else
-        error_message = VALIDATION_MESSAGE["PROVIDER"]["EMPTY_FILE"]
-      end
-      if error_message.present?
-        flash[:error] = error_message
-        AuditTrailsLog.error error_message
-      else
-        flash[:notice] = success_message
-        AuditTrailsLog.warn success_message
+        flash[:error] = message
+        AuditTrailsLog.warn message
       end
     rescue => e
       puts e.inspect
@@ -172,7 +193,7 @@ class Admin::ProvidersController < ApplicationController
     end
   end
 
-  # Start providers_queue to process uploaded cvs file
+  # Start providers_queue to process uploaded csv file
   def save_providers(providers)
     Resque.enqueue(BatchUpload, providers, @cao.id, @application.id, @audit_trail.id, session[:router_reg_applications])
     resque_info = Resque.info

@@ -27,12 +27,12 @@ class BatchUpload
 
 
   # Process and add provider data in provisioning db
-  def self.save_providers(providers, cao, application, audit_trail,router_reg_applications) 
+  def self.save_providers(providers, cao, application, audit_trail, router_reg_applications) 
     # begin
     provider_app_detail_ids, provider_invalid_ids, provi_invalid_ids  = [], [], []
     total_npi_processed = 0
     if providers.present?
-      provider_app_detail_ids, valid_providers, provider_invalid_ids = Provider.save_provider(providers, cao, application)
+      provider_app_detail_ids, valid_providers, provider_invalid_ids = Provider.save_provider(providers, cao, application, router_reg_applications)
       providers = valid_providers
       if providers.present?
         invalid_providers, npiless_providers, response = ProvisioningOis::batch_upload_dest(providers, cao, application,router_reg_applications) 
