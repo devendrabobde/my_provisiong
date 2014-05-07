@@ -1,1 +1,0 @@
-Resque.enqueue(RedisUpdate)
