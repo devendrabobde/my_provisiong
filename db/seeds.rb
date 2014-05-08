@@ -19,10 +19,10 @@ profile_list.each {|profile| Profile.where(profile_name: profile).first_or_creat
 RegisteredApp.delete_all
 
 
-## The display_name column should have the name of Organization and name of OIS from Router concatenated by a '-'
-applications = [{ app_name: "EPCS-IDP", display_name: "DrFirst-epcsidp"},
-                { app_name: "Rcopia", display_name: "DrFirst-rcopia"},
-                { app_name: "Moxy", display_name: "DrFirst-moxy"},
+## The display_name column should have the name of Organization and name of OIS from Router concatenated by a '::'
+applications = [{ app_name: "EPCS-IDP", display_name: "DrFirst::epcsidp"},
+                { app_name: "Rcopia", display_name: "DrFirst::rcopia"},
+                { app_name: "Moxy", display_name: "DrFirst::moxy"},
                 { app_name: "Backline", display_name: nil }]
 
 
@@ -65,8 +65,8 @@ app_upload_fields = [
   { name: "fqdn", field_type: "string", required: false, field_format: nil, display_name: "FQDN" },
   { name: "middle_name", field_type: "string", required: false, field_format: nil, display_name: "Provider Middle Name" },
   { name: "prefix", field_type: "string", required: false, field_format: nil, display_name: "Provider Prefix" },
-  { name: "gender", field_type: "string", required: true, field_format: "^[M|F]$", display_name: "Provider Gender" },
-  { name: "birth_date", field_type: "string", required: true, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider Dateofbirth" },
+  { name: "gender", field_type: "string", required: false, field_format: "^[M|F]$", display_name: "Provider Gender" },
+  { name: "birth_date", field_type: "string", required: false, field_format: "^([1-9]|0[1-9]|1[012])[\\/]([1-9]|0[1-9]|[12][0-9]|3[01])[\\/][0-9]{4}$", display_name: "Provider Dateofbirth" },
   { name: "social_security_number", field_type: "string", required: false, field_format: nil, display_name: "Provider SocialSecurityNumber" }
 ]
 
