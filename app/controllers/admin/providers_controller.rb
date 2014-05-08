@@ -89,6 +89,7 @@ class Admin::ProvidersController < ApplicationController
   end
 
   # # Upload and process providers csv file
+  ## Old Logic Before OIS Level Validations
   # def upload
   #   begin
   #     error_message, success_message, invalid_providers = "", "", []
@@ -222,25 +223,27 @@ class Admin::ProvidersController < ApplicationController
     audit
   end
 
-  def check_provider_duplicate_records(providers)
-    temp_providers, duplicate_npis, duplicate_status = providers.to_s, [], true
-    if @application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
-      npi_numbers = providers.collect { |p| p[:npi] }
-      duplicate_npis = npi_numbers.select { |item| npi_numbers.count(item) > 1 }
-      if duplicate_npis.present?
-        temp = true
-        duplicate_npis.uniq.each do |dup_npi|
-          b = providers.collect{|x| x if dup_npi.eql?(x[:npi])}.compact
-          b.collect{|x| x.delete(:npi)}
-          duplicate_status = b.uniq.count == 1
-          temp = temp && duplicate_status
-        end
-        duplicate_status = temp
-      end
-    end
-    modified_providers = eval(temp_providers)
-    [duplicate_status, duplicate_npis.uniq, modified_providers.uniq]
-  end
+
+  ##Old Logic Before OIS Level Validations
+  # def check_provider_duplicate_records(providers)
+  #   temp_providers, duplicate_npis, duplicate_status = providers.to_s, [], true
+  #   if @application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+  #     npi_numbers = providers.collect { |p| p[:npi] }
+  #     duplicate_npis = npi_numbers.select { |item| npi_numbers.count(item) > 1 }
+  #     if duplicate_npis.present?
+  #       temp = true
+  #       duplicate_npis.uniq.each do |dup_npi|
+  #         b = providers.collect{|x| x if dup_npi.eql?(x[:npi])}.compact
+  #         b.collect{|x| x.delete(:npi)}
+  #         duplicate_status = b.uniq.count == 1
+  #         temp = temp && duplicate_status
+  #       end
+  #       duplicate_status = temp
+  #     end
+  #   end
+  #   modified_providers = eval(temp_providers)
+  #   [duplicate_status, duplicate_npis.uniq, modified_providers.uniq]
+  # end
 
   def get_audit_trails(registered_app_id, registered_applications)
     if registered_app_id.present?
