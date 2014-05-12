@@ -9,7 +9,7 @@ class Cao < ActiveRecord::Base
 
   attr_accessible :username, :first_name, :last_name, :user_id, :is_active,
                   :email, :password, :password_confirmation, :remember_me, :fk_organization_id,
-                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at#, :encrypted_password, :password_salt
+                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at, :ois_subscribed, :vendor_name, :vendor_password #, :encrypted_password, :password_salt
 
   alias_attribute :sys_cao_id, :id
 

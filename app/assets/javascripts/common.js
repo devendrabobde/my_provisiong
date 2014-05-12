@@ -144,6 +144,16 @@ $(document).ready(function () {
   if ($("#update-password-modal").length != 0){
     $(".alert-success").hide();
   }
+
+  $('#cao_ois_subscribed_Rcopia, #cao_ois_subscribed_EPCS-IDP').change(function(){
+    $('#cao_vendor_name').attr('readonly', false);
+    $('#cao_vendor_password').attr('readonly', false);
+  });
+
+  if($('#cao_ois_subscribed_Rcopia, #cao_ois_subscribed_EPCS-IDP').is(':checked')){
+    $('#cao_vendor_name').attr('readonly', false);
+    $('#cao_vendor_password').attr('readonly', false);
+  }
   
 });
 

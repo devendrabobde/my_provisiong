@@ -1241,3 +1241,13 @@ ALTER TABLE SPARKWAY.PROVIDERS ADD (
 PRACTICE_EXTERNAL_ID VARCHAR2(255),
 DEFAULT_LOCATION_EXTERNAL_ID VARCHAR2(255));
 /
+
+-----------------------------------------------------------
+--   Provisioning: Added fields as per the ticket [ MOXY-13707 ] - OIS_SUBSCRIBED, VENDOR_NAME and VENDOR_PASSWORD 
+-----------------------------------------------------------
+
+ALTER TABLE SPARKWAY.CAOS ADD (
+OIS_SUBSCRIBED VARCHAR2(255),
+VENDOR_NAME VARCHAR2(255),
+VENDOR_PASSWORD VARCHAR2(255));
+/
