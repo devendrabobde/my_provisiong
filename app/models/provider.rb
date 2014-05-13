@@ -43,7 +43,7 @@ class Provider < ActiveRecord::Base
 
     t1 = Time.now
       # validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
-      validated_providers = ProvisioingCsvValidation::validate_provider_api(providers, router_reg_apps)
+      validated_providers = ProvisioingCsvValidation::validate_provider_api(providers, application, router_reg_apps)
     Rails.logger.info "Benchmarking - validate_provider_api  - elapsed time:#{Time.now - t1} sec"
     if validated_providers.present?
       validated_providers.each do |provider|

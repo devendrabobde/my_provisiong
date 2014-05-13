@@ -144,7 +144,7 @@ class Admin::ProvidersController < ApplicationController
   def upload
     begin
       file_path, file_name = store_csv
-      status, message, providers = ProvisioingCsvValidation::process_csv_api(file_path, session[:router_reg_applications])
+      status, message, providers = ProvisioingCsvValidation::process_csv_api(file_path, @application, session[:router_reg_applications])
       if status
         @audit_trail = save_audit_trails(file_name)
         save_providers(providers)

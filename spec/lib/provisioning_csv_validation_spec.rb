@@ -47,14 +47,14 @@ describe "ProvisioingCsvValidation" do
   	it "should process the csv file of providers for EPCS-IDP application" do
 	  path = "#{Rails.root}/public/rspec_test_files/epcs/valid_epcs_providers.csv"
 	  application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
-	  response = ProvisioingCsvValidation.process_csv_api(path, @router_reg_apps)  		
+	  response = ProvisioingCsvValidation.process_csv_api(path, application, @router_reg_apps)  		
 	  assert response.should be_true
   	end
 
   	it "should process the csv file of providers for Rcopia application" do
 	  path = "#{Rails.root}/public/rspec_test_files/rcopia/valid_rcopia_providers.csv"
 	  application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
-	  response = ProvisioingCsvValidation.process_csv_api(path, @router_reg_apps)  		
+	  response = ProvisioingCsvValidation.process_csv_api(path, application, @router_reg_apps)  		
 	  assert response.should be_true
   	end
 

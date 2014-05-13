@@ -25,11 +25,13 @@ module ProvisioingCsvValidation
   # include ValidateRecord
 
 
-  def self.process_csv_api(path, router_reg_applications)
+  def self.process_csv_api(path, application, router_reg_applications)
     status, message, providers = false, nil, []
     csv_record = CSV.read(path, :col_sep=>',', :headers => true)
     providers = csv_record.collect{|x| x.to_hash }.delete_if{|p| p.nil? }
-    url = "http://localhost:3002/api/v1/ois/validations/validate-csv.json"
+    hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+    # url = "http://localhost:3002/api/v1/ois/validations/validate-csv.json"
+    url = hash['validate_csv_url'] rescue nil
     payload = {:providers => {"" => providers}}
     begin
       response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
@@ -209,13 +211,19 @@ module ProvisioingCsvValidation
   #   total_providers
   # end
 
-  def self.validate_provider_api(providers, router_reg_applications)
+  def self.validate_provider_api(providers, application, router_reg_applications)
     valid_providers, invalid_providers, total_providers = [], [], []
-    url = "http://localhost:3002/api/v1/ois/validations/validate-provider.json"
-    mod_providers = providers.collect do |provider|
-        provider = provider.symbolize_keys
-        provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
-        provider
+    hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+    # url = "http://localhost:3002/api/v1/ois/validations/validate-provider.json"
+    url = hash['validate_provider_url'] rescue "" 
+    if providers.first.keys.include? "provider_dea_record"
+      mod_providers = providers.collect do |provider|
+          provider = provider.symbolize_keys
+          provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
+          provider
+      end
+    else
+      mod_providers = providers
     end
     payload = {:providers => {"" => mod_providers}}
     begin

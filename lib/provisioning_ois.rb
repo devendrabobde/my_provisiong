@@ -10,7 +10,7 @@ module ProvisioningOis
   def self.batch_upload_dest(providers, cao, application,router_reg_applications) 
     updated_providers = []
     hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
-    app_url = hash['ip_address_concat'] rescue "" 
+    app_url = hash['batch_upload_url'] rescue "" 
     if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
       providers = providers.collect do |provider|
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
@@ -18,7 +18,8 @@ module ProvisioningOis
       end
       payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
       # url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # url = app_url + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      url = app_url
       if Rails.env == "test"
         url = CONSTANT["EPCS_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       end
@@ -48,7 +49,7 @@ module ProvisioningOis
       end
       payload = { :providers => { "" => providers }}
       # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      url = app_url #+ "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
         response = JSON.parse(response)
@@ -72,7 +73,7 @@ module ProvisioningOis
       # end
       payload = { :providers => { "" => providers }}
       # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      url = app_url #+ "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload)
         response = JSON.parse(response)
