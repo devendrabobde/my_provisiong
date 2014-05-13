@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  # default from: "sharonevas@gmail.com"
+
   default from: "Dr.First <notification@example.com>"
 
   def account_activate(user)
