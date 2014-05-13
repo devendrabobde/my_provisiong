@@ -31,8 +31,8 @@ describe Admin::CaosController do
     describe "Add new COA" do
 
       before(:each) do
-        @coa1_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name }
-        @coa2_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name }
+        @coa1_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name, ois_subscribed: CONSTANT["APP_NAME"]["EPCS"], vendor_name: "Meditech1", vendor_password: "xxxxxxxxxxxx" }
+        @coa2_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name, ois_subscribed: CONSTANT["APP_NAME"]["EPCS"], vendor_name: "Meditech1", vendor_password: "xxxxxxxxxxxx" }
         @invalid_coa_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: "test...", password_confirmation: "password@123", username: Faker::Internet.user_name }
       end
 
@@ -56,8 +56,8 @@ describe Admin::CaosController do
     describe "Update COA" do
 
       before(:each) do
-        @coa1_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name }
-        @invalid_coa_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: "test...", username: Faker::Internet.user_name }
+        @coa1_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: Faker::Internet.email, username: Faker::Internet.user_name, ois_subscribed: CONSTANT["APP_NAME"]["EPCS"], vendor_name: "Meditech1", vendor_password: "xxxxxxxxxxxx" }
+        @invalid_coa_data = { user_id: Faker::Internet.slug, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, is_active: true, email: "test...", username: Faker::Internet.user_name, ois_subscribed: CONSTANT["APP_NAME"]["EPCS"], vendor_name: "Meditech1", vendor_password: "xxxxxxxxxxxx" }
       end
 
       it "As a logged in Super Admin, I should be able to update details of a COA" do
