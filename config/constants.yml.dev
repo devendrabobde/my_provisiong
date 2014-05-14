@@ -56,10 +56,12 @@ SUPERNPI_OIS:
 
 RCOPIA_OIS:
   SERVER_URL: http://10.100.10.203:84
+  TEST_SERVER_URL: http://10.100.10.203:84
   BATCH_UPLOAD_DEST_URL: api/v1/ois/rcopia/batch_upload_dest.json
 
 MOXY_OIS:
   SERVER_URL: http://10.100.10.203:83
+  TEST_SERVER_URL: http://10.100.10.203:83
   BATCH_UPLOAD_DEST_URL: api/v1/ois/moxy/batch_upload_dest.json
 
 APP_NAME:

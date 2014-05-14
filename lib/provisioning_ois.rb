@@ -49,6 +49,9 @@ module ProvisioningOis
       payload = { :providers => { "" => providers }}
       # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
       url = app_url + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      if Rails.env == "test"
+        url = CONSTANT["RCOPIA_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      end
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
         response = JSON.parse(response)
@@ -73,6 +76,9 @@ module ProvisioningOis
       payload = { :providers => { "" => providers }}
       # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
       url = app_url + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      if Rails.env == "test"
+        url = CONSTANT["MOXY_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      end
       begin
         response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload)
         response = JSON.parse(response)

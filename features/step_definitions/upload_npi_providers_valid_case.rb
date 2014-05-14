@@ -63,7 +63,7 @@ end
 
 Given /^I select an application$/ do
   page.execute_script("$('#update-password-modal').modal('hide');")
-  select "DrFirst - epcsidp", from: 'provider_registered_app_id'
+  select "DrFirst::epcsidp", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of 4 providers$/ do
