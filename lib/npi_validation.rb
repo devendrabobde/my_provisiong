@@ -30,7 +30,7 @@ module NpiValidation
     begin
       url = CONSTANT["SUPERNPI_OIS"]["SERVER_URL"] + "/" + CONSTANT["SUPERNPI_OIS"]["VIEW_USER_URL"]
       modified_providers = providers_records
-      if providers.first.keys.include? :provider_dea_record
+      if providers_records.first.keys.include? :provider_dea_record
         modified_providers.each do |provider|
           provider[:provider_dea_record] = { "" => provider[:provider_dea_record]}
         end
