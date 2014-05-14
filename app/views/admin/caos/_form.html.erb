@@ -63,30 +63,62 @@
       <fieldset class="fieldset ois-fieldset">
         <legend class="scheduler-border">Control Panel</legend>
         <div class="control-panel-rbtns">
-          <%= radio_button_tag('cao[ois_subscribed]', CONSTANT["APP_NAME"]["RCOPIA"], (CONSTANT["APP_NAME"]["RCOPIA"] == coa.try(:ois_subscribed)), class: "ois-radio-button")%>
           <p class="ois-rbtn-label">Rcopia</p>
-          <%= radio_button_tag('cao[ois_subscribed]', CONSTANT["APP_NAME"]["EPCS"], (CONSTANT["APP_NAME"]["EPCS"] == coa.try(:ois_subscribed)), class: "ois-radio-button")%>
-          <p class="ois-rbtn-label">EPCS</p>
+          <%= radio_button_tag('cao[rcopia_ois_subscribed]', "1", (true == coa.try(:rcopia_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Enable</p>
+          <%= radio_button_tag('cao[rcopia_ois_subscribed]', "0", (false == coa.try(:rcopia_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Disable</p>
         </div>
-        <div class="row-fluid">
-          <div class="span6 bgcolor">
-            <div class="control-group">
-              <%= label_tag "Vendor Name", "Vendor Name <span class='red'>*</span>".html_safe, class: "control-label", style: "text-align: left;" %>
-              <div class="controls">
-                <%= f.text_field :vendor_name, required: "required", placeholder: "Vendor Name", style: "margin-left: -75px;", readonly: true  %>
+        <div id="rcopia_vendor_Details", style="display: none;">
+          <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Rcopia Vendor Name", "Rcopia Vendor Name".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :rcopia_vendor_name, placeholder: "Rcopia Vendor Name", style: "margin-left: -30px; width: 100%;" %>
+                </div>
               </div>
-            </div>
-          </div><!--/span-->
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Rcopia Vendor Password", "Rcopia Vendor Password".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :rcopia_vendor_password, class: "form-control", placeholder: "Rcopia Vendor Password", style: "margin-left: -10px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+          </div><!--/row-->
+        </div>
 
-          <div class="span6 bgcolor">
-            <div class="control-group">
-              <%= label_tag "Vendor Password", "Vendor Password <span class='red'>*</span>".html_safe, class: "control-label", style: "text-align: left;" %>
-              <div class="controls">
-                <%= f.text_field :vendor_password, class: "form-control", required: "required", placeholder: "Vendor Password", style: "margin-left: -50px;", readonly: true %>
+        <div class="control-panel-rbtns">
+          <p class="ois-rbtn-label">EPCS</p>
+          <%  %>
+          <%= radio_button_tag('cao[epcs_ois_subscribed]', "1", (true == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button", style: "margin-left: 5px;")%>
+          <p class="ois-rbtn-label">Enable</p>
+          <%= radio_button_tag('cao[epcs_ois_subscribed]', "0", (false == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Disable</p>
+        </div>
+
+        <div id="epcs_vendor_Details", style="display: none;">
+          <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "EPCS Vendor Name", "EPCS Vendor Name".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :epcs_vendor_name, placeholder: "EPCS Vendor Name", style: "margin-left: -30px; width: 100%;" %>
+                </div>
               </div>
-            </div>
-          </div><!--/span-->
-        </div><!--/row-->
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "EPCS Vendor Password", "EPCS Vendor Password".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :epcs_vendor_password, class: "form-control", placeholder: "EPCS Vendor Password", style: "margin-left: -10px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+          </div><!--/row-->
+        </div>
       </fieldset><br />
 
       <div class="row-fluid">
