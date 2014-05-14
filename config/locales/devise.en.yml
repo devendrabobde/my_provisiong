@@ -8,7 +8,7 @@ en:
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
     failure:
       already_authenticated: ""
-      inactive: "Your account has been deactivated. Please contact to OneStop Admin. "
+      inactive: "Your account has been deactivated. Please contact the Administrator."
       invalid: "Invalid username or password."
       invalid_token: "Invalid authentication token."
       locked: "Your account is locked."

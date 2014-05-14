@@ -4,7 +4,7 @@ role_list.each { |name| Role.where(:name => name).first_or_create }
 
 # Setup Super Admin account
 cao = Cao.where(username: "superadmin").first_or_create
-coa.email = "superadmin@onestop.com"
+cao.email = "superadmin@onestop.com"
 cao.password = "password@1234" if cao.new_record?
 cao.first_name = "super"
 cao.last_name = "admin"
