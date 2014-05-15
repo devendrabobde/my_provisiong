@@ -25,7 +25,7 @@
    <td><%= audit.createddate.strftime("%m/%d/%Y") %></td>
    <td class="break-large-text"><%= audit.file_name %></td>
    <td class="break-large-text">
-      <% if audit.total_providers.to_i >= 1 %>
+      <% if audit.upload_status == true %>
         <%= audit.total_npi_processed %> / <%= audit.total_providers %>
       <% else %>
         <div class='auditProgressBar' id="progress_bar_<%= audit.id %>" data-audit-id="<%= audit.id %>">
