@@ -1,6 +1,58 @@
 require 'spec_helper'
 describe "BatchUpload" do
   describe "#perform" do
+    before(:each) do
+    @router_reg_apps =  [
+    {
+      "DrFirst" =>  [
+          {
+              "authentication_url" =>  "https://applicationtwo_sparkway.home => 3007/users/login",
+              "enrollment_url" =>  "http://10.100.10.211/users/sign_up",
+              # "ip_address_concat" =>  "10.100.10.45",
+              "ip_address_concat" => CONSTANT['EPCS']['TEST_SERVER_URL'],
+              "validate_csv_url" => "http://localhost:3003/api/v1/ois/validations/validate-csv.json",
+              "validate_provider_url" => "http://localhost:3003/api/v1/ois/validations/validate-provider.json",
+              'batch_upload_url' => "http://10.100.10.45/api/v1/ois/epcs/batch_upload_dest.json",
+              "ois_name" =>  "epcsidp",
+              "ois_password" =>  "sImI0WW9oxfM00wLjX0TQuOxM3QiwItCesVPkf8NkTB8HqMuPpBGVURgGlKNM9mWZ"
+          },
+          {
+              "authentication_url" =>  "http://moxy/users/login",
+              "enrollment_url" =>  "http://moxy/users/sign_up",
+              "validate_csv_url" => "http://localhost:3004/api/v1/ois/validations/validate-csv.json",
+              "validate_provider_url" => "http://localhost:3004/api/v1/ois/validations/validate-provider.json",
+              'batch_upload_url' => 'http://10.100.10.45:81/api/v1/ois/moxy/batch_upload_dest.json',
+              # "ip_address_concat" =>  "10.100.10.45",
+              "ip_address_concat" => CONSTANT['MOXY']['TEST_SERVER_URL'],
+              "ois_name" =>  "moxy",
+              "ois_password" =>  "Nr7aICD51pBigc9pac3LBjYobvavptxfF0yNON6nktOwjP8ZmQT7UxxR8wxWUQQ6H5Il"
+          },
+          {
+              "authentication_url" =>  "http://rcapia/users/login",
+              "enrollment_url" =>  "http://rcopia/users/sign_up",
+              # "ip_address_concat" =>  "10.100.10.45",
+              "ip_address_concat" => CONSTANT['RCOPIA']['TEST_SERVER_URL'],
+              "validate_csv_url" => "http://localhost:3002/api/v1/ois/validations/validate-csv.json",
+              "validate_provider_url" => "http://localhost:3002/api/v1/ois/validations/validate-provider.json",
+              'batch_upload_url' => "http://10.100.10.45:84/api/v1/ois/rcopia/batch_upload_dest.json",
+              "ois_name" =>  "rcopia",
+              "ois_password" =>  "vCr8eTgeYE6grgjePkNA135iG6OU0W36z8py1jSM5bzco6dWfamaMlPjl2iiXogI7xc"
+          }
+      ]
+  },
+  {
+      "Org1" =>  [
+          {
+              "authentication_url" =>  "http://test.com/login",
+              "enrollment_url" =>  "http://test.com/sign_up",
+              "ip_address_concat" =>  "test.com",
+              "ois_name" =>  "OIS1",
+              "ois_password" =>  "FA7wjlaRVzPX3SvfiYjXd2UvMSa7tFpkRPQLdlTCJxNJwxctRO1XtryNrr"
+          }
+      ]
+  }
+]
+  end
   	it "should perform batch upload for providers for EPCS-IDP application" do
   	  providers = [
                         {:npi=>"1194718007",
@@ -56,7 +108,7 @@ describe "BatchUpload" do
     cao.update_attributes(fk_organization_id: organization.id)
 		application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
 		audit_trail = FactoryGirl.create(:audit_trail)
-		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
   	end
 
@@ -91,7 +143,7 @@ describe "BatchUpload" do
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
         audit_trail = FactoryGirl.create(:audit_trail)
-        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
     end
 
@@ -129,7 +181,7 @@ describe "BatchUpload" do
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
         audit_trail = FactoryGirl.create(:audit_trail)
-        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
     end
 
@@ -189,7 +241,7 @@ describe "BatchUpload" do
       cao.update_attributes(fk_organization_id: organization.id)
       application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
       audit_trail = FactoryGirl.create(:audit_trail)
-      data = BatchUpload.perform(invalid_providers, cao.id, application.id, audit_trail.id)
+      data = BatchUpload.perform(invalid_providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
       assert data.should be_true
     end
 
