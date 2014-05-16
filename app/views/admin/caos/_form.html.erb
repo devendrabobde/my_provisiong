@@ -92,7 +92,6 @@
 
         <div class="control-panel-rbtns">
           <p class="ois-rbtn-label">EPCS</p>
-          <%  %>
           <%= radio_button_tag('cao[epcs_ois_subscribed]', "1", (true == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button", style: "margin-left: 5px;")%>
           <p class="ois-rbtn-label">Enable</p>
           <%= radio_button_tag('cao[epcs_ois_subscribed]', "0", (false == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button")%>
