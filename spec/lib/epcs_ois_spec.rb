@@ -1,6 +1,9 @@
 require_relative '../spec_helper'
 
 describe "EPCS-OIS" do
+  before(:each) do
+    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+  end
   context "class methods" do
 	  describe '#batch_upload_dest' do
 	    describe "EPCS application is unavailable at the time when an upload begins" do
@@ -34,7 +37,7 @@ describe "EPCS-OIS" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    	  response = ProvisioningOis::batch_upload_dest(providers, coa, application).first
+	    	  response = ProvisioningOis::batch_upload_dest(providers, coa, application, @router_reg_apps).first
 	    	  response.each do |res|
 	    		res[:error].should =~ /EPCS-IDP Connection refused/
 	    	  end
@@ -72,7 +75,7 @@ describe "EPCS-OIS" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    		response = ProvisioningOis::batch_upload_dest(providers, coa, application).first
+	    		response = ProvisioningOis::batch_upload_dest(providers, coa, application, @router_reg_apps).first
 	    		response.each do |res|
 	    			res[:error].should =~ /EPCS-IDP Connection refused/
 	    		end
