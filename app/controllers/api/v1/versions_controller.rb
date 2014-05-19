@@ -14,11 +14,11 @@ class Api::V1::VersionsController < ApplicationController
       status = 'fail'
     end
     version_message ='%s version %s is up and running at %s:%s.' % [
-      'Onestop Provisioining App', SERVER_CONFIGURATION["onestop_code_version"], request.host, request.port ]
+      'Onestop Provisioning App', SERVER_CONFIGURATION["onestop_code_version"], request.host, request.port ]
     if var_error.nil?
-      db_status = "Onestop Provisioining is connected to database on account ID #{ActiveRecord::Base.connection_config[:username]}"
+      db_status = "Onestop Provisioning is connected to database on account ID #{ActiveRecord::Base.connection_config[:username]}"
     else
-      db_status = "Onestop Provisioining is currently experiencing problems with connecting to database. Error: #{var_error}"
+      db_status = "Onestop Provisioning is currently experiencing problems with connecting to database. Error: #{var_error}"
     end
     render json: { version_message: version_message + db_status, status: status, api_version: SERVER_CONFIGURATION["onestop_code_version"], server_instance_name: ServerConfiguration::CONFIG['onestop_server_instance_name'] }
   end
