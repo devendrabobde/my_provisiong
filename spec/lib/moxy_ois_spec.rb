@@ -36,9 +36,10 @@ describe "RCOPIA-OIS" do
 			                       "office_address_country"=>"US", "office_address_zip"=>"41100", 
 			                       "validation_error_message"=>"", "sys_provider_app_detail_id"=>"6948f684-a70c-4edf-96dd-c47a27aa2d44"
 			                    }]
+			            @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
 			    	end
 			    	it "After uploading a valid NPI, Moxy Ois should have the expected result" do		    			
-			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application).last
+			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application, @router_reg_apps).last
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200
@@ -46,7 +47,7 @@ describe "RCOPIA-OIS" do
 			    		end
 	    			end
 	    			it "After uploading a valid NPI, Router should have the expected result" do
-		    			response = OnestopRouter::batch_upload(@providers, @application)
+		    			response = OnestopRouter::batch_upload(@providers, @application, @router_reg_apps)
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200

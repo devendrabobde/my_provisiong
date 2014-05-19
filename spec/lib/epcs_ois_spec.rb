@@ -3,6 +3,9 @@ require_relative '../spec_helper'
 describe "EPCS-OIS" do
   context "class methods" do
 	  describe '#batch_upload_dest' do
+	  	before(:each) do
+	  	  @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+	  	end
 	    describe "EPCS application is unavailable at the time when an upload begins" do
 	    	it "raises an timeout/connection error when EPCS batch_upload_dest() method is called" do
 	    	  application = RegisteredApp.where(app_name: "EPCS-IDP").first
@@ -34,7 +37,7 @@ describe "EPCS-OIS" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    	  response = ProvisioningOis::batch_upload_dest(providers, coa, application).first
+	    	  response = ProvisioningOis::batch_upload_dest(providers, coa, application, @router_reg_apps).first
 	    	  response.each do |res|
 	    		res[:error].should =~ /EPCS-IDP Connection refused/
 	    	  end
@@ -72,7 +75,7 @@ describe "EPCS-OIS" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    		response = ProvisioningOis::batch_upload_dest(providers, coa, application).first
+	    		response = ProvisioningOis::batch_upload_dest(providers, coa, application, @router_reg_apps).first
 	    		response.each do |res|
 	    			res[:error].should =~ /EPCS-IDP Connection refused/
 	    		end
@@ -111,6 +114,7 @@ describe "EPCS-OIS" do
 					              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 					              	:validation_error_message=>""
 					              }]
+					    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
 			    	end
 			    	it "After uploading a valid NPI, SuperNpi Ois should have the expected result" do		    			
 			    		response = NpiValidation::validate(@providers, @application)
@@ -138,7 +142,7 @@ describe "EPCS-OIS" do
 	    			end
 
 			    	it "After uploading a valid NPI, EPCS OIS should have the expected result" do
-			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application).first
+			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application, @router_reg_apps).first
 			    		response.each do |res|
 			    			res[:status].should == "900"
 			    			res[:error].should  == "Organization is not registered as an EPCS IDP Vendor"
@@ -146,7 +150,7 @@ describe "EPCS-OIS" do
 			    	end
 
 			    	it "After uploading a valid NPI, Router should have the expected result" do
-		    			response = OnestopRouter::batch_upload(@providers, @application)
+		    			response = OnestopRouter::batch_upload(@providers, @application, @router_reg_apps)
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200

@@ -1,5 +1,5 @@
 Given /^I select moxy application$/ do
-  select "DrFirst - moxy", from: 'provider_registered_app_id'
+  select "DrFirst::moxy", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of valid moxy providers$/ do

@@ -1,6 +1,9 @@
 require_relative '../spec_helper'
 
 describe "ProvisioningOis" do
+  before(:each) do
+    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+  end
   describe "#batch_upload_dest" do
   	it "should upload a batch of providers for Rcopia application" do
   	  providers = [
@@ -32,7 +35,7 @@ describe "ProvisioningOis" do
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application)
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application,@router_reg_apps)
         assert data.should be_true
   	end
 
@@ -57,7 +60,7 @@ describe "ProvisioningOis" do
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application)
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application, @router_reg_apps)
         assert data.should be_true
   	end
   end

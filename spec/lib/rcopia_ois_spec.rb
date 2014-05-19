@@ -33,9 +33,10 @@ describe "RCOPIA-OIS" do
 		                        [""=>[{:provider_dea=>"BV8234661"}]],
 		                      "email" => "test@example.com"
 		                    }]
+		                    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
 			    	end
 			    	it "After uploading a valid NPI, Rcopia Ois should have the expected result" do		    			
-			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application).last
+			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application, @router_reg_apps).last
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200
@@ -43,7 +44,7 @@ describe "RCOPIA-OIS" do
 			    		end
 	    			end
 	    			it "After uploading a valid NPI, Router should have the expected result" do
-		    			response = OnestopRouter::batch_upload(@providers, @application)
+		    			response = OnestopRouter::batch_upload(@providers, @application, @router_reg_apps)
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200

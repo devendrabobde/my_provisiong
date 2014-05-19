@@ -6,7 +6,7 @@ Given /^a valid COA$/ do
   profile = Profile.create(profile_name: Faker::Name.first_name)
   @organization_coa = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
-    contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
+    contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", state_code: "AL")
   coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa.id, fk_profile_id: profile.id)
   coa.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: coa.id)
   @current_cao = coa
@@ -63,7 +63,7 @@ end
 
 Given /^I select an application$/ do
   page.execute_script("$('#update-password-modal').modal('hide');")
-  select "DrFirst - epcsidp", from: 'provider_registered_app_id'
+  select "DrFirst::epcsidp", from: 'provider_registered_app_id'
 end
 
 When /^I select a csv file of 4 providers$/ do

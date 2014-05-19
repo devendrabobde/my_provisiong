@@ -1,6 +1,9 @@
 require 'spec_helper'
 describe "BatchUpload" do
   describe "#perform" do
+    before(:each) do
+    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+  end
   	it "should perform batch upload for providers for EPCS-IDP application" do
   	  providers = [
                         {:npi=>"1194718007",
@@ -56,7 +59,7 @@ describe "BatchUpload" do
     cao.update_attributes(fk_organization_id: organization.id)
 		application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
 		audit_trail = FactoryGirl.create(:audit_trail)
-		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
   	end
 
@@ -91,7 +94,7 @@ describe "BatchUpload" do
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
         audit_trail = FactoryGirl.create(:audit_trail)
-        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
     end
 
@@ -129,7 +132,7 @@ describe "BatchUpload" do
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
         audit_trail = FactoryGirl.create(:audit_trail)
-        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id)
+        data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
         assert data.should be_true
     end
 
@@ -189,7 +192,7 @@ describe "BatchUpload" do
       cao.update_attributes(fk_organization_id: organization.id)
       application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
       audit_trail = FactoryGirl.create(:audit_trail)
-      data = BatchUpload.perform(invalid_providers, cao.id, application.id, audit_trail.id)
+      data = BatchUpload.perform(invalid_providers, cao.id, application.id, audit_trail.id, @router_reg_apps)
       assert data.should be_true
     end
 
