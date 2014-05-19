@@ -12,3 +12,8 @@ US_STATE_LIST = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colo
                 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
                 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
                 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+SECURITY_QUESTIONS = ["What was your childhood nickname?", 
+  	                  "What was the make of your first car?",
+  	                  "What is your oldest sibling's middle name?",
+  	                  "What school did you attend for sixth grade?",
+  	                  "What was the name of your first pet?"]

@@ -110,6 +110,25 @@
       </div><!--/row-->
 
       <div class="row-fluid">
+          <div class="span6 bgcolor">
+            <div class="control-group">
+              <%= label_tag "Security Question", "Security Question <span class='red'>*</span>".html_safe, class: "control-label" %>
+              <div class="controls">
+                <%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, f.object.security_question), { prompt: "Select Security Question", required: true } %>            
+              </div>
+            </div>
+          </div><!--/span-->
+          <div class="span6 bgcolor">
+            <div class="control-group">
+              <%= label_tag "Security Answer", "Security Answer <span class='red'>*</span>".html_safe, class: "control-label" %>
+              <div class="controls">
+                <%= f.text_field :security_answer, required: true, class: "form-control", placeholder: "Security Answer" %>
+              </div>
+            </div>
+          </div><!--/span-->
+      </div><!--/row-->
+
+      <div class="row-fluid">
 
         <div class="form-group" style="text-align: right;margin-right:10px">
           <div class="col-sm-10">

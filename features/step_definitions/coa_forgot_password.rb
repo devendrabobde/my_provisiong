@@ -47,6 +47,8 @@ end
 Then /^I should be able to enter new password and confirmation password$/ do
   # fill_in "cao_password", with: "password@1234"
   # fill_in "cao_password_confirmation", with: "password@1234"
+  # select "What was your childhood nickname?", from: "cao_security_question"
+  # fill_in "cao_security_answer", with: "scott"
 end
 
 When /^I click on Change my password$/ do
