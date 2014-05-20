@@ -59,7 +59,7 @@ module ProvisioningOis
       end
       payload = { :providers => { "" => providers }, vendor_details: vendor_details}
       # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      url = app_url #+ "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       if Rails.env == "test"
         url = CONSTANT["RCOPIA_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
       end
@@ -86,7 +86,7 @@ module ProvisioningOis
       # end
       payload = { :providers => { "" => providers }}
       # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
+      url = app_url #+ "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       if Rails.env == "test"
         url = CONSTANT["MOXY_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
       end
