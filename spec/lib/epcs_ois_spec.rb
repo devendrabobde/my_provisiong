@@ -1,6 +1,9 @@
 require_relative '../spec_helper'
 
 describe "EPCS-OIS" do
+  before(:each) do
+    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+  end
   context "class methods" do
 	  describe '#batch_upload_dest' do
 	  	before(:each) do

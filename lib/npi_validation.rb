@@ -6,20 +6,20 @@ module NpiValidation
   #
   # Find the application and verify application specific conditions, for EPCS we are verifying providers against SuperNPI DB
   #
-  def self.validate(providers, application)
+  def self.validate(providers)
     # response = providers
     #
     # validate providers npi checksum
     #
-    response, invalid_npi_providers = validate_provider_npi(providers)
+    response, npiless_providers, invalid_npi_providers = validate_provider_npi(providers)
 
-    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+    if providers.first.keys.include?(:npi)
       request_time = Time.now
       response = check_supernpi_acceptance(response)
       response_time = Time.now
       Rails.logger.info "Benchmarking - SUPERNPI OIS - NpiValidation elapsed time:#{response_time - request_time} sec"
     end
-    response + invalid_npi_providers
+    response + npiless_providers + invalid_npi_providers
   end
 
   #
@@ -30,8 +30,10 @@ module NpiValidation
     begin
       url = CONSTANT["SUPERNPI_OIS"]["SERVER_URL"] + "/" + CONSTANT["SUPERNPI_OIS"]["VIEW_USER_URL"]
       modified_providers = providers_records
-      modified_providers.each do |provider|
-        provider[:provider_dea_record] = { "" => provider[:provider_dea_record]}
+      if providers_records.first.keys.include? :provider_dea_record
+        modified_providers.each do |provider|
+          provider[:provider_dea_record] = { "" => provider[:provider_dea_record]}
+        end
       end
       payload = { :providers => { "" => modified_providers } }
       response = RestClient::Request.execute(:method => :get, :url => url , :payload => payload, :timeout => 720 )
@@ -58,9 +60,10 @@ module NpiValidation
   def self.validate_provider_npi(providers)
     invalid_npi_provs = []
     provs = []
+    npiless_provs = []
     providers.each do |provider|
       if provider[:npi].blank?
-        provs << provider
+        npiless_provs << provider
       else
         npi = provider[:npi]
         if npi.length == 10
@@ -85,6 +88,6 @@ module NpiValidation
         end
       end
     end
-    [provs, invalid_npi_provs]
+    [provs, npiless_provs, invalid_npi_provs]
   end
 end
