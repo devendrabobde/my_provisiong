@@ -3,6 +3,14 @@ class BatchUpload
   # include Resque::Plugins::Status
   include ProvisioningOis
   @queue = :providers_queue
+
+  # Custom On Failure Callback for Queue exit.
+  def self.on_failure(e, *args)
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: args[3])
+      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: args[0].count)
+      Rails.logger.error e
+  end
+
    # Ask resque to perform processing of CSV record
   def self.perform(providers,cao_id, application_id, audit_trail_id)
   # def self.perform
