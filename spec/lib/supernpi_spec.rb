@@ -26,7 +26,7 @@ describe "SuperNPI" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    		response = NpiValidation::validate(providers, application)
+	    		response = NpiValidation::validate(providers)
 	    		response.each do |res|
 	    			res[:validation_error_message].should =~ /SuperNPI OIS Connection refused/
 	    		end
@@ -56,7 +56,7 @@ describe "SuperNPI" do
 				              	:provider_dea_record=>[{"provider_dea"=>"BM9301045", "provider_dea_state"=>"MD", "provider_dea_expiration_date"=>"03/01/1988"}], 
 				              	:validation_error_message=>""
 				              }]
-	    		response = NpiValidation::validate(providers, application)
+	    		response = NpiValidation::validate(providers)
 	    		response.each do |res|
 	    			res[:validation_error_message].should =~ /SuperNPI OIS Connection refused/
 	    		end
