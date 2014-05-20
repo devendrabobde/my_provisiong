@@ -114,7 +114,11 @@
 
 .error {
     color: red;
-    width: 200%
+    width: 200%;
+}
+
+.popup-errors {
+  width: 139%;
 }
 
 .new-organization-errors {
