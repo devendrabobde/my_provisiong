@@ -159,3 +159,24 @@ hr {
 .padding-top-10 {
     padding-top: 10px;
 }
+
+.ois-fieldset {
+  margin-left: 80px;
+  overflow: hidden;
+}
+
+.control-panel-rbtns {
+  float: left;
+  clear: none;
+}
+.ois-radio-button {
+  float: left;
+  clear: none;
+  margin: 2px 0 0 2px;
+}
+.ois-rbtn-label {
+  float: left;
+  clear: none;
+  display: block;
+  padding: 0px 10em 0px 5px;
+}

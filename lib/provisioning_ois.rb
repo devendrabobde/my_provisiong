@@ -16,7 +16,12 @@ module ProvisioningOis
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
       end
-      payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys  }
+      if cao.epcs_ois_subscribed?
+        vendor_details = { vendor_name: cao.epcs_vendor_name, vendor_password: cao.epcs_vendor_password }
+      else
+        vendor_details = { vendor_name: "", vendor_password: "" }
+      end
+      payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys, vendor_details: vendor_details  }
       # url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       url = app_url + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
       if Rails.env == "test"
@@ -46,7 +51,12 @@ module ProvisioningOis
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
       end
-      payload = { :providers => { "" => providers }}
+      if cao.rcopia_ois_subscribed?
+        vendor_details = { vendor_name: cao.rcopia_vendor_name, vendor_password: cao.rcopia_vendor_password }
+      else
+        vendor_details = { vendor_name: "", vendor_password: "" }
+      end
+      payload = { :providers => { "" => providers }, vendor_details: vendor_details}
       # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
       url = app_url + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       if Rails.env == "test"

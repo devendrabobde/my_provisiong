@@ -144,7 +144,36 @@ $(document).ready(function () {
   if ($("#update-password-modal").length != 0){
     $(".alert-success").hide();
   }
+
+// Control panel toggle buttons
+  $('#cao_rcopia_ois_subscribed_1').change(function(){
+    $("#rcopia_vendor_Details").show();
+    $('#cao_rcopia_vendor_name, #cao_rcopia_vendor_password').attr('required','required');
+  });
+
+  $('#cao_rcopia_ois_subscribed_0').change(function(){
+    $("#rcopia_vendor_Details").hide();
+  });
+
+  if($('#cao_rcopia_ois_subscribed_1').is(':checked')){
+    $("#rcopia_vendor_Details").show();
+    $('#cao_rcopia_vendor_name, #cao_rcopia_vendor_password').attr('required','required');
+  }
+
+  $('#cao_epcs_ois_subscribed_1').change(function(){
+    $("#epcs_vendor_Details").show();
+    $('#cao_epcs_vendor_name, #cao_epcs_vendor_password').attr('required','required');
+  });
+
+  $('#cao_epcs_ois_subscribed_0').change(function(){
+    $("#epcs_vendor_Details").hide();
+  });  
   
+  if($('#cao_epcs_ois_subscribed_1').is(':checked')){
+    $("#epcs_vendor_Details").show();
+    $('#cao_epcs_vendor_name, #cao_epcs_vendor_password').attr('required','required');
+  }
+
 });
 
 

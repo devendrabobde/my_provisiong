@@ -3,16 +3,8 @@
     <legend><h3><%= text %></h3></legend>
     <div class="row-fluid" style="padding:20px 0px 0px 90px;">
       <div class="span9">
-        <!--div class="row-fluid">
-        <div class="span12 bgcolor">
-          <div class="alert alert-error">
-            <a href="#" class="close" data-dismiss="alert">×</a>
-            Error Messages.
-          </div>
-        </div>
-        </div-->
-        <div class="row-fluid">
 
+        <div class="row-fluid">
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= label_tag "First Name", "First Name <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -30,12 +22,10 @@
               </div>
             </div>
           </div><!--/span-->
-
         </div><!--/row-->
 
 
         <div class="row-fluid">
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= label_tag "Username", "Username <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -53,36 +43,9 @@
               </div>
             </div>
           </div><!--/span-->
-
         </div><!--/row-->
 
-        <%#- if coa.new_record? -%>
-         <!--  <div class="row-fluid">
-
-            <div class="span6 bgcolor">
-              <div class="control-group"> -->
-                <%#= label_tag "Password", "Password <span class='red'>*</span>".html_safe, class: "control-label" %>
-                <!-- <div class="controls"> -->
-                  <%#= f.password_field :password, required: true, class: "form-control", placeholder: "Password" %>
-                <!-- </div>
-              </div>
-            </div></span-->
-
-            <!-- <div class="span6 bgcolor">
-              <div class="control-group"> -->
-                <%#= label_tag "Password Confirmation", "Confirm Password <span class='red'>*</span>".html_safe, class: "control-label" %>
-                <!-- <div class="controls"> -->
-                  <%#= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation" %>
-                <!-- </div> -->
-              <!-- </div> -->
-            <!--/div></span-->
-
-          <!--/div></row-->
-        <%#- end -%>
-
-
         <div class="row-fluid">
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= f.label :profile_id, class: "control-label" %>
@@ -95,22 +58,69 @@
               </div>
             </div>
           </div><!--/span-->
-
-          <!--div class="span6 bgcolor">
-          <div class="control-group">
-            <%= f.label :role_id, class: "control-label" %>
-            <div class="controls">
-              <%#= select_tag 'cao[fk_role_id]', options_from_collection_for_select(@role_list, "id", "name"), { class: "form-control" } %>
-
-              <%#= hidden_field :fk_role_id, value:  %>
-            </div>
-          </div>
-        </div></span-->
-
       </div><!--/row-->
 
-      <div class="row-fluid">
+      <fieldset class="fieldset ois-fieldset">
+        <legend class="scheduler-border">Control Panel</legend>
+        <div class="control-panel-rbtns">
+          <p class="ois-rbtn-label">Rcopia</p>
+          <%= radio_button_tag('cao[rcopia_ois_subscribed]', "1", (true == coa.try(:rcopia_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Enable</p>
+          <%= radio_button_tag('cao[rcopia_ois_subscribed]', "0", (false == coa.try(:rcopia_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Disable</p>
+        </div>
+        <div id="rcopia_vendor_Details" style="display: none;">
+          <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Rcopia Vendor Name", "Rcopia Vendor Name".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :rcopia_vendor_name, placeholder: "Rcopia Vendor Name", style: "margin-left: -30px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "Rcopia Vendor Password", "Rcopia Vendor Password".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :rcopia_vendor_password, class: "form-control", placeholder: "Rcopia Vendor Password", style: "margin-left: -10px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+          </div><!--/row-->
+        </div>
 
+        <div class="control-panel-rbtns">
+          <p class="ois-rbtn-label">EPCS</p>
+          <%= radio_button_tag('cao[epcs_ois_subscribed]', "1", (true == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button", style: "margin-left: 5px;")%>
+          <p class="ois-rbtn-label">Enable</p>
+          <%= radio_button_tag('cao[epcs_ois_subscribed]', "0", (false == coa.try(:epcs_ois_subscribed)), class: "ois-radio-button")%>
+          <p class="ois-rbtn-label">Disable</p>
+        </div>
+
+        <div id="epcs_vendor_Details" style="display: none;">
+          <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "EPCS Vendor Name", "EPCS Vendor Name".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :epcs_vendor_name, placeholder: "EPCS Vendor Name", style: "margin-left: -30px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <div class="control-group">
+                <%= label_tag "EPCS Vendor Password", "EPCS Vendor Password".html_safe, class: "control-label", style: "text-align: left;" %>
+                <div class="controls">
+                  <%= f.text_field :epcs_vendor_password, class: "form-control", placeholder: "EPCS Vendor Password", style: "margin-left: -10px; width: 100%;" %>
+                </div>
+              </div>
+            </div><!--/span-->
+          </div><!--/row-->
+        </div>
+      </fieldset><br />
+
+      <div class="row-fluid">
         <div class="form-group" style="text-align: right;margin-right:10px">
           <div class="col-sm-10">
             <%= f.submit @cao.new_record? ? 'Create' : 'Update', :class => "btn btn-primary" %>

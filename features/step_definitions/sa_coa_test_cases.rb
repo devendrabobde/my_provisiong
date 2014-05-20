@@ -40,6 +40,12 @@ When(/^I submit the form with proper values$/) do
 	fill_in "cao_email", with: @n_email
 	# select "Doctor", from: "cao_fk_profile_id"
 	find('#cao_fk_profile_id').find(:xpath, 'option[2]').select_option
+	choose("cao_rcopia_ois_subscribed_1")
+	fill_in "cao_rcopia_vendor_name", with: "Meditech1"
+	fill_in "cao_rcopia_vendor_password", with: "xxxxxxxxxxxxxxxxxxx"
+	choose("cao_epcs_ois_subscribed_1")
+	fill_in "cao_epcs_vendor_name", with: "Meditech1"
+	fill_in "cao_epcs_vendor_password", with: "xxxxxxxxxxxxxxxxxxx"
 	click_button("Create")
 end
 
@@ -83,6 +89,12 @@ When(/^I update the edit COA form with proper fields$/) do
 	fill_in "cao_last_name", with: @e_lname
 	fill_in "cao_username", with: @e_username
 	fill_in "cao_email", with: @e_email
+	choose("cao_rcopia_ois_subscribed_1")
+	fill_in "cao_rcopia_vendor_name", with: "Meditech1"
+	fill_in "cao_rcopia_vendor_password", with: "xxxxxxxxxxxxxxxxxxx"
+	choose("cao_epcs_ois_subscribed_1")
+	fill_in "cao_epcs_vendor_name", with: "Meditech1"
+	fill_in "cao_epcs_vendor_password", with: "xxxxxxxxxxxxxxxxxxx"
 	click_button("Update")
 end
 
