@@ -19,6 +19,14 @@
             <td style="padding-left:5px;"><div><%= f.label :password_confirmation, "Confirm new password" %></td>
             <td style="padding-left:10px;"><%= f.password_field :password_confirmation %></div></td>
               </tr>
+              <tr>
+            <td style="padding-left:5px;"><div><%= f.label :security_question, "Security Question" %></td>
+            <td style="padding-left:10px;"><%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, @coa.try(:security_question)), { prompt: "Select Security Question", required: true } %></div></td>
+              </tr>
+              <tr>
+            <td style="padding-left:5px;"><div><%= f.label :security_answer, "Security Answer" %></td>
+            <td style="padding-left:10px;"><%= f.text_field :security_answer, required: true %></div></td>
+              </tr>
             </tbody>
           </table>
       <div><%= f.submit "Change my password", :class=>"btn btn-primary" %></div>

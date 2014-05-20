@@ -13,13 +13,12 @@ end
 When /^I enter email on the reset password form$/ do
   @coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
-    password: "password@123", password_confirmation: "password@123")
+    password: "Password@123", password_confirmation: "Password@123", security_question: "What was your childhood nickname?", security_answer: "scott")
   role = Role.create(name: "COA")
   organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
   @coa.update_attributes(fk_role_id: role.id, fk_organization_id: organization.id)
-  @coa.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @coa.id)
   fill_in "cao_email", with: @coa.email
 end
 
@@ -37,22 +36,24 @@ end
 
 When /^I open email then I should be able to see Change my password link$/ do
   # email = open_email(@coa.email)
-  # email.should have_body_text(/Change my password/)
+  email = open_email(@coa.email, with_subject: "Reset password instructions")
+  email.should have_body_text(/Change my password/)
 end
 
 And /^I follow Change my password link in the email$/ do
-  # click_first_link_in_email
+  click_first_link_in_email
 end
 
 Then /^I should be able to enter new password and confirmation password$/ do
-  # fill_in "cao_password", with: "password@1234"
-  # fill_in "cao_password_confirmation", with: "password@1234"
+  fill_in("cao_password", with: "Password@12345")
+  fill_in("cao_password_confirmation", with: "Password@12345")
+  fill_in("cao_security_answer", with: "scott")
 end
 
 When /^I click on Change my password$/ do
-  # click_button "Change my password"
+  click_button "Change my password"
 end
 
 Then /^I should be able to see Your password was changed successfully. You are now signed in$/ do
-  # page.should have_content('Your password was changed successfully. You are now signed in.')
+  page.should have_content('Your password was changed successfully. You are now signed in.')
 end

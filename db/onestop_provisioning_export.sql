@@ -1254,3 +1254,12 @@ RCOPIA_VENDOR_PASSWORD VARCHAR2(255),
 EPCS_VENDOR_NAME VARCHAR2(255),
 EPCS_VENDOR_PASSWORD VARCHAR2(255));
 /
+
+-----------------------------------------------------------
+--   Provisioning: Added fields as per the ticket [ MOXY-13747 - There should be some Security Q/A in order to reset a Password ] - SECURITY_QUESTION_ID, SECURITY_ANSWER 
+-----------------------------------------------------------
+
+ALTER TABLE SPARKWAY.CAOS ADD (
+SECURITY_QUESTION VARCHAR2(255),
+SECURITY_ANSWER VARCHAR2(255));
+/

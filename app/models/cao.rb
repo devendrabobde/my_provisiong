@@ -9,7 +9,8 @@ class Cao < ActiveRecord::Base
 
   attr_accessible :username, :first_name, :last_name, :user_id, :is_active,
                   :email, :password, :password_confirmation, :remember_me, :fk_organization_id,
-                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at,
+                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at,#, :encrypted_password, :password_salt
+                  :security_question, :security_answer,
                   :rcopia_ois_subscribed, :rcopia_vendor_name, :rcopia_vendor_password, :epcs_ois_subscribed, :epcs_vendor_name, :epcs_vendor_password
 
   alias_attribute :sys_cao_id, :id
@@ -54,6 +55,22 @@ class Cao < ActiveRecord::Base
 
   def active_for_authentication?
     super && !deleted_at
+  end
+
+  def self.reset_password_by_token(attributes={})
+    recoverable = find_or_initialize_with_error_by(:reset_password_token, attributes[:reset_password_token])
+    if recoverable.persisted?
+      if (recoverable.security_question.eql?(attributes[:security_question]) && recoverable.security_answer.eql?(attributes[:security_answer]))
+        if recoverable.reset_password_period_valid?
+          recoverable.reset_password!(attributes[:password], attributes[:password_confirmation])
+        else
+          recoverable.errors.add(:reset_password_token, :expired)
+        end
+      else
+        recoverable.errors.add(:security_answer, :security_question_error)
+      end
+    end
+    recoverable
   end
 
   private
