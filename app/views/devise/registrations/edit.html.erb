@@ -3,7 +3,6 @@
     <legend><h3><%= "Personal Information" %></h3></legend>
     <div class="row-fluid personal-info-form" style="padding:20px 0px 0px 0px;">
       <div class="span9">
-
         <% if resource.errors.any? && @password.eql?(false) %>
           <div class="row-fluid">
             <div class="span12 bgcolor">
@@ -13,9 +12,7 @@
             </div>
           </div>
         <%- end -%>
-
         <div class="row-fluid">
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= f.label :first_name, "First Name <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -24,7 +21,6 @@
               </div>
             </div>
           </div><!--/span-->
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= f.label :last_name, "Last Name <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -33,11 +29,9 @@
               </div>
             </div>
           </div><!--/span-->
-
         </div><!--/row-->
 
         <div class="row-fluid">
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= f.label :email, "Email <span class='red'>*</span>".html_safe, class: "control-label"  %>
@@ -51,14 +45,34 @@
             <div class="control-group">
               <%= f.label :profile_id, class: "control-label" %>
               <div class="controls">
-                <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name", resource.profile.id), { class: "form-control" } %>
+                <%- if !resource.is_admin? -%>
+                  <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name", resource.profile.id), { class: "form-control" } %>
+                <%- end -%>
               </div>
             </div>
           </div><!--/span-->
         </div><!--/row-->
 
         <div class="row-fluid">
+        <div class="span6 bgcolor">
+          <div class="control-group">
+            <%= label_tag "Security Question", "Security Question <span class='red'>*</span>".html_safe, class: "control-label" %>
+            <div class="controls">
+              <%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, f.object.security_question), { prompt: "Select Security Question", required: true } %>            
+            </div>
+          </div>
+        </div><!--/span-->
+        <div class="span6 bgcolor">
+          <div class="control-group">
+            <%= label_tag "Security Answer", "Security Answer <span class='red'>*</span>".html_safe, class: "control-label" %>
+            <div class="controls">
+              <%= f.text_field :security_answer, required: true, class: "form-control", placeholder: "Security Answer" %>
+            </div>
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
 
+        <div class="row-fluid">
           <div class="form-group" style="text-align: right;margin-right:10px">
             <div class="col-sm-10">
               <%= f.submit "Update", :class=>'btn btn-primary' %>
@@ -66,7 +80,6 @@
             </div>
           </div>
         </div><!--/row-->
-
 
       </div>
       <div class="span4">

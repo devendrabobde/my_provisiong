@@ -12,7 +12,6 @@
               </div>
             </div>
           </div><!--/span-->
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= label_tag "Last Name", "Last Name <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -23,7 +22,6 @@
           </div><!--/span-->
         </div><!--/row-->
 
-
         <div class="row-fluid">
           <div class="span6 bgcolor">
             <div class="control-group">
@@ -33,7 +31,6 @@
               </div>
             </div>
           </div><!--/span-->
-
           <div class="span6 bgcolor">
             <div class="control-group">
               <%= label_tag "Email", "Email <span class='red'>*</span>".html_safe, class: "control-label" %>
@@ -60,22 +57,22 @@
       </div><!--/row-->
 
       <div class="row-fluid">
-          <div class="span6 bgcolor">
-            <div class="control-group">
-              <%= label_tag "Security Question", "Security Question <span class='red'>*</span>".html_safe, class: "control-label" %>
-              <div class="controls">
-                <%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, f.object.security_question), { prompt: "Select Security Question", required: true } %>            
-              </div>
+        <div class="span6 bgcolor">
+          <div class="control-group">
+            <%= label_tag "Security Question", "Security Question <span class='red'>*</span>".html_safe, class: "control-label" %>
+            <div class="controls">
+              <%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, f.object.security_question), { prompt: "Select Security Question", required: true } %>            
             </div>
-          </div><!--/span-->
-          <div class="span6 bgcolor">
-            <div class="control-group">
-              <%= label_tag "Security Answer", "Security Answer <span class='red'>*</span>".html_safe, class: "control-label" %>
-              <div class="controls">
-                <%= f.text_field :security_answer, required: true, class: "form-control", placeholder: "Security Answer" %>
-              </div>
+          </div>
+        </div><!--/span-->
+        <div class="span6 bgcolor">
+          <div class="control-group">
+            <%= label_tag "Security Answer", "Security Answer <span class='red'>*</span>".html_safe, class: "control-label" %>
+            <div class="controls">
+              <%= f.text_field :security_answer, required: true, class: "form-control", placeholder: "Security Answer" %>
             </div>
-          </div><!--/span-->
+          </div>
+        </div><!--/span-->
       </div><!--/row-->
       
       <fieldset class="fieldset ois-fieldset">

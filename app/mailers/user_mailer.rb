@@ -24,10 +24,12 @@ class UserMailer < ActionMailer::Base
   end
 
   def send_password(user, password)
-    @password   = password
-    @recipient  = user[:email]
-    @user       = "#{user[:first_name]} #{user[:last_name]}"
-    @url        = root_url
+    @security_question = user[:security_question]
+    @security_answer   = user[:security_answer]
+    @password          = password
+    @recipient         = user[:email]
+    @user              = "#{user[:first_name]} #{user[:last_name]}"    
+    @url               = root_url
     mail(to: @recipient, subject: "Your account is successfully created.")    
   end
 
