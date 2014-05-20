@@ -42,7 +42,7 @@ module ProvisioingCsvValidation
     rescue => e
       Rails.logger.error e
       status = false
-      message = "OIS #{router_reg_applications["ois_name"]}: " + e.message
+      message = "OIS #{router_reg_applications["ois_name"] rescue nil}: " + e.message
     ensure
       Rails.logger.info \
         "Provisioning- process_csv_api(): Communication summary:\n\nURL:#{url}\n\nSent:\
