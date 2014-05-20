@@ -3,7 +3,7 @@ class Devise::RegistrationsController < DeviseController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
   before_filter :generate_required_object, only: [:edit, :update]
   skip_before_filter :check_update_password!, only: :update
-  skip_before_filter :check_update_password!, only: :edit, :if => proc { current_coa.is_admin? }
+  # skip_before_filter :check_update_password!, only: :edit, :if => proc { current_coa.is_admin? }
   # GET /resource/sign_up
   def new
     build_resource({})
