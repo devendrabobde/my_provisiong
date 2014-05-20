@@ -248,6 +248,7 @@ module ProvisioingCsvValidation
         total_providers = providers.collect do |x|
           x = x.symbolize_keys 
           x[:validation_error_message] = VALIDATION_MESSAGE["PROVIDER"]["VALIDATION_UNSUCCESSFUL"] + router_reg_applications["ois_name"]
+          x
         end
       end
     rescue => e
@@ -255,6 +256,7 @@ module ProvisioingCsvValidation
       total_providers = providers.collect do |x| 
         x = x.symbolize_keys
         x[:validation_error_message] = e.message
+        x
       end 
     ensure
       Rails.logger.info \
