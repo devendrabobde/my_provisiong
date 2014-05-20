@@ -4,6 +4,7 @@ describe "OneStopRouter" do
   before(:each) do
     @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
   end
+
   context "class methods" do
 	  describe '#batch_upload' do
 	    describe "Router application is unavailable at the time when an upload begins" do
