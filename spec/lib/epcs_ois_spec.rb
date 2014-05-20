@@ -120,7 +120,7 @@ describe "EPCS-OIS" do
 					    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
 			    	end
 			    	it "After uploading a valid NPI, SuperNpi Ois should have the expected result" do		    			
-			    		response = NpiValidation::validate(@providers, @application)
+			    		response = NpiValidation::validate(@providers)
 			    		res = response.collect{|x| x.symbolize_keys}
 			    		res.should == [{:npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA",
 					                :address_1=>"28411 NORTHWESTERN HWY", :city=>"SOUTHFIELD",

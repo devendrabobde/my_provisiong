@@ -134,11 +134,12 @@ describe Provider do
          [{:provider_dea=>"BV8234661",
            :provider_dea_state=>"VA",
            :provider_dea_expiration_date=>"03/01/1988"}]}]
+      router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
       cao = FactoryGirl.create(:cao)
       organization = FactoryGirl.create(:organization)
       cao.update_attributes(fk_organization_id: organization.id)
       application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
-      provider = Provider.save_provider(providers, cao, application)
+      provider = Provider.save_provider(providers, cao, application, router_reg_apps)
       assert provider.should be_true
     end
   end
