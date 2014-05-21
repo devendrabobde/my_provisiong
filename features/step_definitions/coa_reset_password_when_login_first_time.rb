@@ -32,11 +32,36 @@ Then(/^I should be able to see Change Password form$/) do
   page.should have_content("Change Password")
 end
 
+And /^I click on update without entering required fields$/ do
+  click_button("Update")
+end
+
+Then /^I should see error message as This field is required$/ do
+  page.should have_content("This field is required.")
+end
+
+And /^I fill in system unexpected password in new password field$/ do
+  fill_in('cao_password', with: 'p')
+end
+
+Then /^I should see error message as Minimum 8 and Maximum 16 characters at least 1 Alphabet, 1 Number and 1 Special Character$/ do
+  page.should have_content("Minimum 8 and Maximum 16 characters at least 1 Alphabet, 1 Number and 1 Special Character")
+end
+
+And /^I fill in dissimilar value in password confirmation field$/ do
+  fill_in('cao_password', with: 'password@12345')
+  fill_in('cao_password_confirmation', with: 'password')
+end
+
+Then /^I should see error message as Please enter the same value again$/ do
+  page.should have_content("Please enter the same value again.")
+end
+
 And(/^I click on update with the new password and correct old password$/) do
-  fill_in('cao_current_password', :with => 'password@123')
-  fill_in('cao_password', :with => 'password@12345')
-  fill_in('cao_password_confirmation', :with => 'password@12345')
-  click_button("Update")  
+  fill_in('cao_current_password', with: 'password@123')
+  fill_in('cao_password', with: 'Password@12345')
+  fill_in('cao_password_confirmation', with: 'Password@12345')
+  click_button("Update")
 end
 
 Then(/^I should see success message as You updated your account successfully$/) do
