@@ -67,3 +67,25 @@ end
 Then(/^I should see success message as You updated your account successfully$/) do
   page.should have_content("You updated your account successfully.")
 end
+
+And /^I click on update with the new password which I had used in past$/ do
+  fill_in('cao_current_password', with: 'password@123')
+  fill_in('cao_password', with: 'password@123')
+  fill_in('cao_password_confirmation', with: 'password@123')
+  click_button("Update")
+end
+
+Then /^I should see error message as Password was already taken in the past$/ do
+  page.should have_content("Password was already taken in the past! ")
+end
+
+And /^I click on update with incorrect old password$/ do
+  fill_in('cao_current_password', with: 'password')
+  fill_in('cao_password', with: 'Password@12345')
+  fill_in('cao_password_confirmation', with: 'Password@12345')
+  click_button("Update")
+end
+
+Then /^I should see error message as Current password is invalid$/ do
+  page.should have_content("Current password is invalid")
+end
