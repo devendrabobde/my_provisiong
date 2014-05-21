@@ -9,7 +9,14 @@ class Cao < ActiveRecord::Base
 
   attr_accessible :username, :first_name, :last_name, :user_id, :is_active,
                   :email, :password, :password_confirmation, :remember_me, :fk_organization_id,
+<<<<<<< HEAD
                   :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at#, :encrypted_password, :password_salt
+=======
+                  :fk_profile_id, :fk_role_id, :deleted_reason, :deleted_at,#, :encrypted_password, :password_salt
+                  :security_question, :security_answer,
+                  :rcopia_ois_subscribed, :rcopia_vendor_name, :rcopia_vendor_password, :epcs_ois_subscribed, :epcs_vendor_name, :epcs_vendor_password,
+                  :reset_password_token, :reset_password_sent_at
+>>>>>>> 7d2717c... MOXY-13746 - Password reset link in the email must expire
 
   alias_attribute :sys_cao_id, :id
 

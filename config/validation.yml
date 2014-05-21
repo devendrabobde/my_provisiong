@@ -11,6 +11,7 @@ COA:
   UPDATE: COA was updated successfully.
   DEACTIVATE: COA deactivated successfully.
   ACTIVATE: COA activated successfully.
+  PASSWORD_RESET_LINK_EXPIRED: Reset password token has expired. please request a new one
 
 ORGANIZATION:
   CREATE: Organization was created successfully.

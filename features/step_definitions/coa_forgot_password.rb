@@ -56,3 +56,19 @@ end
 Then /^I should be able to see Your password was changed successfully. You are now signed in$/ do
   # page.should have_content('Your password was changed successfully. You are now signed in.')
 end
+
+When /^I open an email then I should be able to see Change my password link$/ do
+  Cao.where(email: @coa.email).first.update_attributes(reset_password_token: nil, reset_password_sent_at: nil)
+  email = open_email(@coa.email, with_subject: "Reset password instructions")
+  email.should have_body_text(/Change my password/)
+end
+
+When /^I open my email then I should be able to see Change my password link$/ do
+  Cao.where(email: @coa.email).first.update_attributes(reset_password_sent_at: (Time.now-1.day))
+  email = open_email(@coa.email, with_subject: "Reset password instructions")
+  email.should have_body_text(/Change my password/)
+end
+
+Then /^I should be able to see message as Reset password token has expired. please request a new one$/ do
+  page.should have_content("Reset password token has expired. please request a new one")  
+end
