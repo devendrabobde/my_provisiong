@@ -25,6 +25,8 @@ And(/^I click on update with the information that needs to be changed including 
   fill_in('cao_first_name', :with => 'Sarah')
   fill_in('cao_last_name', :with => 'Parkar')
   fill_in('cao_email', :with => 'sarahparkar@onestop.com')
+  select "What was your childhood nickname?", from: "cao_security_question"
+  fill_in "cao_security_answer", with: "scott"
   within(".personal-info-form") do
     click_on("Update")
   end

@@ -61,6 +61,8 @@ And(/^I click on update with the new password and correct old password$/) do
   fill_in('cao_current_password', with: 'password@123')
   fill_in('cao_password', with: 'Password@12345')
   fill_in('cao_password_confirmation', with: 'Password@12345')
+  select "What was your childhood nickname?", from: "cao_security_question"
+  fill_in "cao_security_answer", with: "scott"
   click_button("Update")
 end
 
@@ -72,6 +74,8 @@ And /^I click on update with the new password which I had used in past$/ do
   fill_in('cao_current_password', with: 'password@123')
   fill_in('cao_password', with: 'password@123')
   fill_in('cao_password_confirmation', with: 'password@123')
+  select "What was your childhood nickname?", from: "cao_security_question"
+  fill_in "cao_security_answer", with: "scott"
   click_button("Update")
 end
 
@@ -83,6 +87,8 @@ And /^I click on update with incorrect old password$/ do
   fill_in('cao_current_password', with: 'password')
   fill_in('cao_password', with: 'Password@12345')
   fill_in('cao_password_confirmation', with: 'Password@12345')
+  select "What was your childhood nickname?", from: "cao_security_question"
+  fill_in "cao_security_answer", with: "scott"
   click_button("Update")
 end
 
