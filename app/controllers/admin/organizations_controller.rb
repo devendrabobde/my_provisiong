@@ -1,5 +1,5 @@
 class Admin::OrganizationsController < ApplicationController
-  before_filter :find_organization, only: [:show, :edit, :update, :destroy, :activate]
+  before_filter :find_organization, only: [:show, :edit, :update, :destroy] #, :activate]
   skip_before_filter :check_update_password!
   # Get all organizations
   def index
@@ -54,6 +54,7 @@ class Admin::OrganizationsController < ApplicationController
 
   # Change the state of an organization from inactive to active.
   def activate
+    @organization = Organization.unscoped.find(params[:id])
     @organization.caos.each do |cao|
       cao.update_attributes(deleted_at: nil, deleted_reason: nil)
     end
