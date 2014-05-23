@@ -21,8 +21,14 @@ class Devise::PasswordsController < DeviseController
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
     @coa = Cao.find_by_reset_password_token(params[:reset_password_token])
-    self.resource = resource_class.new
-    resource.reset_password_token = params[:reset_password_token]
+    check_valid_token = (@coa.present? && @coa.reset_password_period_valid?) rescue false
+    if check_valid_token
+      self.resource = resource_class.new
+      resource.reset_password_token = params[:reset_password_token]
+    else
+      flash[:error] = VALIDATION_MESSAGE["COA"]["PASSWORD_RESET_LINK_EXPIRED"]
+      redirect_to new_cao_password_path
+    end
   end
 
   # PUT /resource/password
