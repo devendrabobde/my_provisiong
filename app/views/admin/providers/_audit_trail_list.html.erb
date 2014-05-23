@@ -22,26 +22,33 @@
               <%= virtual_id %>
             <% end %>
           </td>
-   <td><%= audit.createddate.strftime("%m/%d/%Y") %></td>
-   <td class="break-large-text"><%= audit.file_name %></td>
-   <td class="break-large-text">
-      <% if audit.upload_status == true %>
-        <%= audit.total_npi_processed %> / <%= audit.total_providers %>
-      <% else %>
-        <div class='auditProgressBar' id="progress_bar_<%= audit.id %>" data-audit-id="<%= audit.id %>">
-          <div class="audit_loading_image">
-            <%= image_tag("spinner.gif") %>
-          </div>
-          <div class="audit_progress_text">
-            In Progress..
-          </div>
-        </div>
-        <div id="npi_loaded_count_<%= audit.id %>">
-        </div>
-      <% end %>
-    </td>
-   <td><%= audit.cao.full_name rescue nil  %></td>
-   <td><%= audit.registered_app.app_name rescue nil %></td>
+          <td>
+            <%= audit.createddate.strftime("%m/%d/%Y") %>
+          </td>
+          <td class="break-large-text">
+            <%= audit.file_name %>
+          </td>
+          <td class="break-large-text">
+            <% if audit.upload_status == true %>
+              <%= audit.total_npi_processed %> / <%= audit.total_providers %>
+            <% else %>
+              <div class='auditProgressBar' id="progress_bar_<%= audit.id %>" data-audit-id="<%= audit.id %>">
+                <div class="audit_loading_image">
+                  <%= image_tag("spinner.gif") %>
+                </div>
+                <div class="audit_progress_text">
+                  In Progress..
+                </div>
+              </div>
+              <div id="npi_loaded_count_<%= audit.id %>"></div>
+            <% end %>
+          </td>
+          <td>
+            <%= audit.cao.full_name rescue nil  %>
+          </td>
+          <td>
+            <%= audit.registered_app.app_name rescue nil %>
+          </td>
         </tr>
       <% end %>
     <% end %>

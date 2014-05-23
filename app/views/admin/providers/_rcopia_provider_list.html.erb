@@ -23,7 +23,7 @@
             <%= provider.provider_app_detail.provider_dea_numbers.pluck(:provider_dea).join(",") rescue nil %>
           <% end %>
         </td>
-       <td><%= provider.npi %></td>
+        <td><%= provider.npi %></td>
         <td><%= provider.provider_app_detail.status_code %> </td>
         <td><%= provider.provider_app_detail.status_text %></td>
       </tr>

@@ -18,16 +18,16 @@
     <% providers.each do |provider| %>
       <tr>
         <td><%= provider.last_name %></td>
- <td><%= provider.first_name %></td>
- <td><%= provider.middle_name %></td>
- <td><%= provider.email %></td>
- <td><%= provider.phone %></td>
- <td><%= provider.username %></td>
- <td><%= provider.role %></td>
- <td><%= provider.department %></td>
- <td><%= provider.npi %></td>
-  <td><%= provider.provider_app_detail.status_code %> </td>
-  <td><%= provider.provider_app_detail.status_text %></td>
+        <td><%= provider.first_name %></td>
+        <td><%= provider.middle_name %></td>
+        <td><%= provider.email %></td>
+        <td><%= provider.phone %></td>
+        <td><%= provider.username %></td>
+        <td><%= provider.role %></td>
+        <td><%= provider.department %></td>
+        <td><%= provider.npi %></td>
+        <td><%= provider.provider_app_detail.status_code %> </td>
+        <td><%= provider.provider_app_detail.status_text %></td>
       </tr>
     <% end %>
   </tbody>

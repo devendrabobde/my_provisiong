@@ -11,9 +11,6 @@ class Admin::ProvidersController < ApplicationController
 
   # Return list of uploaded files.
   def application
-    # @registered_applications = RegisteredApp.all
-    #    @audit_trails = get_audit_trails(params[:registered_app_id], registered_applications)
-
     unless session[:router_reg_applications]
       $regapps = OnestopRouter.request_batchupload_responders(@cao.organization)
       session[:router_reg_applications] = $regapps unless $regapps.first["errors"]
@@ -31,10 +28,6 @@ class Admin::ProvidersController < ApplicationController
 
     if params[:registered_app_id].present?
       @audit_trails = @cao.organization.audit_trails.where("fk_registered_app_id =?", params[:registered_app_id]).order(:createddate) rescue []
-    # else
-    #   if @registered_applications.first.present?
-    #     @audit_trails = @cao.organization.audit_trails.where(fk_registered_app_id: @registered_applications.first.id).order(:createddate) rescue []
-    #   end
     end
 
     respond_to do |format|
