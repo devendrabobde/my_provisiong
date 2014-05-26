@@ -37,7 +37,7 @@ When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_address1", with: Faker::Address.street_address
   fill_in "organization_address2", with: Faker::Address.street_address
   fill_in "organization_city", with: 'winder'
-  select "Alabama", from: 'organization_state_code'
+  select "AL", from: 'organization_state_code'
   fill_in "organization_contact_first_name", with: Faker::Name.first_name
   fill_in "organization_contact_last_name", with: Faker::Name.last_name
   fill_in "organization_contact_email", with: Faker::Internet.email
@@ -84,7 +84,7 @@ When(/^I make changes and update the organization$/) do
   fill_in "organization_address1", with: @o_addr
   fill_in "organization_address2", with: @o_addr2
   fill_in "organization_city", with: "winder"
-  select "Alabama", from: 'organization_state_code'
+  select "AL", from: 'organization_state_code'
   fill_in "organization_contact_first_name", with: @o_fname
   fill_in "organization_contact_last_name", with: @o_lname
   fill_in "organization_contact_email", with: @o_email
@@ -124,12 +124,12 @@ Then(/^I should be able to delete an organization$/) do
   page.find('table#cao_table tbody tr', text: @organization.name).should_not have_link("Manage")
 end
 
-Then(/^I should be able to activate an organization which is inactive$/) do
-  # @organization.update_attribute(:deleted_at, Time.now)
-  # @organization.caos.update_all(deleted_at: Time.now)
-  # visit application_admin_providers_path
-  # page.find('table#cao_table tbody tr', text: @organization.name).click_link('Activate')
-  # click_button("Activate")
-  # page.find('table#cao_table tbody tr', text: @organization.name).should have_content("Active")
-  # page.find('table#cao_table tbody tr', text: @organization.name).should have_link("Manage")
+And(/^I should be able to activate an organization which is inactive$/) do
+  @organization.update_attribute(:deleted_at, Time.now)
+  @organization.caos.update_all(deleted_at: Time.now)
+  visit application_admin_providers_path
+  page.find('table#cao_table tbody tr', text: @organization.name).click_link('Activate')
+  click_button("Activate")
+  page.find('table#cao_table tbody tr', text: @organization.name).should have_content("Active")
+  page.find('table#cao_table tbody tr', text: @organization.name).should have_link("Manage")
 end
