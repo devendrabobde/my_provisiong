@@ -98,12 +98,13 @@ namespace :db do
       "#{shared_path}/config/.dbpass"
 
     # Create conf file
-    location = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
-    template = File.read(location)
-    password=Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
-    dbpassword="<%= Util::Encrypt.decrypt('#{password}') %>"
-    header="<% require 'util/encrypt' %>"
-    config = ERB.new(template)
+    location   = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
+    template   = File.read(location)
+    #password   = Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    password   = 'drfirst'#Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    dbpassword = "<%= Util::Encrypt.decrypt('#{password}') %>"
+    header     = "<% require 'util/encrypt' %>"
+    config     = ERB.new(template)
     run "mkdir -p #{shared_path}/db"
     put config.result(binding), "#{shared_path}/db/database.yml"
 
