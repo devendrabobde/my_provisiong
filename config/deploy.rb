@@ -6,7 +6,7 @@ set :default_stage, "qaonestop05"
 
 set :application, "provisioning"
 set :bundle_gemfile, "Gemfile"
-set :user, 'sparkway'
+set :user, 'root'
 set :use_sudo, false
 
 set :scm, :git
