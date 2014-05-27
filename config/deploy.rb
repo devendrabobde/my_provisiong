@@ -6,7 +6,7 @@ set :default_stage, "qaonestop05"
 
 set :application, "provisioning"
 set :bundle_gemfile, "Gemfile"
-set :user, 'sparkway'
+set :user, 'root'
 set :use_sudo, false
 
 set :scm, :git
@@ -98,12 +98,16 @@ namespace :db do
       "#{shared_path}/config/.dbpass"
 
     # Create conf file
-    location = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
-    template = File.read(location)
-    password=Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
-    dbpassword="<%= Util::Encrypt.decrypt('#{password}') %>"
-    header="<% require 'util/encrypt' %>"
-    config = ERB.new(template)
+    location   = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
+    template   = File.read(location)
+    #password   = Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    password   = "drfirst" #Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    p "--------"
+    p password
+    p "--------"
+    dbpassword = "<%= Util::Encrypt.decrypt('#{password}') %>"
+    header     = "<% require 'util/encrypt' %>"
+    config     = ERB.new(template)
     run "mkdir -p #{shared_path}/db"
     put config.result(binding), "#{shared_path}/db/database.yml"
 
