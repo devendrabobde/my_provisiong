@@ -101,7 +101,10 @@ namespace :db do
     location   = fetch(:template_dir, "config/deploy") + "/#{stage}-database.yml.erb"
     template   = File.read(location)
     #password   = Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
-    password   = 'drfirst'#Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    password   = "drfirst" #Base64.encode64(Encryptor.encrypt(Capistrano::CLI.ui.ask("Enter database password: "), :key => key))
+    p "--------"
+    p password
+    p "--------"
     dbpassword = "<%= Util::Encrypt.decrypt('#{password}') %>"
     header     = "<% require 'util/encrypt' %>"
     config     = ERB.new(template)
