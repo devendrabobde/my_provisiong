@@ -44,3 +44,6 @@
   <div class="application_waiting_image" style="display:none;">
     <%= image_tag("loading.gif") %>
   </div>
+  <%= render 'devise/registrations/edit_personal_info_form', resource: current_cao %>
+  <%= render 'devise/registrations/change_password_form', resource: current_cao %>
+  

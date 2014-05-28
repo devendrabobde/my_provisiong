@@ -65,10 +65,17 @@
                   <%#= link_to "Login", new_cao_session_path  %>
                 </li>
               <% else %>
-                <%= drop_down "Setting" do %>
-                  <%= menu_item "Edit Account", edit_cao_registration_path %>
-                  <%#= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
-                <% end %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle setting-dropdown" data-toggle="dropdown">Setting<b class="caret"></b></a>
+                <ul class="dropdown-menu setting-dropdown-menu">
+                  <li>
+                    <a class="edit-cao-personal-info" href="javascript:void(0)" type="button"> Edit Personal Info </a>                    
+                  </li>
+                  <li>
+                    <a class="change-cao-password" href="javascript:void(0)" type="button"> Change Password </a>                    
+                  </li>
+                </ul>
+                </li> 
                 <%= drop_down "#{current_cao.username}" do %>
                   <%= menu_item "Logout",  destroy_cao_session_path, :method => :delete %>
                 <% end %>
@@ -137,6 +144,6 @@
 
           //}
         </script>
-
     </body>
+    
   </html>
