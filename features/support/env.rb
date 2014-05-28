@@ -102,7 +102,14 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 Capybara.register_driver :selenium do |app|
   http_client = Selenium::WebDriver::Remote::Http::Default.new
   http_client.timeout = 20000
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :http_client => http_client)
+
+  browser_array = ['chrome', 'safari', 'ie']
+  if browser_array.include? ENV['BROWSER']
+    browser = ENV['BROWSER'].to_sym
+  else 
+    browser = :firefox
+  end
+  Capybara::Selenium::Driver.new(app, :browser => browser, :http_client => http_client)
 end
 
 def wait_for_ajax
@@ -112,4 +119,8 @@ def wait_for_ajax
       break if active == 0
     end
   end
+end
+
+Before('@selenium') do
+  page.driver.browser.manage.window.maximize
 end
