@@ -7,7 +7,8 @@ class BatchUpload
   # Custom On Failure Callback for Queue exit.
   def self.on_failure(e, *args)
       ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: args[3])
-      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: args[0].count)
+      audit_trail = AuditTrail.find(args[3])
+      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: args[0].count) rescue nil
       Rails.logger.error e
   end
   
