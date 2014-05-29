@@ -63,8 +63,10 @@ class Devise::RegistrationsController < DeviseController
       flash[:notice] = resource.errors.full_messages.map { |msg| msg }.join(" ")
       redirect_to application_admin_providers_path
     else
-      clean_up_passwords resource
-      respond_with resource
+      # clean_up_passwords resource
+      # respond_with resource
+      flash[:error] = resource.errors.full_messages.map { |msg| msg }.join(" ")
+      redirect_to application_admin_providers_path
     end
   end
 

@@ -7,6 +7,7 @@ class Admin::ProvidersController < ApplicationController
   before_filter :find_cao
   before_filter :require_coa_login
   before_filter :find_application, :only => [:upload]
+  before_filter :generate_required_object, only: :application
   skip_before_filter :check_update_password!, only: :application
 
   # Return list of uploaded files.
@@ -247,5 +248,9 @@ class Admin::ProvidersController < ApplicationController
       end
     end
     return audit_trails
+  end
+
+  def generate_required_object
+    @profile_list = Profile.all
   end
 end

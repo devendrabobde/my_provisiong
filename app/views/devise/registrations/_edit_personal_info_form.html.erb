@@ -1,0 +1,86 @@
+<div id="edit-personal-info-form" class="modal edit-personal-info-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">&#215;</a>
+        <h4 class="modal-title">Personal Information</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          <div class="container-fluid">
+          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { class: "form-horizontal",  id: "edit-personal-info", method: :put }) do |f| %>
+              <div class="row-fluid" style="padding:20px 0px 0px 0px;">
+                <div class="span9">
+                  <% if resource.errors.any? && @password.eql?(false) %>
+                    <div class="row-fluid">
+                      <div class="span12 bgcolor">
+                        <div class="alert alert-error">
+                          <%= devise_error_messages! %>
+                        </div>
+                      </div>
+                    </div>
+                  <%- end -%>
+
+                  <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                      <div class="control-group">
+                        <%= f.label :first_name, "First Name <span class='red'>*</span>".html_safe, class: "control-label" %>
+                        <div class="controls popup-errors">
+                          <%= f.text_field :first_name, autofocus: true, required: 'required', class: "form-control" %>
+                        </div>
+                      </div>
+                    </div><!--/span-->
+                  </div><!--/row-->
+                  <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                      <div class="control-group">
+                        <%= f.label :last_name, "Last Name <span class='red'>*</span>".html_safe, class: "control-label" %>
+                        <div class="controls popup-errors">
+                          <%= f.text_field :last_name, class: "form-control", required: "required", placeholder: "Last Name" %>
+                        </div>
+                      </div>
+                    </div><!--/span-->
+                  </div><!--/row-->
+                  <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                      <div class="control-group">
+                        <%= f.label :email, "Email <span class='red'>*</span>".html_safe, class: "control-label"  %>
+                        <div class="controls popup-errors">
+                          <%= f.email_field :email, required: 'required', class: "form-control" %>
+                        </div>
+                      </div>
+                    </div><!--/span-->
+                  </div><!--/row-->
+                  <% if !resource.is_admin? %>
+                    <div class="row-fluid">
+                      <div class="span6 bgcolor">
+                        <div class="control-group">
+                          <%= f.label :profile_id, class: "control-label" %>
+                          <div class="controls">
+                            <%= select_tag 'cao[fk_profile_id]', options_from_collection_for_select(@profile_list, "id", "profile_name", resource.profile.id), { class: "form-control" } %>
+                          </div>
+                        </div>
+                      </div><!--/span-->
+                    </div><!--/row-->
+                  <% end %>
+                </div>
+                <div class="span4">
+                </div><!--/span-->
+              </div>
+          </div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <div class="row-fluid">
+          <div class="form-group" style="text-align: right;margin-right:10px">
+            <div class="col-sm-10">
+              <%= f.submit "Update", class: 'btn btn-primary' %>
+              <a class="btn btn-primary" data-dismiss="modal" href="#">Cancel</a>
+            </div>
+          </div>
+        </div><!--/row-->
+      <%- end -%>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
