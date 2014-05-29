@@ -140,6 +140,28 @@ $(document).ready(function () {
     backdrop: 'static',
     keyboard: true
   });
+
+  $(".setting-dropdown").on('click', function(){
+    $(".setting-dropdown-menu").show();
+    $(".edit-cao-personal-info").on("click", function(){
+      $('.edit-personal-info-modal').modal("show");
+    });
+    $(".change-cao-password").on("click", function(){
+      $('.change-cao-password-modal').modal("show");
+    });
+  });
+
+  $(".edit-personal-info-modal, .change-cao-password-modal").on('shown', function() {
+    $(this).find("[autofocus]:first").focus();
+  });
+
+  $(".edit-personal-info-modal, .change-cao-password-modal").on("hide", function(){
+    $(".setting-dropdown-menu").hide();
+  });
+
+  $(document).on('click',function(){
+    $(".setting-dropdown-menu").hide();
+  })
   
 });
 
