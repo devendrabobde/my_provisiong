@@ -41,7 +41,9 @@ When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_contact_first_name", with: Faker::Name.first_name
   fill_in "organization_contact_last_name", with: Faker::Name.last_name
   fill_in "organization_contact_email", with: Faker::Internet.email
-  fill_in "organization_zip_code", with: "12345"
+  fill_in "organization_zip_code", with: 12345
+  fill_in "organization_contact_phone", with: 1234567890
+  fill_in "organization_contact_fax", with: 1234567890
   click_button "Create Organization"
 end
 
@@ -85,9 +87,12 @@ When(/^I make changes and update the organization$/) do
   fill_in "organization_address2", with: @o_addr2
   fill_in "organization_city", with: "winder"
   select "AL", from: 'organization_state_code'
+  fill_in "organization_zip_code", with: 12345
   fill_in "organization_contact_first_name", with: @o_fname
   fill_in "organization_contact_last_name", with: @o_lname
   fill_in "organization_contact_email", with: @o_email
+  fill_in "organization_contact_phone", with: 1234567890
+  fill_in "organization_contact_fax", with: 1234567890
   click_button "Update Organization"
 end
 
