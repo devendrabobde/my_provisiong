@@ -3,38 +3,50 @@
     <div class="row">
       <div class="span5 offset4">
         <h2 class="widget-header">Change your password</h2>
-         <div class="widget-body">
+          <div class="widget-body">
             <div class="center-align">
-
-     <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, id: "new_cao" }) do |f| %>
-         <%= devise_error_messages! %>
-      <%= f.hidden_field :reset_password_token %>
-          <table>
-            <tbody>
-              <tr>
-            <td style="padding-left:5px;"><div ><%= f.label :password, "New password" %></td>
-            <td style="padding-left:10px;"><%= f.password_field :password, :autofocus => true, required: true %></div></td>
-              </tr>
-              <tr>
-            <td style="padding-left:5px;"><div><%= f.label :password_confirmation, "Confirm new password" %></td>
-            <td style="padding-left:10px;"><%= f.password_field :password_confirmation, required: true %></div></td>
-              </tr>
-              <tr>
-            <td style="padding-left:5px;"><div><%= f.label :security_question, "Security Question" %></td>
-            <td style="padding-left:10px;"><%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, @coa.try(:security_question)), { prompt: "Select Security Question", required: true } %></div></td>
-              </tr>
-              <tr>
-            <td style="padding-left:5px;"><div><%= f.label :security_answer, "Security Answer" %></td>
-            <td style="padding-left:10px;"><%= f.text_field :security_answer, required: true %></div></td>
-              </tr>
-            </tbody>
-          </table>
-      <div><%= f.submit "Change my password", :class=>"btn btn-primary" %></div>
-    <% end %>
-   </div>
+              <p>
+                <div class="container-fluid">
+                <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, class: "form-horizontal" }) do |f| %>
+                  <%= devise_error_messages! %>
+                    <div class="row-fluid" style="padding:20px 0px 0px 0px;">
+                      <div class="span9">
+                        <div class="row-fluid">
+                          <div class="span6 bgcolor">
+                            <div class="control-group">
+                              <%= label_tag :password, "New Password <span class='red'>*</span>".html_safe, class: "control-label" %>
+                              <div class="controls popup-errors">
+                                <%= f.password_field :password, required: 'required', class: "form-control", autofocus: true, placeholder: "New Password" %>
+                              </div>
+                            </div>
+                          </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                          <div class="span6 bgcolor">
+                            <div class="control-group">
+                              <%= label_tag :password_confirmation, "Confirm New Password <span class='red'>*</span>".html_safe, class: "control-label" %>
+                              <div class="controls popup-errors">
+                                <%= f.password_field :password_confirmation, required: 'required', class: "form-control", placeholder: "Confirm New Password" %>
+                              </div>
+                            </div>
+                          </div><!--/span-->
+                        </div><!--/row-->
+                      </div>
+                      <div class="span4">
+                      </div><!--/span-->
+                    </div>
+                </div>
+              </p>     
+                <div class="row-fluid" style="margin-top: -30px;">
+                  <div class="form-group" style="text-align: center;margin-right:10px">
+                    <div class="col-sm-10">
+                      <%= f.submit "Change my password", :class=>"btn btn-primary" %>
+                    </div>
+                  </div>
+                </div><!--/row-->
+              <%- end -%>
+            </div>
           </div>
-
-  <%#= render "devise/shared/links" %>
       </div>
     </div>
   </div>

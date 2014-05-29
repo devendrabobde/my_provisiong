@@ -141,6 +141,7 @@ $(document).ready(function () {
     keyboard: true
   });
 
+
   if ($("#update-password-modal").length != 0){
     $(".alert-success").hide();
   }
@@ -168,14 +169,35 @@ $(document).ready(function () {
   $('#cao_epcs_ois_subscribed_0').change(function(){
     $("#epcs_vendor_Details").hide();
   });  
-  
+
   if($('#cao_epcs_ois_subscribed_1').is(':checked')){
     $("#epcs_vendor_Details").show();
     $('#cao_epcs_vendor_name, #cao_epcs_vendor_password').attr('required','required');
   }
 
-});
+  $(".setting-dropdown").on('click', function(){
+    $(".setting-dropdown-menu").show();
+    $(".edit-cao-personal-info").on("click", function(){
+      $('.edit-personal-info-modal').modal("show");
+    });
+    $(".change-cao-password").on("click", function(){
+      $('.change-cao-password-modal').modal("show");
+    });
+  });
 
+  $(".edit-personal-info-modal, .change-cao-password-modal").on('shown', function() {
+    $(this).find("[autofocus]:first").focus();
+  });
+
+  $(".edit-personal-info-modal, .change-cao-password-modal").on("hide", function(){
+    $(".setting-dropdown-menu").hide();
+  });
+
+  $(document).on('click',function(){
+    $(".setting-dropdown-menu").hide();
+  })
+  
+});
 
 //sets up numeric sorting of links
 jQuery.extend( jQuery.fn.dataTableExt.oSort, {
