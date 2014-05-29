@@ -158,6 +158,10 @@ $(document).ready(function () {
   $(".edit-personal-info-modal, .change-cao-password-modal").on("hide", function(){
     $(".setting-dropdown-menu").hide();
   });
+
+  $(document).on('click',function(){
+    $(".setting-dropdown-menu").hide();
+  })
   
 });
 
