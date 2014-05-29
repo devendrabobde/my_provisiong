@@ -9,6 +9,7 @@
                 <div class="container-fluid">
                 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, class: "form-horizontal" }) do |f| %>
                   <%= devise_error_messages! %>
+                  <%= f.hidden_field :reset_password_token %>
                     <div class="row-fluid" style="padding:20px 0px 0px 0px;">
                       <div class="span9">
                         <div class="row-fluid">
