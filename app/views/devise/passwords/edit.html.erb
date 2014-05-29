@@ -32,6 +32,26 @@
                             </div>
                           </div><!--/span-->
                         </div><!--/row-->
+                        <div class="row-fluid">
+                          <div class="span6 bgcolor">
+                            <div class="control-group">
+                              <%= label_tag :security_question, "Security Question <span class='red'>*</span>".html_safe, class: "control-label" %>
+                              <div class="controls popup-errors">
+                                <%= select_tag 'cao[security_question]', options_for_select(SECURITY_QUESTIONS, @coa.try(:security_question)), { prompt: "Select Security Question", required: true } %>
+                              </div>
+                            </div>
+                          </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                          <div class="span6 bgcolor">
+                            <div class="control-group">
+                              <%= label_tag :security_answer, "Security Answer <span class='red'>*</span>".html_safe, class: "control-label" %>
+                              <div class="controls popup-errors">
+                                <%= f.text_field :security_answer, required: true %>
+                              </div>
+                            </div>
+                          </div><!--/span-->
+                        </div><!--/row-->
                       </div>
                       <div class="span4">
                       </div><!--/span-->
