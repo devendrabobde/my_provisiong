@@ -197,6 +197,10 @@ $(document).ready(function () {
     $(".setting-dropdown-menu").hide();
   })
   
+  $('.username-dropdown').on('click', function(){
+    $('.setting-dropdown-menu').hide();
+  });
+  
 });
 
 //sets up numeric sorting of links
