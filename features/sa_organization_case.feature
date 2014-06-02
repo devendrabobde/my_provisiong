@@ -47,6 +47,12 @@ Scenario: SA proceeds to update an organization
 
 @selenium
 @no-database-cleaner
+Scenario: SA views setting options
+  Given I go to admin home page 
+  Then I should be able to see two setting options as Edit Personal Info and Change Password
+  
+@selenium
+@no-database-cleaner
 Scenario: SA views an organization
   Given I go to admin home page 
   Then I should see a list of all organizations

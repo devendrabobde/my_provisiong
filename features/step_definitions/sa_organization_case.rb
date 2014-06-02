@@ -110,6 +110,13 @@ Then(/^I should see a next ten organizations$/) do
   page.should have_content("entries")
 end
 
+Then(/^I should be able to see two setting options as Edit Personal Info and Change Password$/) do
+  page.execute_script("$('.edit-personal-info-modal').modal('show');")
+  page.should have_content("Personal Information")
+  page.execute_script("$('.change-cao-password-modal').modal('show');")
+  page.should have_content("Change Password")
+end
+
 When(/^I click edit for an organization$/) do
   page.find(:css, 'table#cao_table tbody tr:last-child').click_link('Edit')
 end
