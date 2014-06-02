@@ -83,6 +83,33 @@ Then(/^I should see a list of all organizations$/) do
   page.should have_content(@organization.name)
 end
 
+Given(/^I have more than ten organization$/) do
+  15.times do
+    @organizations = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
+      address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
+      contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
+  end
+end
+
+Then(/^I should see a first ten organizations$/) do
+  visit application_admin_providers_path
+  page.should have_content("Listing Organizations")
+  page.should have_content("Show")
+  page.find(:xpath, "/html/body/div[2]/div/div/div/div/label/select/option[1]").text.should == "10"
+  page.should have_content("entries")
+end
+
+And(/^I click on next button$/) do
+  click_link("Next")
+end
+
+Then(/^I should see a next ten organizations$/) do
+  page.should have_content("Listing Organizations")
+  page.should have_content("Show")
+  page.find(:xpath, "/html/body/div[2]/div/div/div/div/label/select/option[1]").text.should == "10"
+  page.should have_content("entries")
+end
+
 When(/^I click edit for an organization$/) do
   page.find(:css, 'table#cao_table tbody tr:last-child').click_link('Edit')
 end
