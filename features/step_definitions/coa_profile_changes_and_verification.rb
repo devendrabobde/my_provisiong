@@ -36,6 +36,9 @@ And(/^I click on update with the information that needs to be changed including 
   fill_in('cao_current_password', with: 'password@123')
   fill_in('cao_password', with: 'password@12345')
   fill_in('cao_password_confirmation', with: 'password@12345')
+  @sec_ans = "scott"
+  select "What was your childhood nickname?", from: "cao_security_question"
+  fill_in "cao_security_answer", with: @sec_ans
   click_button("Update")
 end
 
@@ -44,10 +47,26 @@ Then(/^I should see success message You updated your account successfully$/) do
 end
 
 And(/^I click on update with the information that needs to be changed including correct personal information$/) do 
-  fill_in('cao_first_name', with: 'Sarah')
-  fill_in('cao_last_name', with: 'Parkar')
-  fill_in('cao_email', with: 'sarahparkar@onestop.com')
-  select "What was your childhood nickname?", from: "cao_security_question"
-  fill_in "cao_security_answer", with: "scott"
+  @ufname = 'Sarah'
+  @ulname = 'Parkar'
+  @uemail = 'sarahparkar@onestop.com'
+  fill_in('cao_first_name', with: @ufname)
+  fill_in('cao_last_name', with: @ulname)
+  fill_in('cao_email', with: @uemail)
   click_button("Update")
+end
+
+Then(/^I should see the information being updated$/) do
+  page.should have_content(@ufname)
+  page.should have_content(@ulname)
+  page.should have_content(@uemail)
+end
+
+Then(/^I should see an error message indicating password is incorrect$/) do
+  page.should have_content("Invalid username or password.")
+end
+
+Then(/^I fill in username and updated password$/) do
+  fill_in "cao_username", with: @current_cao.username
+  fill_in "cao_password", with: "password@12345"
 end
