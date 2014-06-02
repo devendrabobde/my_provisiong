@@ -37,10 +37,6 @@ Then(/^I should be able to see error validation messages for mandatory fields wh
   page.should have_content("Last name can't be blank.")
   page.should have_content("Username can't be blank.")
   page.should have_content("Email can't be blank.")
-  choose("cao_rcopia_ois_subscribed_1")
-  page.should have_content("This field is required.")
-  choose("cao_epcs_ois_subscribed_1")
-  page.should have_content("This field is required.")
 end
 
 And(/^I fill the fields on form for COA with incorrect inputs, I should see input validation message$/) do
