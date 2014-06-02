@@ -29,6 +29,8 @@ Background:
     Given I go to application page
     And I click on file upload button
     Then I should see message Please select application and a CSV file to initiate the provisioning process
+    And I select an invalid file with .png extension
+    Then I should see error validation message
 
   @selenium
   @no-database-cleaner

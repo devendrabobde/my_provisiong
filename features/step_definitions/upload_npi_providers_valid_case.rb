@@ -76,6 +76,14 @@ Then /^I should see message Please select application and a CSV file to initiate
   page.find_by_id("dialog").text.should =~ /Please select application and a CSV file to initiate the provisioning process./
 end
 
+And(/^I select an invalid file with .png extension$/) do
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'loading.gif')  
+end
+
+Then(/^I should see error validation message$/) do
+  page.find_by_id("dialog").text.should =~ /Only file with extension .csv is allowed./
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
