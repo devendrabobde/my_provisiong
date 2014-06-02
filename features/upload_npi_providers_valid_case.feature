@@ -13,6 +13,9 @@ Background:
 @selenium
 @no-database-cleaner
   Scenario: COA logs in
+    And I should be able to see Onestop tab as defalut tab
+    Then I click on Onestop default tab
+    And I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting, Username and organization 
     And I should see correct screen title
     And I should see application selection list
     And I should see file selection button
