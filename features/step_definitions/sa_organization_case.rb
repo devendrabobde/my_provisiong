@@ -35,6 +35,14 @@ And(/^I should be able to see the tabs on the top of the main screen as Onestop 
   page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
 end
 
+And(/^I should be able to see Onestop tab as defalut tab$/) do
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
+end
+
+Then(/^I click on Onestop default tab$/) do
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img").click
+end
+
 And(/^I click on create organization$/) do
 	click_link "Create Organization"
 end
