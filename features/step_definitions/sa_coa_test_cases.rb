@@ -28,6 +28,32 @@ Then(/^I should see the form for creating the coa$/) do
 	page.should have_button("Create")
 end
 
+And(/^I click on create COA without filling up the mandatory fields$/) do
+  click_button "Create"
+end
+
+Then(/^I should be able to see error validation messages for mandatory fields while creating COA$/) do
+  page.should have_content("First name can't be blank.")
+  page.should have_content("Last name can't be blank.")
+  page.should have_content("Username can't be blank.")
+  page.should have_content("Email can't be blank.")
+  choose("cao_rcopia_ois_subscribed_1")
+  page.should have_content("This field is required.")
+  choose("cao_epcs_ois_subscribed_1")
+  page.should have_content("This field is required.")
+end
+
+And(/^I fill the fields on form for COA with incorrect inputs, I should see input validation message$/) do
+  fill_in "cao_first_name", with: "a"
+  page.should have_content("Please enter at least 3 characters.")
+  fill_in "cao_last_name", with: "a"
+  page.should have_content("Please enter at least 3 characters.")
+  fill_in "cao_username", with: "a"
+  page.should have_content("Please enter at least 6 characters.")
+  fill_in "cao_email", with: "andrew"
+  page.should have_content("Email format is invalid.")
+end
+
 When(/^I submit the form with proper values$/) do
 	@n_user_id = Faker::Internet.user_name
 	@n_fname = Faker::Name.first_name

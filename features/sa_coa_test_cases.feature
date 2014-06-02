@@ -20,6 +20,9 @@ Scenario: SA to add COA to any organization
 	Given I select an organization to see the COAs
 	When I proceed for creating the COA
 	Then I should see the form for creating the coa
+	And I click on create COA without filling up the mandatory fields
+	Then I should be able to see error validation messages for mandatory fields while creating COA
+	And I fill the fields on form for COA with incorrect inputs, I should see input validation message
 	When I submit the form with proper values
 	Then I should see the created CAO saved in provisioning db with username and password
 
