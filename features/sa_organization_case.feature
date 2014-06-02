@@ -29,6 +29,14 @@ Scenario: SA views all organizations
 
 @selenium
 @no-database-cleaner
+Scenario: SA views all organizations with pagination
+  Given I have more than ten organization
+  Then I should see a first ten organizations
+  And I click on next button
+  Then I should see a next ten organizations
+
+@selenium
+@no-database-cleaner
 Scenario: SA proceeds to update an organization
   Given I go to admin home page
   Then I should see a list of all organizations

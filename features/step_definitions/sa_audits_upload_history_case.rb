@@ -1,21 +1,7 @@
 And (/^I should be successfully logged out of the application$/) do
-  sleep 5
-  visit current_path
-  if ENV['HEADLESS']
-    binding.pry
-    # page.execute_script("$('.dropdown-menu').show();")
-    # click_link("Logout")
-    # # click_link('Logout', href: "/caos/sign_out")
-    # page.should have_selector(".sign_in_box")
-    # page.driver.submit :delete, "/caos/sign_out", {}
-    # http_delete "/caos/sign_out"
-    rack_test_session_wrapper = Capybara.current_session.driver
-    rack_test_session_wrapper.process :delete, '/caos/sign_out'
-  else
-    page.execute_script("$('.dropdown-menu').show();")
-    click_on('Logout')
-    page.should have_selector(".sign_in_box")
-  end  
+  page.execute_script("$('.dropdown-menu').show();")
+  click_on('Logout')
+  page.should have_selector(".sign_in_box")
 end
 
 Given(/^I click on the organization of COA$/) do
