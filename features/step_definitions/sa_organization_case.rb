@@ -103,6 +103,11 @@ And(/^I click on next button$/) do
   click_link("Next")
 end
 
+And(/^I should be able to verify dropdown for selecting the number of displayed Organizations has 10, 25, 50 and 100$/) do
+  page.find(:xpath, "/html/body/div[2]/div/div/div/div/label/select").click
+  page.find(:xpath, "/html/body/div[2]/div/div/div/div/label/select").text.should == "10 25 50 100"
+end
+
 Then(/^I should see a next ten organizations$/) do
   page.should have_content("Listing Organizations")
   page.should have_content("Show")

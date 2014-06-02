@@ -34,6 +34,7 @@ Scenario: SA views all organizations with pagination
   Then I should see a first ten organizations
   And I click on next button
   Then I should see a next ten organizations
+  And I should be able to verify dropdown for selecting the number of displayed Organizations has 10, 25, 50 and 100
 
 @selenium
 @no-database-cleaner
@@ -50,7 +51,7 @@ Scenario: SA proceeds to update an organization
 Scenario: SA views setting options
   Given I go to admin home page 
   Then I should be able to see two setting options as Edit Personal Info and Change Password
-  
+
 @selenium
 @no-database-cleaner
 Scenario: SA views an organization
