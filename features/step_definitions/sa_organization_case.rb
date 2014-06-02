@@ -114,6 +114,23 @@ And(/^I should be able to search for a organization by entering text in search b
   page.should have_content(@organization.name)
 end
 
+Then(/^I should be able to select 25 from dropdown$/) do
+  fill_in "Search", with: ""
+  select "25", from: "cao_table_length"
+end
+
+And(/^I should be able to see 25 organizations$/) do
+  page.should have_content(@organization.name)
+end
+
+Then(/^I should be able to select 50 from dropdown$/) do
+  select "50", from: "cao_table_length"
+end
+
+And(/^I should be able to see 50 organizations$/) do
+  page.should have_content(@organization.name)
+end
+
 Then(/^I should see a next ten organizations$/) do
   page.should have_content("Listing Organizations")
   page.should have_content("Show")

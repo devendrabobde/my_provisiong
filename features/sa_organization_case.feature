@@ -36,6 +36,10 @@ Scenario: SA views all organizations with pagination
   Then I should see a next ten organizations
   And I should be able to verify dropdown for selecting the number of displayed Organizations has 10, 25, 50 and 100
   And I should be able to search for a organization by entering text in search box
+  Then I should be able to select 25 from dropdown
+  And I should be able to see 25 organizations
+  Then I should be able to select 50 from dropdown
+  And I should be able to see 50 organizations
 
 @selenium
 @no-database-cleaner
