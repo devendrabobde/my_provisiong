@@ -67,21 +67,6 @@ Then(/^I should be able to see error validation messages for mandatory fields$/)
   page.should have_content("Email can't be blank.")
 end
 
-And(/^I fill the fields on form with incorrect inputs, I should see input validation message$/) do
-  fill_in "organization_name", with: "a"
-  page.should have_content("Please enter at least 6 characters.")
-  fill_in "organization_city", with: 123
-  page.should have_content("Please enter letters only.")
-  fill_in "organization_contact_first_name", with: 123
-  page.should have_content("Please enter letters only.")
-  fill_in "organization_contact_last_name", with: 123
-  page.should have_content("Please enter letters only.")
-  fill_in "organization_contact_email", with: "andrew"
-  page.should have_content("Email format is invalid.")
-  fill_in "organization_zip_code", with: "a"
-  page.should have_content("Zip Code must contain digits only.")
-end
-
 When(/^I fill in form with proper organization details and submit$/) do
   fill_in "organization_name", with: Faker::Company.name
   fill_in "organization_address1", with: Faker::Address.street_address

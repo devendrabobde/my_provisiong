@@ -20,7 +20,6 @@ Scenario: SA proceeds to add a new organization
 	Then I should see a form
   And I click on create organization without filling up the mandatory fields
   Then I should be able to see error validation messages for mandatory fields
-  And I fill the fields on form with incorrect inputs, I should see input validation message
 	When I fill in form with proper organization details and submit
 	Then I should see success message and organization details
 
