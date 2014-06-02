@@ -18,6 +18,7 @@ Background:
     And I should see file selection button
     And I should see application csv template download button
     And I should see correct section names
+    And I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting, Username and organization
 
   @selenium
   @no-database-cleaner

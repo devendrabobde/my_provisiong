@@ -41,10 +41,24 @@ end
 
 And /^I should see file selection button$/ do
   # page.should have_selector("input[type=file][name='upload']")
+  page.find(:xpath, "/html/body/div[2]/div/div/div/fieldset/form/input").value.should == "Upload"
 end
 
 And /^I should see application csv template download button$/ do
   # page.should have_content("Download Sample Data File")
+end
+
+And(/^I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting, Username and organization$/) do
+  if ENV['HEADLESS']
+    page.evaluate_script("$('.dropdown-toggle').text()").include?(@current_cao.username)
+    page.evaluate_script("$('.setting-dropdown').text()").should == "Setting"
+    page.should have_content("Organization : #{@organization_coa.name}")
+  else
+    page.should have_content(@current_cao.username)
+    page.should have_content("Setting")
+    page.should have_content("Organization : #{@organization_coa.name}")
+  end
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
 end
 
 And /^I should see correct section names$/ do
