@@ -12,6 +12,10 @@ Background:
 @no-database-cleaner
 Scenario: SA proceeds to add a new organization
   Given I go to admin home page
+  And I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting and Username
+  And I should be able to see Onestop tab as defalut tab
+  Then I click on Onestop default tab
+  And I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting and Username
 	And I click on create organization
 	Then I should see a form
 	When I fill in form with proper organization details and submit

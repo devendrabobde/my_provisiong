@@ -16,11 +16,23 @@ end
 
 Given(/^I go to admin home page$/) do
   visit application_admin_providers_path
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
 end
 
 And(/^I fill in the username and password for SA$/) do
   fill_in "cao_username", with: @current_admin.username
   fill_in "cao_password", with: "password@123"
+end
+
+And(/^I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting and Username$/) do
+  if ENV['HEADLESS']
+    page.evaluate_script("$('.dropdown-toggle').text()").include?(@current_admin.username)
+    page.evaluate_script("$('.setting-dropdown').text()").should == "Setting"
+  else
+    page.should have_content(@current_admin.username)
+    page.should have_content("Setting")
+  end
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
 end
 
 And(/^I click on create organization$/) do
@@ -62,7 +74,6 @@ Then(/^I should see a list of all organizations$/) do
   page.should have_content("COA Account")
   page.should have_content(@organization.name)
 end
-
 
 When(/^I click edit for an organization$/) do
   page.find(:css, 'table#cao_table tbody tr:last-child').click_link('Edit')

@@ -14,6 +14,7 @@ end
 
 When /^I go to login page$/ do
   visit new_cao_session_path
+  page.find(:xpath, "/html/body/div/div/div/a[2]/img")["alt"].should == "OneStop"
 end
 
 And /^I fill in the username and password$/ do
