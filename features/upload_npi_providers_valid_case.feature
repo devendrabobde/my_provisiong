@@ -56,11 +56,22 @@ Background:
 
   @selenium
   @no-database-cleaner
-  Scenario: COA views all files with pagination
+  Scenario: COA search for files with pagination
     Given I go to application page
     And I should be able to verify the search box
     And I should be able to search for a file by entering text in search box
     And I should be able to see 25 files
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA varifies the presence of Previous and Next buttons in pagination view
+    Given I go to application page
+    And I should be able to verify previous and next button
+    Given I select an application    
+    And I click on the next button
+    Then I should see the correct files
+    And I click on the previous button
+    Then I should see the correct files
 
   @selenium
   @no-database-cleaner
