@@ -47,6 +47,15 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA views all files with pagination
+    Given I go to application page
+    Given I select an application
+    And I should be able to see download sample data file link
+    And I click on download sample data file link
+    Then I should be able to see download dialog
+
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers

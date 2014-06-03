@@ -132,6 +132,19 @@ And(/^I should be able to see 50 files$/) do
   page.should have_content("Total NPI Processed")
 end
 
+And(/^I should be able to see download sample data file link$/) do
+  page.should have_content("Download Sample Data File")
+  page.should have_link("Download Sample Data File")
+end
+
+And(/^I click on download sample data file link$/) do
+  click_link("Download Sample Data File")
+end
+
+Then(/^I should be able to see download dialog$/) do
+  page.should have_content("Download Sample Data File")
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
