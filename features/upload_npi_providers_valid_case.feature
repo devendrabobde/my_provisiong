@@ -37,6 +37,16 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA views all files with pagination
+    Given I go to application page
+    And I should be able to verify dropdown for selecting the number of displayed files has 10, 25, 50 and 100
+    Then I should be able to select 25 from file dropdown
+    And I should be able to see 25 files
+    Then I should be able to select 50 from file dropdown
+    And I should be able to see 50 files
+
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers

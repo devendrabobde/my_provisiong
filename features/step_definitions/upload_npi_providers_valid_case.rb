@@ -112,6 +112,26 @@ And(/^I select file to upload with any of the extensions like .xml other than cs
   page.find(:xpath, "/html/body/div[4]/div/button").click
 end
 
+And(/^I should be able to verify dropdown for selecting the number of displayed files has 10, 25, 50 and 100$/) do  
+  page.find_by_id("table1_length").text.should == "Show 10 25 50 100 entries"
+end
+
+Then(/^I should be able to select 25 from file dropdown$/) do
+  select "25", from: "table1_length"
+end
+
+And(/^I should be able to see 25 files$/) do
+  page.should have_content("Total NPI Processed")
+end
+
+Then(/^I should be able to select 50 from file dropdown$/) do
+  select "50", from: "table1_length"
+end
+
+And(/^I should be able to see 50 files$/) do
+  page.should have_content("Total NPI Processed")
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
