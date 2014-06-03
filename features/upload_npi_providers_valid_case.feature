@@ -97,6 +97,9 @@ Background:
     Then I should see the correct entry of provider
     And I click on the previous button
     Then I should see the correct entry of provider
+    And I should be able to verify the search box
+    And I should be able to search for a provider entry by entering text in search box
+    Then I should see the correct entry of provider
 
   @selenium
   @no-database-cleaner

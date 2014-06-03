@@ -173,6 +173,10 @@ Then(/^I should see the correct entry of provider$/) do
   page.should have_content("DEA Numbers")
 end
 
+And(/^I should be able to search for a provider entry by entering text in search box$/) do
+  fill_in "Search", with: @provider.first_name  
+end
+
 And(/^I should be able to see download sample data file link$/) do
   page.should have_content("Download Sample Data File")
   page.should have_link("Download Sample Data File")
