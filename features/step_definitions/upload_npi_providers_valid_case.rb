@@ -177,6 +177,10 @@ And(/^I click on the previous button$/) do
   click_link("Previous")
 end
 
+Then(/^I should see the correct total number of NPI processed$/) do
+  page.should have_content("Total NPI Processed")
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")

@@ -75,6 +75,14 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA varifies the total NPI processed gives the number of NPI's processed
+    Given I go to application page
+    And I should be able to verify previous and next button
+    Given I select an application    
+    Then I should see the correct total number of NPI processed
+
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers
