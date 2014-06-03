@@ -46,6 +46,8 @@ Background:
     And I should be able to see 25 files
     Then I should be able to select 50 from file dropdown
     And I should be able to see 50 files
+    Then I should be able to select 100 from file dropdown
+    And I should be able to see 100 files
 
   @selenium
   @no-database-cleaner
@@ -83,6 +85,13 @@ Background:
     Then I should see the correct total number of NPI processed
     And I click on the first audit record
     Then I should be able to see total npi processed on the top of page
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA verifies provider entries per page
+    Given I go to application page
+    And I visit the first audit record
+    Then I should be able to verify 25, 50 and 100 entries per page
 
   @selenium
   @no-database-cleaner

@@ -141,6 +141,31 @@ And(/^I should be able to see 50 files$/) do
   page.should have_content("Total NPI Processed")
 end
 
+Then(/^I should be able to select 100 from file dropdown$/) do
+  select "100", from: "table1_length"
+end
+
+And(/^I should be able to see 100 files$/) do
+  page.should have_content("Total NPI Processed")
+end
+
+And(/^I visit the first audit record$/) do
+  @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+  @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  2.times do
+    @provider_app_detail = ProviderAppDetail.create(status_code: "200", status_text: "Success", fk_cao_id: @current_cao.id, fk_registered_app_id: @registered_app.id, fk_audit_trail_id: @audit_trail.id, fk_organization_id: @organization_coa.id)
+  end
+  @provider = Provider.create(username: "mackie", password: "Password@1234", role: "Doctor", prefix: "Mr.", first_name: "mack", middle_name: "John", last_name: "Nelung", suffix: "Dr.", degrees: "Doctor", npi: "1234567890", email: "mack@test.com", address_1: "Lawrenceville", address_2: "NewYork", city: "New Jercey", state: "NJ")
+  @provider.update_attributes(fk_provider_app_detail_id: @provider_app_detail.id)
+  @provider_error_log = ProviderErrorLog.create(fk_provider_id: @provider.id, application_name: @registered_app.app_name, error_message: "Unprocessable", fk_cao_id: @current_cao.id, fk_audit_trail_id: @audit_trail.id)
+  visit admin_provider_path(@audit_trail.id)
+end
+
+Then(/^I should be able to verify 25, 50 and 100 entries per page$/) do
+  page.find_by_id("table2_length").text.should == "Show 10 25 50 100 entries"
+end
+
 And(/^I should be able to see download sample data file link$/) do
   page.should have_content("Download Sample Data File")
   page.should have_link("Download Sample Data File")
