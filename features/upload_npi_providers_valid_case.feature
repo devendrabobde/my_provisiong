@@ -103,6 +103,12 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA verifies new application visibility and upload a file for the  new application successfully
+    Given I go to application page
+    And I should be able to verify new application populated in select application dropdown
+    
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers

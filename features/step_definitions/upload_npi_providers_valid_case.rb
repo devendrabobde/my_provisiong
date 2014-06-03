@@ -237,6 +237,10 @@ Then(/^I should be able to see total npi processed on the top of page$/) do
   page.should have_content("Total NPI Processed")
 end
 
+And(/^I should be able to verify new application populated in select application dropdown$/) do
+  page.find_by_id("provider_registered_app_id").text.should be_true
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
