@@ -56,6 +56,14 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA views all files with pagination
+    Given I go to application page
+    And I should be able to verify the search box
+    And I should be able to search for a file by entering text in search box
+    And I should be able to see 25 files
+
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers

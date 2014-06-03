@@ -145,6 +145,14 @@ Then(/^I should be able to see download dialog$/) do
   page.should have_content("Download Sample Data File")
 end
 
+And(/^I should be able to verify the search box$/) do
+  page.should have_content("Search")
+end
+
+And(/^I should be able to search for a file by entering text in search box$/) do
+  fill_in "Search", with: "valid"
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
