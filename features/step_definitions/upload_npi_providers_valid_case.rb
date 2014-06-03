@@ -181,6 +181,17 @@ Then(/^I should see the correct total number of NPI processed$/) do
   page.should have_content("Total NPI Processed")
 end
 
+And(/^I click on the first audit record$/) do
+  @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+  @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  visit admin_provider_path(@audit_trail.id)
+end
+
+Then(/^I should be able to see total npi processed on the top of page$/) do
+  page.should have_content("Total NPI Processed")
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")

@@ -77,9 +77,10 @@ Background:
   @no-database-cleaner
   Scenario: COA varifies the total NPI processed gives the number of NPI's processed
     Given I go to application page
-    And I should be able to verify previous and next button
     Given I select an application    
     Then I should see the correct total number of NPI processed
+    And I click on the first audit record
+    Then I should be able to see total npi processed on the top of page
 
   @selenium
   @no-database-cleaner
