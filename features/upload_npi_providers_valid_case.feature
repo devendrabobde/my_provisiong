@@ -31,6 +31,9 @@ Background:
     Then I should see message Please select application and a CSV file to initiate the provisioning process
     And I select an invalid file with .png extension
     Then I should see error validation message
+    And I select file to upload with any of the extensions like .doc other than csv, I should see error validation message
+    And I select file to upload with any of the extensions like .pdf other than csv, I should see error validation message
+    And I select file to upload with any of the extensions like .xml other than csv, I should see error validation message
 
   @selenium
   @no-database-cleaner

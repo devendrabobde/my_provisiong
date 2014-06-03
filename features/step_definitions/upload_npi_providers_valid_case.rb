@@ -74,14 +74,42 @@ And /^I click on file upload button$/ do
 end
 Then /^I should see message Please select application and a CSV file to initiate the provisioning process$/ do
   page.find_by_id("dialog").text.should =~ /Please select application and a CSV file to initiate the provisioning process./
+  page.find(:xpath, "/html/body/div[4]/div/button").click
 end
 
 And(/^I select an invalid file with .png extension$/) do
-  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'loading.gif')  
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'sample.gif')
 end
 
 Then(/^I should see error validation message$/) do
+  click_button "Upload"
   page.find_by_id("dialog").text.should =~ /Only file with extension .csv is allowed./
+  page.find(:xpath, "/html/body/div[4]/div/button").click
+end
+
+And(/^I select file to upload with any of the extensions like .doc other than csv, I should see error validation message$/) do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'sample.doc')
+  click_button "Upload"
+  page.find_by_id("dialog").text.should =~ /Only file with extension .csv is allowed./
+  page.find(:xpath, "/html/body/div[4]/div/button").click
+end
+
+And(/^I select file to upload with any of the extensions like .pdf other than csv, I should see error validation message$/) do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'sample.pdf')
+  click_button "Upload"
+  page.find_by_id("dialog").text.should =~ /Only file with extension .csv is allowed./
+  page.find(:xpath, "/html/body/div[4]/div/button").click
+end
+
+And(/^I select file to upload with any of the extensions like .xml other than csv, I should see error validation message$/) do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'sample.xml')
+  click_button "Upload"
+  page.find_by_id("dialog").text.should =~ /Only file with extension .csv is allowed./
+  page.find(:xpath, "/html/body/div[4]/div/button").click
 end
 
 Given /^I select an application$/ do
