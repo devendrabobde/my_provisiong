@@ -40,6 +40,8 @@ Background:
   Scenario: COA views all files with pagination
     Given I go to application page
     And I should be able to verify dropdown for selecting the number of displayed files has 10, 25, 50 and 100
+    And I should be able to verify 10 entries per page
+    Given I select an application
     Then I should be able to select 25 from file dropdown
     And I should be able to see 25 files
     Then I should be able to select 50 from file dropdown

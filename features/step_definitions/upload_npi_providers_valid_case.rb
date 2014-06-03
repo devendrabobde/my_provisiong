@@ -116,6 +116,15 @@ And(/^I should be able to verify dropdown for selecting the number of displayed 
   page.find_by_id("table1_length").text.should == "Show 10 25 50 100 entries"
 end
 
+And(/^I should be able to verify 10 entries per page$/) do
+  15.times do
+    @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+    @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+    @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  end
+  page.find_by_id("table1_length").text.include?("10")
+end
+
 Then(/^I should be able to select 25 from file dropdown$/) do
   select "25", from: "table1_length"
 end
