@@ -16,18 +16,18 @@ Scenario: SA proceeds to add a new organization
   And I should be able to see Onestop tab as defalut tab
   Then I click on Onestop default tab
   And I should be able to see the tabs on the top of the main screen as Onestop Logo, Setting and Username
-	And I click on create organization
-	Then I should see a form
+  And I click on create organization
+  Then I should see a form
   And I click on create organization without filling up the mandatory fields
   Then I should be able to see error validation messages for mandatory fields
   And I fill the fields on form with incorrect inputs, I should see input validation message
-	When I fill in form with proper organization details and submit
-	Then I should see success message and organization details
+  When I fill in form with proper organization details and submit
+  Then I should see success message and organization details
 
 @selenium
 @no-database-cleaner
 Scenario: SA views all organizations
-  Given I go to admin home page 
+  Given I go to admin home page
   Then I should see a list of all organizations
 
 @selenium
@@ -57,26 +57,26 @@ Scenario: SA proceeds to update an organization
 @selenium
 @no-database-cleaner
 Scenario: SA views setting options
-  Given I go to admin home page 
+  Given I go to admin home page
   Then I should be able to see two setting options as Edit Personal Info and Change Password
 
 @selenium
 @no-database-cleaner
 Scenario: SA views an organization
-  Given I go to admin home page 
+  Given I go to admin home page
   Then I should see a list of all organizations
   And I should be able to view COAs of any organization
 
 @selenium
 @no-database-cleaner
 Scenario: SA deletes an organization
-  Given I go to admin home page 
+  Given I go to admin home page
   Then I should see a list of all organizations
   And I should be able to delete an organization
 
 @selenium
 @no-database-cleaner
 Scenario: SA activates an organization
-  Given I go to admin home page 
+  Given I go to admin home page
   Then I should see a list of all organizations
   And I should be able to activate an organization which is inactive

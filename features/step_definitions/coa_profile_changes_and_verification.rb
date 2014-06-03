@@ -1,3 +1,7 @@
+Then(/^I should see "(.*?)"$/) do |content|
+  page.should have_content(content)
+end
+
 And(/^I click on edit account link in setting section$/) do
   @current_cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @current_cao.id)
   if ENV['HEADLESS']
