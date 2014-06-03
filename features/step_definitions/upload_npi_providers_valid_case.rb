@@ -156,14 +156,21 @@ And(/^I visit the first audit record$/) do
   2.times do
     @provider_app_detail = ProviderAppDetail.create(status_code: "200", status_text: "Success", fk_cao_id: @current_cao.id, fk_registered_app_id: @registered_app.id, fk_audit_trail_id: @audit_trail.id, fk_organization_id: @organization_coa.id)
   end
-  @provider = Provider.create(username: "mackie", password: "Password@1234", role: "Doctor", prefix: "Mr.", first_name: "mack", middle_name: "John", last_name: "Nelung", suffix: "Dr.", degrees: "Doctor", npi: "1234567890", email: "mack@test.com", address_1: "Lawrenceville", address_2: "NewYork", city: "New Jercey", state: "NJ")
+  @provider = Provider.create(username: Faker::Internet.user_name, password: "Password@1234", role: "Doctor", prefix: "Mr.", first_name: Faker::Name.first_name, middle_name: Faker::Name.first_name, last_name: Faker::Name.last_name, suffix: "Dr.", degrees: "Doctor", npi: "1234567890", email: Faker::Internet.email, address_1: Faker::Address.street_address, address_2: Faker::Address.street_address, city: "New Jercey", state: "NJ")
   @provider.update_attributes(fk_provider_app_detail_id: @provider_app_detail.id)
-  @provider_error_log = ProviderErrorLog.create(fk_provider_id: @provider.id, application_name: @registered_app.app_name, error_message: "Unprocessable", fk_cao_id: @current_cao.id, fk_audit_trail_id: @audit_trail.id)
+  # @provider_error_log = ProviderErrorLog.create(fk_provider_id: @provider.id, application_name: @registered_app.app_name, error_message: "Unprocessable", fk_cao_id: @current_cao.id, fk_audit_trail_id: @audit_trail.id)
   visit admin_provider_path(@audit_trail.id)
 end
 
 Then(/^I should be able to verify 25, 50 and 100 entries per page$/) do
   page.find_by_id("table2_length").text.should == "Show 10 25 50 100 entries"
+end
+
+Then(/^I should see the correct entry of provider$/) do
+  page.should have_content("Last Name")
+  page.should have_content("First Name")
+  page.should have_content("Email")
+  page.should have_content("DEA Numbers")
 end
 
 And(/^I should be able to see download sample data file link$/) do

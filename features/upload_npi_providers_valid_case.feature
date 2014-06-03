@@ -92,6 +92,11 @@ Background:
     Given I go to application page
     And I visit the first audit record
     Then I should be able to verify 25, 50 and 100 entries per page
+    And I should be able to verify previous and next button
+    And I click on the next button
+    Then I should see the correct entry of provider
+    And I click on the previous button
+    Then I should see the correct entry of provider
 
   @selenium
   @no-database-cleaner
