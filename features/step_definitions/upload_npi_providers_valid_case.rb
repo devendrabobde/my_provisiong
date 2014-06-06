@@ -132,6 +132,66 @@ And(/^I should be able to see 50 files$/) do
   page.should have_content("Total NPI Processed")
 end
 
+And(/^I should be able to see download sample data file link$/) do
+  page.should have_content("Download Sample Data File")
+  page.should have_link("Download Sample Data File")
+end
+
+And(/^I click on download sample data file link$/) do
+  click_link("Download Sample Data File")
+end
+
+Then(/^I should be able to see download dialog$/) do
+  page.should have_content("Download Sample Data File")
+end
+
+And(/^I should be able to verify the search box$/) do
+  page.should have_content("Search")
+end
+
+And(/^I should be able to search for a file by entering text in search box$/) do
+  fill_in "Search", with: "valid"
+end
+
+And(/^I should be able to verify previous and next button$/) do
+  12.times do
+    @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+    @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+    @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  end
+  page.should have_content("Next")
+  page.should have_content("Previous")
+  page.should have_link("Next")
+  page.should have_link("Next")
+end
+
+And(/^I click on the next button$/) do
+  click_link("Next")
+end
+
+Then(/^I should see the correct files$/) do
+  page.should have_content("Total NPI Processed")
+end
+
+And(/^I click on the previous button$/) do
+  click_link("Previous")
+end
+
+Then(/^I should see the correct total number of NPI processed$/) do
+  page.should have_content("Total NPI Processed")
+end
+
+And(/^I click on the first audit record$/) do
+  @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+  @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  visit admin_provider_path(@audit_trail.id)
+end
+
+Then(/^I should be able to see total npi processed on the top of page$/) do
+  page.should have_content("Total NPI Processed")
+end
+
 Given /^I select an application$/ do
   @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")

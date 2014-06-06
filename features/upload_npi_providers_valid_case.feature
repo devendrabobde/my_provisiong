@@ -47,6 +47,43 @@ Background:
 
   @selenium
   @no-database-cleaner
+  Scenario: COA views all files with pagination
+    Given I go to application page
+    Given I select an application
+    And I should be able to see download sample data file link
+    And I click on download sample data file link
+    Then I should be able to see download dialog
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA search for files with pagination
+    Given I go to application page
+    And I should be able to verify the search box
+    And I should be able to search for a file by entering text in search box
+    And I should be able to see 25 files
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA varifies the presence of Previous and Next buttons in pagination view
+    Given I go to application page
+    And I should be able to verify previous and next button
+    Given I select an application    
+    And I click on the next button
+    Then I should see the correct files
+    And I click on the previous button
+    Then I should see the correct files
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA varifies the total NPI processed gives the number of NPI's processed
+    Given I go to application page
+    Given I select an application    
+    Then I should see the correct total number of NPI processed
+    And I click on the first audit record
+    Then I should be able to see total npi processed on the top of page
+
+  @selenium
+  @no-database-cleaner
   Scenario: COA selects an application and upload a CSV file of 4 providers
     Given I select an application
     When I select a csv file of 4 providers
