@@ -40,10 +40,14 @@ Background:
   Scenario: COA views all files with pagination
     Given I go to application page
     And I should be able to verify dropdown for selecting the number of displayed files has 10, 25, 50 and 100
+    And I should be able to verify 10 entries per page
+    Given I select an application
     Then I should be able to select 25 from file dropdown
     And I should be able to see 25 files
     Then I should be able to select 50 from file dropdown
     And I should be able to see 50 files
+    Then I should be able to select 100 from file dropdown
+    And I should be able to see 100 files
 
   @selenium
   @no-database-cleaner
@@ -81,6 +85,36 @@ Background:
     Then I should see the correct total number of NPI processed
     And I click on the first audit record
     Then I should be able to see total npi processed on the top of page
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA verifies provider entries per page
+    Given I go to application page
+    And I visit the first audit record
+    Then I should be able to verify 25, 50 and 100 entries per page
+    And I should be able to verify previous and next button
+    And I click on the next button
+    Then I should see the correct entry of provider
+    And I click on the previous button
+    Then I should see the correct entry of provider
+    And I should be able to verify the search box
+    And I should be able to search for a provider entry by entering text in search box
+    Then I should see the correct entry of provider
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA verifies new application visibility and upload a file for the  new application successfully
+    Given I go to application page
+    And I should be able to verify new application populated in select application dropdown
+    Given I select an application
+    When I select a csv file of 4 providers
+    And I clicks upload button
+    And I should be able to see correct file upload message
+    And I should be able to see progress bar
+    And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to associate provider with COA
+    And I should be able to add audit data in Provisioning DB
+    And I should be able to see simple acknowledgement messages
 
   @selenium
   @no-database-cleaner

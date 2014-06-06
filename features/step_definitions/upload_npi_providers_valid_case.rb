@@ -116,6 +116,15 @@ And(/^I should be able to verify dropdown for selecting the number of displayed 
   page.find_by_id("table1_length").text.should == "Show 10 25 50 100 entries"
 end
 
+And(/^I should be able to verify 10 entries per page$/) do
+  15.times do
+    @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+    @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+    @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  end
+  page.find_by_id("table1_length").text.include?("10")
+end
+
 Then(/^I should be able to select 25 from file dropdown$/) do
   select "25", from: "table1_length"
 end
@@ -130,6 +139,42 @@ end
 
 And(/^I should be able to see 50 files$/) do
   page.should have_content("Total NPI Processed")
+end
+
+Then(/^I should be able to select 100 from file dropdown$/) do
+  select "100", from: "table1_length"
+end
+
+And(/^I should be able to see 100 files$/) do
+  page.should have_content("Total NPI Processed")
+end
+
+And(/^I visit the first audit record$/) do
+  @audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2)
+  @registered_app = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @audit_trail.update_attributes(fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_app.id)
+  2.times do
+    @provider_app_detail = ProviderAppDetail.create(status_code: "200", status_text: "Success", fk_cao_id: @current_cao.id, fk_registered_app_id: @registered_app.id, fk_audit_trail_id: @audit_trail.id, fk_organization_id: @organization_coa.id)
+  end
+  @provider = Provider.create(username: Faker::Internet.user_name, password: "Password@1234", role: "Doctor", prefix: "Mr.", first_name: Faker::Name.first_name, middle_name: Faker::Name.first_name, last_name: Faker::Name.last_name, suffix: "Dr.", degrees: "Doctor", npi: "1234567890", email: Faker::Internet.email, address_1: Faker::Address.street_address, address_2: Faker::Address.street_address, city: "New Jercey", state: "NJ")
+  @provider.update_attributes(fk_provider_app_detail_id: @provider_app_detail.id)
+  # @provider_error_log = ProviderErrorLog.create(fk_provider_id: @provider.id, application_name: @registered_app.app_name, error_message: "Unprocessable", fk_cao_id: @current_cao.id, fk_audit_trail_id: @audit_trail.id)
+  visit admin_provider_path(@audit_trail.id)
+end
+
+Then(/^I should be able to verify 25, 50 and 100 entries per page$/) do
+  page.find_by_id("table2_length").text.should == "Show 10 25 50 100 entries"
+end
+
+Then(/^I should see the correct entry of provider$/) do
+  page.should have_content("Last Name")
+  page.should have_content("First Name")
+  page.should have_content("Email")
+  page.should have_content("DEA Numbers")
+end
+
+And(/^I should be able to search for a provider entry by entering text in search box$/) do
+  fill_in "Search", with: @provider.first_name  
 end
 
 And(/^I should be able to see download sample data file link$/) do
@@ -190,6 +235,10 @@ end
 
 Then(/^I should be able to see total npi processed on the top of page$/) do
   page.should have_content("Total NPI Processed")
+end
+
+And(/^I should be able to verify new application populated in select application dropdown$/) do
+  page.find_by_id("provider_registered_app_id").text.should be_true
 end
 
 Given /^I select an application$/ do
