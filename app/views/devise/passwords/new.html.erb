@@ -1,27 +1,52 @@
 <div class="content">
   <div class="container">
     <div class="row">
-      <div class="span4 offset4">
-        <h4 class="widget-header">Forgot your password?</h4>
-        <div class="widget-body">
-          <div class="center-align">
-            <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, id: "forget-password" }) do |f| %>
-              <table>
-                <tbody>
-                  <tr>
-                    <%= devise_error_messages! %>
-                  </tr>
-                  <tr style="vertical-align:text-top;">
-                    <td style="padding-left:20px;"> <%= f.label :email %> </td>
-                    <td style="padding-left:13px;padding-bottom:5px;"> <%= f.email_field :email, :autofocus => true, style: "width: auto;" %> <br /></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div><%= f.submit "Send me reset password instructions", :class=>"btn btn-primary"%></div>
-            <% end %>
-            <%#= render "devise/shared/links" %>
+      <div class="span5 offset4">
+        <h2 class="widget-header">Forgot your username/password?</h2>
+          <div class="widget-body">
+            <div class="center-align">
+              <p>
+                <div class="container-fluid">
+                <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, id: "forget-password", class: "form-horizontal" }) do |f| %>
+                  <%= devise_error_messages! %>
+                    <div class="row-fluid" style="padding:20px 0px 0px 0px;">
+                      <div class="span9">
+                        <div class="row-fluid">
+                          <div class="span6 bgcolor">
+                            <div class="control-group">
+                              <%= label_tag :email, "Email <span class='red'>*</span>".html_safe, class: "control-label" %>
+                              <div class="controls popup-errors">
+                                <%= f.email_field :email, required: 'required', class: "form-control", autofocus: true, placeholder: "Email" %>
+                              </div>
+                            </div>
+                          </div><!--/span-->
+                        </div><!--/row-->
+                      <div class="row-fluid">
+                        <div style>
+                            <%= label_tag :forgot, "Forgot <span class='red'>*</span>".html_safe, class: "control-label" %>
+                            <div class="controls" style="display: flex;">
+                              <%= radio_button_tag :forgot_field, "0", checked: true %>
+                              <p style="margin-left: 10px;"> Password </p>
+                              <%= radio_button_tag :forgot_field, "1", nil,style:"margin-left: 70px;"%>
+                              <p style="margin-left: 10px;"> Username </p>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="span4">
+                      </div><!--/span-->
+                    </div>
+                </div>
+              </p>     
+                <div class="row-fluid" style="margin-top: -30px;">
+                  <div class="form-group" style="text-align: center;margin-right:10px">
+                    <div class="col-sm-10">
+                      <%= f.submit "Send Me Username/Password Revival Instructions", :class=>"btn btn-primary" %>
+                    </div>
+                  </div>
+                </div><!--/row-->
+              <%- end -%>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
