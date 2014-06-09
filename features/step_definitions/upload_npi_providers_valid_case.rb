@@ -270,6 +270,10 @@ And /^I should be able to see progress bar$/ do
   page.should have_content("In Progress..")
 end
 
+And /^I should be able to see the previous CSV file in progress$/ do
+  sleep 25
+end
+
 And /^I should be able to see application info, upload time, file name, download button$/ do
   page.should have_content("valid_epcs_providers.csv")
   page.should have_content("EPCS-IDP")
