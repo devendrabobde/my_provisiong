@@ -325,7 +325,17 @@ And /^I should be able to see simple acknowledgement messages$/ do
   end
 end
 
-And /^I should be able to see current COA name in uploaded by column$/ do
+And /^I should be able to verify the current COA$/ do
+  @last_logged_in_cao = @current_cao
+end
+
+And /^I should be able to see previously uploaded CSV files$/ do
+  @uploaded_audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2, file_name: "valid_epcs_providers_2014-06-09T04:49:46-04:00.csv")
+  @registered_application = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @uploaded_audit_trail.update_attributes(fk_cao_id: @current_cao.id, fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_application.id)
+end
+
+And /^I should not be able to see current COA name in uploaded by column$/ do
   page.should have_content(@current_cao.full_name)
-  page.find("#table1 td:last-child").find(:xpath, '../td[5]').text.should == @current_cao.full_name
+  page.find("#table1 td:last-child").find(:xpath, '../td[5]').text.should_not == @last_logged_in_cao.full_name
 end

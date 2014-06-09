@@ -221,10 +221,14 @@ Background:
     And I should be able to see correct file upload message
     And I should be able to see progress bar
     And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to verify the current COA
     And I should be successfully logged out of the application
+    Given a valid COA
+    When I go to login page
     And I fill in the username and password
     And I press "Sign in"
     Then I should see success message
+    And I should be able to see previously uploaded CSV files
     Given I select an application
     And I should be able to see the previous CSV file in progress
-    And I should be able to see current COA name in uploaded by column
+    And I should not be able to see current COA name in uploaded by column
