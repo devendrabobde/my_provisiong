@@ -252,6 +252,11 @@ When /^I select a csv file of 4 providers$/ do
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv') # id
 end
 
+When /^I select a csv file of providers$/ do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_provider_data.csv')
+end
+
 And /^I clicks upload button$/ do
   click_button "Upload"
 end

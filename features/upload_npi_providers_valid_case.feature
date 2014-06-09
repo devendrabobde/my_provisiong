@@ -128,3 +128,48 @@ Background:
     And I should be able to associate provider with COA
     And I should be able to add audit data in Provisioning DB
     And I should be able to see simple acknowledgement messages
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA uploads any number of CSV file of providers
+    Given I select an application
+    When I select a csv file of providers
+    And I clicks upload button
+    And I should be able to see correct file upload message
+    And I should be able to see progress bar
+    And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to associate provider with COA
+    And I should be able to add audit data in Provisioning DB
+    And I should be able to see simple acknowledgement messages
+    And I should be successfully logged out of the application
+    Given a valid COA
+    When I go to login page
+    And I fill in the username and password
+    And I press "Sign in"
+    Then I should see success message
+    Given I go to application page
+    Given I select an application
+    When I select a csv file of providers
+    And I clicks upload button
+    And I should be able to see correct file upload message
+    And I should be able to see progress bar
+    And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to associate provider with COA
+    And I should be able to add audit data in Provisioning DB
+    And I should be able to see simple acknowledgement messages
+    And I should be successfully logged out of the application
+    Given a valid COA
+    When I go to login page
+    And I fill in the username and password
+    And I press "Sign in"
+    Then I should see success message
+    Given I go to application page
+    Given I select an application
+    When I select a csv file of providers
+    And I clicks upload button
+    And I should be able to see correct file upload message
+    And I should be able to see progress bar
+    And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be able to associate provider with COA
+    And I should be able to add audit data in Provisioning DB
+    And I should be able to see simple acknowledgement messages
