@@ -211,3 +211,20 @@ Background:
     And I should be able to associate provider with COA
     And I should be able to add audit data in Provisioning DB
     And I should be able to see simple acknowledgement messages
+
+  @selenium
+  @no-database-cleaner
+  Scenario: COA re-logs in and still see the same uploaded data files
+    Given I select an application
+    When I select a csv file of providers
+    And I clicks upload button
+    And I should be able to see correct file upload message
+    And I should be able to see progress bar
+    And I should be able to verify clean provider data in Provisioning DB, invokes BatchUploadDest to transmit providers to destination OIS and receive response from destination OIS, invokes BatchUpload to transmit providers to OIS Router and receives success message from OIS Router
+    And I should be successfully logged out of the application
+    And I fill in the username and password
+    And I press "Sign in"
+    Then I should see success message
+    Given I select an application
+    And I should be able to see the previous CSV file in progress
+    And I should be able to see current COA name in uploaded by column

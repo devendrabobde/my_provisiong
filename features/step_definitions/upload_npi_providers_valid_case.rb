@@ -324,3 +324,8 @@ And /^I should be able to see simple acknowledgement messages$/ do
     # td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
 end
+
+And /^I should be able to see current COA name in uploaded by column$/ do
+  page.should have_content(@current_cao.full_name)
+  page.find("#table1 td:last-child").find(:xpath, '../td[5]').text.should == @current_cao.full_name
+end
