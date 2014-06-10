@@ -1,7 +1,14 @@
 And (/^I should be successfully logged out of the application$/) do
-  page.execute_script("$('.dropdown-menu').show();")
-  click_on('Logout')
-  page.should have_selector(".sign_in_box")
+  if ENV['HEADLESS']
+    Capybara.reset_sessions!
+    delete destroy_cao_session_path
+    visit root_path
+    page.should have_selector(".sign_in_box")    
+  else
+    page.execute_script("$('.dropdown-menu').show();")
+    click_on('Logout')
+    page.should have_selector(".sign_in_box")
+  end
 end
 
 Given(/^I click on the organization of COA$/) do

@@ -242,7 +242,7 @@ And(/^I should be able to verify new application populated in select application
 end
 
 Given /^I select an application$/ do
-  @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
+  @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "ONESTOP", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
   select "DrFirst::epcsidp", from: 'provider_registered_app_id'
 end

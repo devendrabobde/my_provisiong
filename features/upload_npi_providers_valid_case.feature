@@ -51,7 +51,7 @@ Background:
 
   @selenium
   @no-database-cleaner
-  Scenario: COA views all files with pagination
+  Scenario: COA download sample CSV file for a application
     Given I go to application page
     Given I select an application
     And I should be able to see download sample data file link
