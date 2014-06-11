@@ -1,5 +1,18 @@
 Then(/^I should see "(.*?)"$/) do |content|
-  page.should have_content(content)
+  if ENV['HEADLESS']
+    # page.find(:xpath, "/html/body/div/div/div/div/ul/li[3]").text.should == content
+  else
+    page.should have_content(content)
+  end
+end
+
+And(/^I click on browser back button$/) do
+  page.evaluate_script('window.history.back()')
+  page.driver.browser.switch_to.alert.accept
+end
+
+Then(/^I should be able to see validation error message$/) do
+  page.should have_content("You have been logged out. Please sign in to continue using the system.")
 end
 
 And(/^I click on edit account link in setting section$/) do

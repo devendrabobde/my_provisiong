@@ -15,10 +15,11 @@ When /^I enter email on the reset password form$/ do
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "Password@123", password_confirmation: "Password@123", security_question: "What was your childhood nickname?", security_answer: "scott")
   role = Role.create(name: "COA")
+  profile = Profile.create(profile_name: Faker::Name.first_name)
   organization = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345")
-  @coa.update_attributes(fk_role_id: role.id, fk_organization_id: organization.id)
+  @coa.update_attributes(fk_role_id: role.id, fk_organization_id: organization.id, fk_profile_id: profile.id)
   fill_in "cao_email", with: @coa.email
 end
 
