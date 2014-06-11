@@ -1,12 +1,13 @@
 Then(/^I should see "(.*?)"$/) do |content|
   if ENV['HEADLESS']
-    # page.find(:xpath, "/html/body/div/div/div/div/ul/li[3]").text.should == content
+    page.evaluate_script("$('.brand').text()").include?(content)
   else
     page.should have_content(content)
   end
 end
 
 And(/^I click on browser back button$/) do
+  binding.pry
   page.evaluate_script('window.history.back()')
   page.driver.browser.switch_to.alert.accept
 end

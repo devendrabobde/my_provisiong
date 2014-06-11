@@ -126,18 +126,39 @@
       <%= javascript_include_tag "application" %>
       <%= yield :javascript %>
       <script>
-        window.onload = function () {
-          if (typeof history.pushState === "function") {
-            history.pushState(document.URL, null, null);
-            window.onpopstate = function () {
-              var currentUser = "<%= current_cao %>";
-              if(currentUser != "") {
-                if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
-                  // history.pushState(document.URL, null, null);
-                  location.href = "/back_button_destroy"
-                }
+        if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0)
+        {
+          window.onpageshow = function(event) {
+            if (event.persisted) {
+              if (typeof history.pushState === "function") {
+                history.pushState(document.URL, null, null);
+                window.onpopstate = function () {
+                  var currentUser = "<%= current_cao %>";
+                  if(currentUser != "") {
+                    if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
+                      location.href = "/back_button_destroy"
+                    }
+                  }
+                };
               }
-            };
+            }
+          };
+        }
+        else
+        {
+          window.onload = function () {
+            if (typeof history.pushState === "function") {
+              history.pushState(document.URL, null, null);
+              window.onpopstate = function () {
+                var currentUser = "<%= current_cao %>";
+                if(currentUser != "") {
+                  if(confirm("By clicking on back button, your session will expire. Do you want to continue?")) {
+                    // history.pushState(document.URL, null, null);
+                    location.href = "/back_button_destroy"
+                  }
+                }
+              };
+            }
           }
         }
       </script>
