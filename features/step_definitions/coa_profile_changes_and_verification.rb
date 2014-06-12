@@ -7,7 +7,6 @@ Then(/^I should see "(.*?)"$/) do |content|
 end
 
 And(/^I click on browser back button$/) do
-  binding.pry
   page.evaluate_script('window.history.back()')
   page.driver.browser.switch_to.alert.accept
 end
