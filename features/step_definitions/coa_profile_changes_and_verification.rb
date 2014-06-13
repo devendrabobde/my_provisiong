@@ -84,9 +84,9 @@ And(/^I click on update with the information that needs to be changed including 
 end
 
 Then(/^I should see the information being updated$/) do
-  page.should have_content(@ufname)
-  page.should have_content(@ulname)
-  page.should have_content(@uemail)
+  page.find_by_id("cao_first_name").value.should == @ufname
+  page.find_by_id("cao_last_name").value.should == @ulname
+  page.find_by_id("cao_email").value.should == @uemail
 end
 
 Then(/^I should see an error message indicating password is incorrect$/) do
