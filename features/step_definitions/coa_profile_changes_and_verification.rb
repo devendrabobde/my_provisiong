@@ -1,5 +1,28 @@
 Then(/^I should see "(.*?)"$/) do |content|
-  page.should have_content(content)
+  if ENV['HEADLESS']
+    page.evaluate_script("$('.brand').text()").include?(content)
+  else
+    page.should have_content(content)
+  end
+end
+
+And(/^I click on browser back button$/) do
+  page.evaluate_script('window.history.back()')
+end
+
+Then(/^I should be able to dismis alert box$/) do
+  page.driver.browser.switch_to.alert.dismiss
+end
+
+When(/^I click on browser back button and click on ok in alert box$/) do
+  visit application_admin_providers_path
+  page.execute_script("$('#update-password-modal').modal('hide');")
+  page.evaluate_script('window.history.back()')
+  page.driver.browser.switch_to.alert.accept
+end
+
+Then(/^I should be able to see You have been logged out. Please sign in to continue using the system$/) do
+  page.should have_content("You have been logged out. Please sign in to continue using the system.")
 end
 
 And(/^I click on edit account link in setting section$/) do

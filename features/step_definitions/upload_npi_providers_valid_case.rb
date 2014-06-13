@@ -242,7 +242,7 @@ And(/^I should be able to verify new application populated in select application
 end
 
 Given /^I select an application$/ do
-  @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "Meditech 1", epcs_vendor_password: "uidyweyf8986328992")
+  @current_cao.update_attributes(epcs_ois_subscribed: true, epcs_vendor_name: "ONESTOP", epcs_vendor_password: "uidyweyf8986328992")
   page.execute_script("$('#update-password-modal').modal('hide');")
   select "DrFirst::epcsidp", from: 'provider_registered_app_id'
 end
@@ -250,6 +250,11 @@ end
 When /^I select a csv file of 4 providers$/ do
   page.execute_script("$('#upload').show();")
   attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_providers.csv') # id
+end
+
+When /^I select a csv file of providers$/ do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'valid_epcs_provider_data.csv')
 end
 
 And /^I clicks upload button$/ do
@@ -263,6 +268,10 @@ end
 
 And /^I should be able to see progress bar$/ do
   page.should have_content("In Progress..")
+end
+
+And /^I should be able to see the previous CSV file in progress$/ do
+  sleep 25
 end
 
 And /^I should be able to see application info, upload time, file name, download button$/ do
@@ -314,4 +323,19 @@ And /^I should be able to see simple acknowledgement messages$/ do
     td.text.should =~ /Success/
     # td.text.should =~ /Success | NativeException: java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint/
   end
+end
+
+And /^I should be able to verify the current COA$/ do
+  @last_logged_in_cao = @current_cao
+end
+
+And /^I should be able to see previously uploaded CSV files$/ do
+  @uploaded_audit_trail = AuditTrail.create(upload_status: true, total_npi_processed: 2, total_providers: 2, file_name: "valid_epcs_providers_2014-06-09T04:49:46-04:00.csv")
+  @registered_application = RegisteredApp.where(app_name: "EPCS-IDP").first
+  @uploaded_audit_trail.update_attributes(fk_cao_id: @current_cao.id, fk_organization_id: @organization_coa.id, fk_registered_app_id: @registered_application.id)
+end
+
+And /^I should not be able to see current COA name in uploaded by column$/ do
+  page.should have_content(@current_cao.full_name)
+  page.find("#table1 td:last-child").find(:xpath, '../td[5]').text.should_not == @last_logged_in_cao.full_name
 end
