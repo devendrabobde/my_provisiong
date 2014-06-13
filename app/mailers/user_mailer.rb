@@ -53,5 +53,17 @@ class UserMailer < ActionMailer::Base
   	  puts e.inspect
   	end
   end
+
+  def send_username_via_email(user)
+    begin
+      @recipient  = user.email
+      @user       = "#{user.first_name} #{user.last_name}"
+      @url        = root_url
+      @username   = user.username
+      mail(to: @recipient, subject: "Requested Username From Onestop")
+    rescue => e
+      puts e.inspect
+    end
+  end
   
 end

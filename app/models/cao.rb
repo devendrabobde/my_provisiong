@@ -74,6 +74,18 @@ class Cao < ActiveRecord::Base
     recoverable
   end
 
+
+  def self.send_username_via_email(params)
+    cao = Cao.find_by_email(params["email"])
+    if cao
+      UserMailer.send_username_via_email(cao).deliver
+    else
+      cao = Cao.new
+      cao.errors.add(:email, "not found")
+    end
+    cao
+  end
+
   private
 
   def restricted_username
