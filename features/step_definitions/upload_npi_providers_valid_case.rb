@@ -339,3 +339,14 @@ And /^I should not be able to see current COA name in uploaded by column$/ do
   page.should have_content(@current_cao.full_name)
   page.find("#table1 td:last-child").find(:xpath, '../td[5]').text.should_not == @last_logged_in_cao.full_name
 end
+
+When /^I select a csv file of invalid provider details$/ do
+  page.execute_script("$('#upload').show();")
+  attach_file 'upload', File.join(Rails.root, 'public', 'rspec_test_files', 'epcs', 'invalid_epcs_provider_data.csv')
+end
+
+And /^I should be able to see error validation messages$/ do
+  page.all(:css, "#table2 tbody tr").each do |td|
+    td.text.should =~ /422 Npi is not in correct format, Invalid DEA Number Checksum, ProviderDea is not in correct format, ProviderDeaExpirationDate is not in correct format, LastName is not in correct format, FirstName is not in correct format, State is not in correct format, Email is not in correct format, IdpPerformedDate is not in correct format, IdpPerformedTime is not in correct format, Gender is not in correct format, BirthDate is not in correct format/
+  end
+end

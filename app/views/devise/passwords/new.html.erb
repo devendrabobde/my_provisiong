@@ -14,8 +14,8 @@
                         <div class="row-fluid">
                           <div class="span6 bgcolor">
                             <div class="control-group">
-                              <%= label_tag :email, "Email <span class='red'>*</span>".html_safe, class: "control-label" %>
-                              <div class="controls popup-errors">
+                              <%= label_tag :email, "Email <span class='red'>*</span>".html_safe, style: "float: left; padding-top: 5px; text-align: right; width: 120px; text-align: center;" %>
+                              <div style="margin-top: -1px; width: 225%;">
                                 <%= f.email_field :email, required: 'required', class: "form-control", autofocus: true, placeholder: "Email" %>
                               </div>
                             </div>
@@ -23,11 +23,11 @@
                         </div><!--/row-->
                       <div class="row-fluid">
                         <div style>
-                            <%= label_tag :forgot, "Forgot <span class='red'>*</span>".html_safe, class: "control-label" %>
-                            <div class="controls" style="display: flex;">
-                              <%= radio_button_tag :forgot_field, "0", checked: true %>
+                            <%= label_tag :forgot, "Forgot <span class='red'>*</span>".html_safe, style: "float: left; padding-top: 5px; text-align: right; width: 120px; text-align: center;" %>
+                            <div style="display: flex;">
+                              <%= radio_button_tag :forgot_field, "0", checked: true, style: "margin-left: 1px;" %>
                               <p style="margin-left: 10px;"> Password </p>
-                              <%= radio_button_tag :forgot_field, "1", nil,style:"margin-left: 70px;"%>
+                              <%= radio_button_tag :forgot_field, "1", nil,style:"margin-left: 10px;"%>
                               <p style="margin-left: 10px;"> Username </p>
                             </div>
                         </div>

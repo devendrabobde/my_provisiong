@@ -10,6 +10,18 @@ And /^I should be able to click on forgot password link$/ do
   click_link "Forgot username or password?"
 end
 
+Then /^I should see the validation error message as This field is required$/ do
+  page.should have_content("This field is required.")
+end
+
+When /^I enter invalid email in email field on form$/ do
+  fill_in "cao_email", with: "andrew"
+end
+
+Then /^I should see the validation error message as Please enter a valid email address$/ do
+  page.should have_content("Please enter a valid email address.")
+end
+
 When /^I enter email on the reset password form$/ do
   @coa = Cao.create(email: Faker::Internet.email, username: Faker::Internet.user_name,
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
@@ -23,20 +35,29 @@ When /^I enter email on the reset password form$/ do
   fill_in "cao_email", with: @coa.email
 end
 
-And /^I press Send me reset password instructions button$/ do
-  click_button "Send me reset password instructions"
+And /^I select username option$/ do
+  choose("forgot_field_1")
 end
 
-Then /^I sould be able to see You will receive an email with instructions about how to reset your password in a few minutes.$/ do
-  page.should have_content("You will receive an email with instructions about how to reset your password in a few minutes.")
+And /^I press Send me reset password instructions button$/ do
+  click_button "Send Me Username/Password Revival Instructions"
+end
+
+Then /^I sould be able to see You will receive an email with requested instructions in a few minutes$/ do
+  page.should have_content("You will receive an email with requested instructions in a few minutes.")
 end
 
 And /^I should receive email with forget password instructions$/ do
   unread_emails_for(@coa.email).size.should >= parse_email_count(1)
 end
 
+When /^I open email then I should be able to see username in email$/ do
+  email = open_email(@coa.email, with_subject: "Requested Username From Onestop")
+  email.should have_body_text(/You have requested the username for Onestop Login./)
+  email.should have_body_text(/#{@coa.username}/)
+end
+
 When /^I open email then I should be able to see Change my password link$/ do
-  # email = open_email(@coa.email)
   email = open_email(@coa.email, with_subject: "Reset password instructions")
   email.should have_body_text(/Change my password/)
 end
