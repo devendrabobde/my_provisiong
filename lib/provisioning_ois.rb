@@ -84,7 +84,7 @@ module ProvisioningOis
       #   provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
       #   provider
       # end
-      payload = { :providers => { "" => providers }}
+      payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys}
       # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
       url = app_url #+ "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
       if Rails.env == "test"
