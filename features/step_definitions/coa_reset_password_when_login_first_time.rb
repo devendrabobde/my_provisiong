@@ -45,6 +45,7 @@ Given /^I visit application page$/ do
 end
 
 Then(/^I should be able to see Change Password form$/) do
+  page.should have_selector("#update-password-modal")
   page.should have_content("Change Password")
 end
 
@@ -96,7 +97,8 @@ And /^I click on update with the new password which I had used in past$/ do
 end
 
 Then /^I should see error message as Password was already taken in the past$/ do
-  page.should have_content("Password was already taken in the past! ")
+  page.find_by_id("devise-error-message-pwd").text.should == "Password was already taken in the past!"
+  page.should have_content("Password was already taken in the past!")
 end
 
 And /^I click on update with incorrect old password$/ do
@@ -109,5 +111,6 @@ And /^I click on update with incorrect old password$/ do
 end
 
 Then /^I should see error message as Current password is invalid$/ do
+  page.find_by_id("devise-error-message-pwd").text.should == "Current password is invalid"
   page.should have_content("Current password is invalid")
 end
