@@ -9,7 +9,7 @@ class BatchUpload
       ActiveRecord::Base.connection.reconnect!
       ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: args[3])
       audit_trail = AuditTrail.where(upload_status: false)
-      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: args[0].count) rescue nil
+      audit_trail.update_all(status: "1", upload_status: true, total_providers: args[0].count) rescue nil
       Rails.logger.error e
   end
   
@@ -29,11 +29,10 @@ class BatchUpload
       provider_app_details.update_all(fk_audit_trail_id: audit_trail.id)
       audit_trail.update_attributes(total_providers: providers.count, upload_status: true, total_npi_processed: total_npi_processed)
     rescue Exception => e
-      # audit_trail = AuditTrail.find(audit_trail_id)
-      # ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: audit_trail.id)
-      # audit_trail.update_attributes(status: "1", upload_status: true, total_providers: providers.count)
+      audit_trail = AuditTrail.find(audit_trail_id)
+      ProviderErrorLog.create( application_name: "OneStop Provisioning System", error_message: "Resque backgroud job fail: " + e.message, fk_audit_trail_id: audit_trail.id)
+      audit_trail.update_attributes(status: "1", upload_status: true, total_providers: providers.count)
       Rails.logger.error e
-      Rails.logger.error "Perform Error"
     end
   end
 
