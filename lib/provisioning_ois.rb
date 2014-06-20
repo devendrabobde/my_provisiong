@@ -16,12 +16,6 @@ module ProvisioningOis
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
       end
-      # if cao.epcs_ois_subscribed?
-      #   vendor_details = { vendor_name: cao.epcs_vendor_name, vendor_password: cao.epcs_vendor_password }
-      # else
-      #   vendor_details = { vendor_name: "", vendor_password: "" }
-      # end
-
       vendor_details = {
         vendor_name: (cao.epcs_ois_subscribed? ? cao.epcs_vendor_name : ""),
         vendor_password: (cao.epcs_ois_subscribed? ? cao.epcs_vendor_password : "")
@@ -57,12 +51,6 @@ module ProvisioningOis
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
       end
-      # if cao.rcopia_ois_subscribed?
-      #   vendor_details = { vendor_name: cao.rcopia_vendor_name, vendor_password: cao.rcopia_vendor_password }
-      # else
-      #   vendor_details = { vendor_name: "", vendor_password: "" }
-      # end
-
       vendor_details = {
         vendor_name: (cao.rcopia_ois_subscribed? ? cao.rcopia_vendor_name : ""),
         vendor_password: (cao.rcopia_ois_subscribed? ? cao.rcopia_vendor_password : "")
