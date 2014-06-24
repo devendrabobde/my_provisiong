@@ -85,7 +85,7 @@ class Admin::ProvidersController < ApplicationController
   def upload
     begin
       file_path, file_name = store_csv
-      app_hash_router = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == @application.display_name}}.flatten.first rescue nil
+      app_hash_router = session[:router_reg_applications].collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == @application.display_name}}.flatten.first rescue nil
       status, message, providers = ProvisioingCsvValidation::process_csv_api(file_path, @application, app_hash_router)
       if status
         @audit_trail = save_audit_trails(file_name)
