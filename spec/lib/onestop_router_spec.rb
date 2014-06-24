@@ -12,7 +12,8 @@ describe "OneStopRouter" do
 	    		application = RegisteredApp.where(app_name: "EPCS-IDP").first
 	    		providers =  [{ :npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA" }, 
 	    		              { :npi=>"1114000148", :last_name=>"MOULICK", :first_name=>"ACHINTYA"}] 
-	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
+	    		app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+	    		response = OnestopRouter::batch_upload(providers, application, app_hash_router)
 	    		response[:error].should =~ /Connection refused/
 	    	end
 	    end
@@ -22,7 +23,8 @@ describe "OneStopRouter" do
 	    		application = RegisteredApp.where(app_name: "EPCS-IDP").first
 	    		providers =  [{ :npi=>"1114919727", :last_name=>"KISTNER", :first_name=>"LISA" }, 
 	    		              { :npi=>"1114000148", :last_name=>"MOULICK", :first_name=>"ACHINTYA"}] 
-	    		response = OnestopRouter::batch_upload(providers, application,@router_reg_apps)
+	    		app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+	    		response = OnestopRouter::batch_upload(providers, application, app_hash_router)
 	    		response[:error].should =~ /Connection refused/
 	    	end
 	    end
@@ -53,7 +55,8 @@ describe "OneStopRouter" do
                                   }
                               ]
                 application = RegisteredApp.where(app_name: "Rcopia").first
-	    		response = OnestopRouter::batch_upload(providers, application,@router_reg_apps)
+                app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+	    		response = OnestopRouter::batch_upload(providers, application, app_hash_router)
 	    		assert response.should be_true
 	    	end
 	    end
@@ -75,7 +78,8 @@ describe "OneStopRouter" do
 						        }
                               ]
                 application = RegisteredApp.where(app_name: "Moxy").first
-	    		response = OnestopRouter::batch_upload(providers, application, @router_reg_apps)
+                app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil                
+	    		response = OnestopRouter::batch_upload(providers, application, app_hash_router)
 	    		assert response.should be_true
 	    	end
 	    end

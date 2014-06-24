@@ -34,9 +34,10 @@ describe "RCOPIA-OIS" do
 		                      "email" => "test@example.com"
 		                    }]
 		                    @router_reg_apps = OnestopRouter.request_batchupload_responders(nil)
+		                    @app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == @application.display_name}}.flatten.first rescue nil
 			    	end
 			    	it "After uploading a valid NPI, Rcopia Ois should have the expected result" do		    			
-			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application, @router_reg_apps).last
+			    		response = ProvisioningOis::batch_upload_dest(@providers, @coa, @application, @app_hash_router).last
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200
@@ -44,7 +45,7 @@ describe "RCOPIA-OIS" do
 			    		end
 	    			end
 	    			it "After uploading a valid NPI, Router should have the expected result" do
-		    			response = OnestopRouter::batch_upload(@providers, @application, @router_reg_apps)
+		    			response = OnestopRouter::batch_upload(@providers, @application, @app_hash_router)
 			    		response["status"].should == "ok"
 			    		response["providers"].each do |res|
 			    			res["status"].should == 200

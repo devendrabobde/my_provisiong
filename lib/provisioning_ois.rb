@@ -7,117 +7,62 @@ module ProvisioningOis
   #
   # This method is responsible for uploading the providers information in specific OIS application
   #
-  def self.batch_upload_dest(providers, cao, application,router_reg_applications) 
+  def self.batch_upload_dest(providers, cao, application, app_hash_router) 
     updated_providers = []
-    hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
-    app_url = hash['batch_upload_url'] rescue "" 
-    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+    app_url = app_hash_router['batch_upload_url'] rescue ""
+    if providers.first.keys.include? :provider_dea_record
       providers = providers.collect do |provider|
         provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
         provider
-      end
-      # if cao.epcs_ois_subscribed?
-      #   vendor_details = { vendor_name: cao.epcs_vendor_name, vendor_password: cao.epcs_vendor_password }
-      # else
-      #   vendor_details = { vendor_name: "", vendor_password: "" }
-      # end
-
-      vendor_details = {
-        vendor_name: (cao.epcs_ois_subscribed? ? cao.epcs_vendor_name : ""),
-        vendor_password: (cao.epcs_ois_subscribed? ? cao.epcs_vendor_password : "")
-      }
-      payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys, vendor_details: vendor_details  }
-      # url = CONSTANT["EPCS_OIS"]["SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      # url = app_url + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url
-      if Rails.env == "test"
-        url = CONSTANT["EPCS_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      end
-      begin
-        request_time = Time.now
-        response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
-        response_time = Time.now
-        Rails.logger.info "Benchmarking - EPCS OIS - btach_upload_dest() elapsed time:#{response_time - request_time} sec"
-        response = JSON.parse(response)
-        provider_records = response["providers"]
-      rescue => e
-        Rails.logger.error e
-        providers.each do |provider|
-          provider[:error] = application.app_name + " " + e.message
-          updated_providers <<  provider
-        end
-        provider_records = updated_providers
-      ensure
-        Rails.logger.info \
-          "Provisioning- batch_upload_dest(): EPCS-OIS communication summary:\n\nURL:#{url}\n\nSent to EPCS-OIS:\
-            \n\n#{payload}\n\nReceived from EPCS-OIS:\n\n#{provider_records}"
-      end
-    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
-      providers = providers.collect do |provider|
-        provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
-        provider
-      end
-      # if cao.rcopia_ois_subscribed?
-      #   vendor_details = { vendor_name: cao.rcopia_vendor_name, vendor_password: cao.rcopia_vendor_password }
-      # else
-      #   vendor_details = { vendor_name: "", vendor_password: "" }
-      # end
-
-      vendor_details = {
-        vendor_name: (cao.rcopia_ois_subscribed? ? cao.rcopia_vendor_name : ""),
-        vendor_password: (cao.rcopia_ois_subscribed? ? cao.rcopia_vendor_password : "")
-      }
-
-      payload = { :providers => { "" => providers }, vendor_details: vendor_details}
-      # url = CONSTANT["RCOPIA_OIS"]["SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url #+ "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"] 
-      if Rails.env == "test"
-        url = CONSTANT["RCOPIA_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      end
-      begin
-        response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload, :timeout=> 600)
-        response = JSON.parse(response)
-        provider_records = response["providers"]
-      rescue => e
-        Rails.logger.error e
-        providers.each do |provider|
-          provider[:error] = application.app_name + " " + e.message
-          updated_providers <<  provider
-        end
-        provider_records = updated_providers
-      ensure
-        Rails.logger.info \
-          "Provisioning- batch_upload_dest(): RCOPIA-OIS communication summary:\n\nURL:#{url}\n\nSent to RCOPIA-OIS:\
-            \n\n#{payload}\n\nReceived from RCOPIA-OIS:\n\n#{provider_records}"
-      end
-    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
-      # providers = providers.collect do |provider|
-      #   provider[:provider_dea_record] = { "" => provider[:provider_dea_record] }
-      #   provider
-      # end
-      payload = { :providers => { "" => providers }, organization: cao.organization.attributes.symbolize_keys}
-      # url = CONSTANT["MOXY_OIS"]["SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      url = app_url #+ "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"] 
-      if Rails.env == "test"
-        url = CONSTANT["MOXY_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
-      end
-      begin
-        response = RestClient::Request.execute(:method => :post, :url => url , :payload => payload)
-        response = JSON.parse(response)
-        provider_records = response["providers"]
-      rescue => e
-        Rails.logger.error e
-        providers.each do |provider|
-          provider[:error] = application.app_name + " " + e.message
-          updated_providers <<  provider
-        end
-        provider_records = updated_providers
-      ensure
-        Rails.logger.info \
-          "Onestop-Provisioning- batch_upload_dest(): MOXY_OIS communication summary:\n\nURL:#{url}\n\nSent to MOXY_OIS:\
-            \n\n#{payload}\n\nReceived from MOXY_OIS:\n\n#{provider_records}"
       end
     end
+    payload = { :providers => { "" => providers }}
+    if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
+      vendor_details = {
+        vendor_name: cao.epcs_vendor_name,
+        vendor_password: cao.epcs_vendor_password
+      }
+      payload = payload.merge(organization: cao.organization.attributes.symbolize_keys, vendor_details: vendor_details)
+      # if Rails.env == "test"
+      #   app_url = CONSTANT["EPCS_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["EPCS_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # end
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
+      vendor_details = {
+        vendor_name: cao.rcopia_vendor_name,
+        vendor_password: cao.rcopia_vendor_password
+      }
+      payload = payload.merge(vendor_details: vendor_details)
+      # if Rails.env == "test"
+      #   app_url = CONSTANT["RCOPIA_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["RCOPIA_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # end
+    elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
+      payload = payload.merge(organization: cao.organization.attributes.symbolize_keys)
+      # if Rails.env == "test"
+      #   app_url = CONSTANT["MOXY_OIS"]["TEST_SERVER_URL"] + "/" + CONSTANT["MOXY_OIS"]["BATCH_UPLOAD_DEST_URL"]
+      # end
+    end
+
+    # Call Batch Upload
+    begin
+      request_time = Time.now
+      response = RestClient::Request.execute(:method => :post, :url => app_url, :payload => payload, :timeout=> 600)
+      Rails.logger.info "Benchmarking - #{ app_hash_router['ois_name'] rescue "" } OIS - btach_upload_dest() elapsed time:#{Time.now - request_time} sec"
+      response = JSON.parse(response)
+      provider_records = response["providers"]
+    rescue => e
+      Rails.logger.error e
+      providers.each do |provider|
+        provider[:error] = application.app_name + " " + e.message
+        updated_providers <<  provider
+       end
+      provider_records = updated_providers
+    ensure
+      Rails.logger.info \
+        "Provisioning- batch_upload_dest(): #{ app_hash_router['ois_name'] rescue "" } OIS communication summary:\n\nURL:#{app_url}\n\nSent to #{ app_hash_router['ois_name'] rescue "" } OIS:\
+          \n\n#{payload}\n\nReceived from #{ app_hash_router['ois_name'] rescue "" } OIS:\n\n#{provider_records}"
+     end
+
+    # Process the response
     providers_with_npi, invalid_providers, npiless_providers, batch_upload_response,temp_providers = [], [], [], nil, []
     if provider_records.present?
       provider_records.each do |provider|
@@ -142,9 +87,10 @@ module ProvisioningOis
         end
       end
     end
+    # Router Batch Upload
     if providers_with_npi.present?
       request_time = Time.now
-      batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application, router_reg_applications)
+      batch_upload_response = OnestopRouter::batch_upload(providers_with_npi, application, app_hash_router)
       response_time = Time.now
       Rails.logger.info "Benchmarking - Onestop Router - batch_upload() elapsed time:#{response_time - request_time} sec"
     end

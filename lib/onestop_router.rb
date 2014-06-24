@@ -6,22 +6,10 @@ module OnestopRouter
   #
   # This method is responsible for uploading the providers data into the Onestop Router DB
   #
-  def self.batch_upload(providers, application, router_reg_applications) 
+  def self.batch_upload(providers, application, app_hash_router) 
     body = { :users => {"" => providers } }
     url = batch_upload_url
-    # if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
-    #   header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["EPCS_IDP"]
-    # elsif application.app_name.eql?(CONSTANT["APP_NAME"]["RCOPIA"])
-    #   header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["RCOPIA"]
-    # elsif application.app_name.eql?(CONSTANT["APP_NAME"]["MOXY"])
-    #   header = CONSTANT["ONESTOP_ROUTER"]["OIS"]["MOXY"]
-    # end
-    if router_reg_applications
-      hash = router_reg_applications.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first
-      header = {"OISID"=>hash["ois_name"], "OISPASSWORD"=>hash["ois_password"]}
-    else
-      header = nil
-    end 
+    header = {"OISID"=>(app_hash_router["ois_name"] rescue ""), "OISPASSWORD"=>(app_hash_router["ois_password"] rescue "")} 
     begin
       response = RestClient.post url, body, header
       return JSON.parse(response)

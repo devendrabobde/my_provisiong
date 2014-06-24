@@ -139,7 +139,8 @@ describe Provider do
       organization = FactoryGirl.create(:organization)
       cao.update_attributes(fk_organization_id: organization.id)
       application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
-      provider = Provider.save_provider(providers, cao, application, router_reg_apps)
+      app_hash_router = router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+      provider = Provider.save_provider(providers, cao, application, app_hash_router)
       assert provider.should be_true
     end
   end

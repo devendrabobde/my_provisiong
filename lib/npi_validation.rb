@@ -7,7 +7,6 @@ module NpiValidation
   # Find the application and verify application specific conditions, for EPCS we are verifying providers against SuperNPI DB
   #
   def self.validate(providers)
-    # response = providers
     #
     # validate providers npi checksum
     #

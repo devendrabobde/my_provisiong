@@ -30,20 +30,11 @@ class Provider < ActiveRecord::Base
   #
   # Save provider record to provision db and process the same
   #
-  def self.save_provider(providers, cao, application, router_reg_apps)
+  def self.save_provider(providers, cao, application, app_hash_router)
     valid_providers, providers_ids, provider_invalid_ids = [], [], []
-    # t1 = Time.now
-    #   upload_field_validations = ProvisioingCsvValidation::application_upload_field_validations(application)
-    # Rails.logger.info "Benchmarking - application_upload_field_validations  - elapsed time:#{Time.now - t1} sec"
-    
-    # if application.app_name.eql?(CONSTANT["APP_NAME"]["EPCS"])
-    #   upload_field_validations = upload_field_validations.each.select {|v| v.required }
-    # end
-    # upload_field_validations = upload_field_validations.each.select {|v| v.required }
 
     t1 = Time.now
-    # validated_providers = ProvisioingCsvValidation::validate_provider(providers, application, upload_field_validations)
-    validated_providers = ProvisioingCsvValidation::validate_provider_api(providers, application, router_reg_apps)
+    validated_providers = ProvisioingCsvValidation::validate_provider_api(providers, application, app_hash_router)
     Rails.logger.info "Benchmarking - validate_provider_api  - elapsed time:#{Time.now - t1} sec"
     if validated_providers.present?
       validated_providers.each do |provider|
@@ -53,16 +44,14 @@ class Provider < ActiveRecord::Base
           if provider_app_detail.present?
             providers_ids << provider_app_detail.id
             provider_app_detail.create_provider(provider.except(:provider_dea_record, :validation_error_message, :status))
-            # if [CONSTANT["APP_NAME"]["EPCS"], CONSTANT["APP_NAME"]["RCOPIA"]].include?(application.app_name)
-              provider_deas = provider[:provider_dea_record]
-              if provider_deas.present?
-                provider_deas.each do |dea|
-                  if dea.present?
-                    provider_app_detail.provider_dea_numbers.create(dea)
-                  end
+            provider_deas = provider[:provider_dea_record]
+            if provider_deas.present?
+              provider_deas.each do |dea|
+                if dea.present?
+                  provider_app_detail.provider_dea_numbers.create(dea)
                 end
               end
-            # end
+            end
             unless provider[:validation_error_message].present?
               provider[:sys_provider_app_detail_id] = provider_app_detail.id
               valid_providers << provider

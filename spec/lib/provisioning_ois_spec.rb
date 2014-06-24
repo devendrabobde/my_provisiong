@@ -35,7 +35,8 @@ describe "ProvisioningOis" do
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["RCOPIA"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application,@router_reg_apps)
+        app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application,app_hash_router)
         assert data.should be_true
   	end
 
@@ -60,7 +61,8 @@ describe "ProvisioningOis" do
         organization = FactoryGirl.create(:organization)
         cao.update_attributes(fk_organization_id: organization.id)
         application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["MOXY"]).first
-        data = ProvisioningOis.batch_upload_dest(providers, cao, application, @router_reg_apps)
+        app_hash_router = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first rescue nil
+        data = ProvisioningOis.batch_upload_dest(providers, cao, application, app_hash_router)
         assert data.should be_true
   	end
   end
