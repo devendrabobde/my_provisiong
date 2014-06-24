@@ -3,11 +3,12 @@ Given /^valid COA credentials$/ do
     first_name: Faker::Name.first_name , last_name: Faker::Name.last_name,
     password: "password@123", password_confirmation: "password@123")
   role = Role.create(name: "COA")
+  profile = Profile.create(profile_name: Faker::Name.first_name)
   @organization_coa_valid = Organization.create(name: Faker::Company.name, address1: Faker::Address.street_address,
     address2: Faker::Address.street_address, contact_first_name: Faker::Name.first_name,
     contact_last_name: Faker::Name.last_name, contact_email: Faker::Internet.email, zip_code: "12345", 
     state_code: "AL123")
-  coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa_valid.id)
+  coa.update_attributes(fk_role_id: role.id, fk_organization_id: @organization_coa_valid.id, fk_profile_id: profile.id)
   coa.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: coa.id)
   @current_valid_cao = coa
 end
