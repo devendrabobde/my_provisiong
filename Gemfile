@@ -87,3 +87,4 @@ gem 'redis-rack-cache'
 gem 'encryptor'
 gem 'useragent'
 gem 'high_voltage', '~> 2.1.0'
+gem 'whenever', require: false

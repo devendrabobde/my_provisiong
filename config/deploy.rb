@@ -1,5 +1,6 @@
 require "bundler/capistrano"
 require 'capistrano/ext/multistage'
+require "whenever/capistrano"
 
 set :stages, %w(qaonestop05 production sparkway)
 set :default_stage, "qaonestop05"
@@ -13,6 +14,8 @@ set :scm, :git
 set :repository,  "git@github01.drfirst.com:onestop/provisioning.git"
 set :bundle_flags, "--quiet"
 set :git_shallow_clone, 1
+
+set(:whenever_command) { "RAILS_ENV=#{rails_env} bundle exec whenever" }
 
 #NOTE: remote_cache will be only active if, the initial deployment process is completed.
 #set :deploy_via, :remote_cache
