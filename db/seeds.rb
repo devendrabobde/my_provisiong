@@ -16,7 +16,7 @@ profile_list = ["Doctor","Nurse"]
 profile_list.each {|profile| Profile.where(profile_name: profile).first_or_create! }
 
 
-RegisteredApp.delete_all
+# RegisteredApp.delete_all
 
 
 ## The display_name column should have the name of Organization and name of OIS from Router concatenated by a '::'

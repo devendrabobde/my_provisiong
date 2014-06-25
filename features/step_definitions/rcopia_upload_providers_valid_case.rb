@@ -1,4 +1,6 @@
 Given /^I select rcopia application$/ do
+  @current_cao.update_attributes(rcopia_ois_subscribed: true, rcopia_vendor_name: "ONESTOP", rcopia_vendor_password: "uidyweyf8986328992")
+  page.execute_script("$('#update-password-modal').modal('hide');")
   select "DrFirst::rcopia", from: 'provider_registered_app_id'
 end
 
