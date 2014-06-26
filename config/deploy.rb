@@ -31,6 +31,7 @@ ssh_options[:forward_agent] = true
 after("deploy:setup", "deploy:create_config_and_environment_folder")
 after("deploy:create_symlink", "deploy:copy_constants_and_production")
 after("deploy:create_symlink", "deploy:bundle_install")
+after("deploy:bundle_install", "deploy:update_crontab")
 before("deploy:restart", "deploy:start_redis")
 before("deploy:restart", "deploy:kill_redis")
 before("deploy:restart", "deploy:start_redis")
@@ -79,6 +80,11 @@ namespace :deploy do
     #copy production.rb file form production.rb.sample if the production.rb file does not exists.
     run "if [[ ! -f #{shared_path}/config/environments/production.rb ]]; then cp #{release_path}/config/environments/production.rb.sample #{shared_path}/config/environments/production.rb; fi"
     run "ln -nfs #{shared_path}/config/environments/production.rb #{release_path}/config/environments/production.rb"
+  end
+
+  desc "Update the crontab file"
+  task :update_crontab do
+    run "cd #{release_path} && whenever --update-crontab #{application}"
   end
 
 end
