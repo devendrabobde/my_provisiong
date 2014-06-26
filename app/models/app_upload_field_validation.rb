@@ -9,8 +9,8 @@ class AppUploadFieldValidation < ActiveRecord::Base
   alias_attribute :sys_app_field_validation_id, :id
 
   # hooks to manipulate cached
-  after_save  :add_or_update_cached
-  after_destroy :remove_from_cached, :add_or_update_cached
+  # after_save  :add_or_update_cached
+  # after_destroy :remove_from_cached, :add_or_update_cached
 
   #
   # Assocations
@@ -23,14 +23,14 @@ class AppUploadFieldValidation < ActiveRecord::Base
   end
 
   # method will remove validations from cached
-  def remove_from_cached
-    app = register_app
-    RedisCache.delete_validation_cached(app.app_name)
-  end
+  # def remove_from_cached
+  #   app = register_app
+  #   RedisCache.delete_validation_cached(app.app_name)
+  # end
 
-  # method will add or update validations in cached
-  def add_or_update_cached
-    RedisCache.set_validation_cached(register_app)
-  end
+  # # method will add or update validations in cached
+  # def add_or_update_cached
+  #   RedisCache.set_validation_cached(register_app)
+  # end
 
 end
