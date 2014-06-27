@@ -16,15 +16,15 @@
     a> Start redis server:
         => redis-server
     b> Start redis job queue
-          => RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+          => RAILS_ENV=development QUEUE=providers_queue rake environment resque:work BACKGROUND=yes
         Run redis job queue in backgroud:-
-          => RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+          => RAILS_ENV=development QUEUE=providers_queue rake environment resque:work BACKGROUND=yes
 
     Note:- RAILS_ENV value depends upon current environment that we are using.
 
   # Run multiple queue lists 
 
-    RAILS_ENV=development QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+    RAILS_ENV=development QUEUE=providers_queue rake environment resque:work BACKGROUND=yes
 
 
 #
@@ -46,7 +46,7 @@
 
 6. Run resque queues in test environment below is the cmd for that, If its already runing stop it and run again
 
-  RAILS_ENV=test QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes
+  RAILS_ENV=test QUEUE=providers_queue rake environment resque:work BACKGROUND=yes
 
 
 Below are the command to test cases,
@@ -68,3 +68,48 @@ Below are the command to test cases,
 
   # To run controllers test cases
     => rspec spec/controllers/
+
+Following is the list of confluence pages which we have documented for Onestop Applications:
+
+Install Ruby 1.9.3 ( or Multiple Ruby Version ) on CentOS, RedHat using RVM
+http://confluence.dfcorp.drfirst.com:8889/display/DEV/Install+Ruby+1.9.3+%28+or+Multiple+Ruby+Version+%29+on+CentOS%2C+RedHat+using+RVM
+
+
+Complete Deployment Steps for OneStop Apps (Pro.UI, EPCS OIS, Router, SuperNPI)
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=37458918
+
+
+Changes required to get OIS list and Registered Application list mapping of Onestop Router and Onestop Provisioning UI
+http://confluence.dfcorp.drfirst.com:8889/display/DEV/Changes+required+to+get+OIS+list+and+Registered+Application+list+mapping+of+Onestop+Router+and+Onestop+Provisioning+UI
+
+
+Confluence page for detailed explanation of constants.yml file keys and procedure to create these constant values
+http://confluence.dfcorp.drfirst.com:8889/display/DEV/Confluence+page+for+detailed+explanation+of+constants.yml+file+keys+and+procedure+to+create+these+constant+values
+
+
+Error Code and Error message description and Description of actions recorded in Performance Logs.
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=38963060
+
+
+Capistrano deployment of Onestop Provisioning, EPCS OIS, SuperNPI OIS and Router application from Windows Machine to Linux server.
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=38600719
+
+
+Redis Documentation
+http://confluence.dfcorp.drfirst.com:8889/display/DEV/Redis+Documentation
+
+
+OneStop Deployment Checklist
+http://confluence.dfcorp.drfirst.com:8889/display/DEV/OneStop+Deployment+Checklist
+
+
+Complete list of configuration files for SuperNPI, EPCS, OneStop Provisioning and Router Application.
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=38600725
+
+
+Troubleshooting application - redis, resque, nginx.
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=38963057
+
+
+List of different provider status/response codes and status texts and detailed descriptions
+http://confluence.dfcorp.drfirst.com:8889/pages/viewpage.action?pageId=38973162
