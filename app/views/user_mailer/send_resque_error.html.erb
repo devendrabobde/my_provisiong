@@ -2,6 +2,6 @@ Hello <%= @recipient %>,
 <p>COA has uploaded CSV file in the provisioning system for processing providers record but currently redis queue is not working status. Can you please start/restart the redis queue for processing CSV files.</p>
 <p> You can do this through below command:- </p>
 
-<b>RAILS_ENV=production QUEUE=providers_queue,cached_updation rake environment resque:work BACKGROUND=yes</b>
+<b>RAILS_ENV=production QUEUE=providers_queue rake environment resque:work BACKGROUND=yes</b>
 
 <h3>Thanks !!! </h3>
