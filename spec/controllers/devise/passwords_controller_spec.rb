@@ -38,6 +38,10 @@ describe Devise::PasswordsController do
       post :create, format: :html, cao: { email: "josh@malinator.com" }
       response.status.should == 200
     end
+    it "I should be able to see error validation message when email is not provided to send reset username instruction on COA's email" do
+      post :create, format: :html, forgot_field: '1', cao: { email: "josh@malinator.com" }
+      response.status.should == 200
+    end
   end
 
   describe "GET 'edit'" do
@@ -66,9 +70,16 @@ describe Devise::PasswordsController do
       response.status.should == 302
     end
     it "I should be able to see error validation message while updating the password using invalid reset password token" do
-      put :update, format: :html, cao: { reset_password_token: @coa.reset_password_token, password: "password@1234", password_confirmation: "password@1234", security_question: "What was your childhood nickname?", security_answer: nil }
+      @coa.send_reset_password_instructions
+      put :update, format: :html, cao: { reset_password_token: @coa.reset_password_token, password: "password@1234", password_confirmation: "password@1234", security_question: @coa.security_question, security_answer: "" }
       response.status.should == 200
-    end    
+    end
+    it "I should be able to see error validation message while updating the password if the reset password token is expired" do
+      @coa.send_reset_password_instructions
+      @coa.update_attributes(reset_password_sent_at: (Time.now-1.day))
+      put :update, format: :html, cao: { reset_password_token: @coa.reset_password_token, password: "password@1234", password_confirmation: "password@1234", security_question: @coa.security_question, security_answer: "scott" }
+      response.status.should == 200
+    end
   end
 
 end
