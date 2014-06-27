@@ -34,6 +34,7 @@ after("deploy:create_symlink", "deploy:bundle_install")
 after("deploy:bundle_install", "deploy:update_crontab")
 before("deploy:restart", "deploy:start_redis")
 before("deploy:restart", "deploy:kill_redis")
+before("deploy:restart", "deploy:kill_queues")
 before("deploy:restart", "deploy:start_redis")
 before("deploy:restart", "deploy:clean_redis")
 before("deploy:restart", "deploy:resque_work")
@@ -85,6 +86,11 @@ namespace :deploy do
   desc "Update the crontab file"
   task :update_crontab do
     run "cd #{release_path} && whenever --update-crontab #{application}"
+  end
+
+  desc "Kill resque queue"
+  task :kill_queues do
+    sudo "kill $(ps aux | grep '[q]ueue' | awk '{print $2}')"
   end
 
 end
