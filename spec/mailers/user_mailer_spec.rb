@@ -21,5 +21,16 @@ describe UserMailer do
   	  email = UserMailer.send_resque_error(superadmin)
   	  email.subject.should == "Redis queue exception"
   	end
+    it "should raise an exception if any error encounters in resque job" do
+      response = UserMailer.send_resque_error(nil)
+      response.subject.should be_nil
+    end
+  end
+
+  describe "#send_username_via_email" do
+    it "should raise an exception if any error encounters in while sending an email of resetting username" do
+      response = UserMailer.send_username_via_email(nil)
+      response.subject.should be_nil
+    end
   end
 end

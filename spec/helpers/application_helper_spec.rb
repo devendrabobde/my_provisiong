@@ -15,4 +15,11 @@ describe ApplicationHelper do
       assert status.should be_true
     end
   end
+
+  describe "#drop_down_link" do
+    it "should display drop down link for the provided name" do
+      result = helper.drop_down_link("Logout")
+      assert result.should be_true
+    end
+  end
 end

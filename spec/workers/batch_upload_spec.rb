@@ -38,14 +38,14 @@ describe "BatchUpload" do
                     }
                   ]
                            
-		cao = FactoryGirl.create(:cao)
-		organization = FactoryGirl.create(:organization)
-    cao.update_attributes(fk_organization_id: organization.id, epcs_ois_subscribed: true, epcs_vendor_name: "ONESTOP", epcs_vendor_password: "uidyweyf8986328992")
-		application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
-		audit_trail = FactoryGirl.create(:audit_trail)
-    router_reg_apps = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first
-		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, router_reg_apps)
-        assert data.should be_true
+  		cao = FactoryGirl.create(:cao)
+  		organization = FactoryGirl.create(:organization)
+      cao.update_attributes(fk_organization_id: organization.id, epcs_ois_subscribed: true, epcs_vendor_name: "ONESTOP", epcs_vendor_password: "uidyweyf8986328992")
+  		application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
+  		audit_trail = FactoryGirl.create(:audit_trail)
+      router_reg_apps = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first
+  		data = BatchUpload.perform(providers, cao.id, application.id, audit_trail.id, router_reg_apps)
+      assert data.should be_true
   	end
 
     it "should perform batch upload for providers for Rcopia application" do

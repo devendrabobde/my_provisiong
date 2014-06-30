@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
   def send_resque_error(superadmin)
   	begin
   	  @recipient = superadmin.email
-	  mail(to: @recipient, subject: "Redis queue exception")
+	    mail(to: @recipient, subject: "Redis queue exception")
   	rescue => e
   	  puts e.inspect
   	end

@@ -94,4 +94,12 @@ describe Cao do
       assert cao.full_name.should be_true
     end
   end
+
+  describe "Cao should be validated with restricted username" do
+    cao = Cao.new
+    cao.username = "drfirst"
+    cao.valid?
+    cao.errors.messages[:username].include?("is not valid. Please select another username.")
+  end
+
 end

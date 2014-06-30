@@ -43,7 +43,7 @@ describe Devise::RegistrationsController do
 
     before(:each) do
       @cao  = FactoryGirl.create(:cao)
-      @role = FactoryGirl.create(:role, name: "Admin")
+      @role = FactoryGirl.create(:role, name: "COA")
       @profile = FactoryGirl.create(:profile)
       @cao.update_attributes(fk_role_id: @role.id, fk_profile_id: @profile.id)
       @cao.old_passwords.create(encrypted_password: "Password@1234", password_archivable_type: "Cao", password_archivable_id: @cao.id)
@@ -52,7 +52,7 @@ describe Devise::RegistrationsController do
 
     it "I should be able to edit the details" do
       get :edit, format: :html
-      response.status.should == 302
+      response.status.should == 200
     end
     
   end
@@ -68,8 +68,15 @@ describe Devise::RegistrationsController do
       @valid_data = { email: "testusername@example.com", password: "password@1234", password_confirmation: "password@1234", current_password: "password@123" }  
     end
 
-    it "I should be able to update the details" do
+    it "I should be able to update the details as a COA" do
       put :update, format: :html, cao: { email: @cao.email, password: "password@123", password_confirmation: "password@123", current_password: "password@1234" }
+      response.status.should == 302
+    end
+
+    it "I should be able to update the details as a Super Admin" do
+      @admin_role = FactoryGirl.create(:role, name: "Admin")
+      @cao.update_attributes(fk_role_id: @admin_role.id)
+      put :update, format: :html, cao: { email: @cao.email, password: "password@1234567", password_confirmation: "password@1234567", current_password: "password@123" }
       response.status.should == 302
     end
 
@@ -80,6 +87,11 @@ describe Devise::RegistrationsController do
 
     it "I should not be able to update information if password is not provided." do
       put :update, format: :html, cao: { email: @cao.email}
+      response.status.should == 302
+    end
+
+    it "I should not be able to use the same password again while updating the password when updating the password first time." do
+      put :update, format: :html, redirect_from: "popup", cao: { email: @cao.email, password: "password@123", password_confirmation: "password@123", current_password: "password@1235" }
       response.status.should == 302
     end
     
