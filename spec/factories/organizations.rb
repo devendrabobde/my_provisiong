@@ -4,7 +4,7 @@ FactoryGirl.define do
     address1 Faker::Address.street_address
     address2 Faker::Address.street_address
     city Faker::Address.city
-    state_code Faker::Address.state
+    state_code "AL"
     zip_code "12345"
     country_code "+52"
     contact_first_name Faker::Name.first_name
