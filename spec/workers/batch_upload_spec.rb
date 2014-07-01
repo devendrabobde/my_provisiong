@@ -191,6 +191,50 @@ describe "BatchUpload" do
         assert data.should be_true
     end
 
+    it "should raise an exeption while performing batch upload for providers for EPCS-IDP application" do
+      providers = [
+                    {
+                        "npi"=>"1194718007",
+                        "last_name"=>"CASEY",
+                        "first_name"=>"THOMAS",
+                        "address_1"=>"28411 NORTHWESTERN HWY",
+                        "address_2"=>"STE # 1050",
+                        "city"=>"SOUTHFIELD",
+                        "state"=>"MI",
+                        "zip"=>"480345544",
+                        "email"=>"THOMAS@rcopia.com",
+                        "provider_otp_token_serial"=>"VSHM31349119",
+                        "resend_flag"=>"",
+                        "hospital_admin_first_name"=>"Jill",
+                        "hospital_admin_last_name"=>"Parks",
+                        "idp_performed_date"=>"08/30/2013",
+                        "idp_performed_time"=>"14:29:13",
+                        "hospital_idp_transaction_id"=>"1101",
+                        "middle_name"=>"CHU",
+                        "prefix"=>"Dr.",
+                        "gender"=>"M",
+                        "birth_date"=>"10/10/1988",
+                        "social_security_number"=>"360629514",
+                        "provider_dea_record"=>[
+                            {
+                                "provider_dea"=>"BC3818892",
+                                "provider_dea_state"=>"AL",
+                                "provider_dea_expiration_date"=>"03/01/1988"
+                            }
+                        ]
+                    }
+                  ]
+                           
+      cao = FactoryGirl.create(:cao)
+      organization = FactoryGirl.create(:organization)
+      cao.update_attributes(fk_organization_id: organization.id, epcs_ois_subscribed: true, epcs_vendor_name: "ONESTOP", epcs_vendor_password: "uidyweyf8986328992")
+      application = RegisteredApp.where(app_name: CONSTANT["APP_NAME"]["EPCS"]).first
+      audit_trail = FactoryGirl.create(:audit_trail)
+      router_reg_apps = @router_reg_apps.collect{|x| x.values.flatten.select{|y| y if "#{x.keys.first}::#{y['ois_name']}" == application.display_name}}.flatten.first
+      data = BatchUpload.perform(providers, cao.id, nil, audit_trail.id, router_reg_apps)
+      assert data.should be_true
+    end
+
   end
 
   describe "#on_failure" do

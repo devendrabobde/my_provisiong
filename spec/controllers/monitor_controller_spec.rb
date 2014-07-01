@@ -9,4 +9,11 @@ describe MonitorController do
   	end
   end
 
+  describe "#verify_connectivity" do
+  	it "should raise en exception if url is not provided" do
+  	  res = controller.instance_eval{ verify_connectivity(nil) }
+  	  res["result"].should be_false
+  	end
+  end
+
 end
